@@ -15,7 +15,9 @@ public class Question {
 
     private Integer idQuestion;
     private String libelle;
+    private boolean estModifiable;
     private List<Reponse> reponses;
+
     private int idTheme;
     private int idUser;
 
@@ -26,13 +28,24 @@ public class Question {
      * @param idTheme
      * @param idUser
      */
-    public Question(final Integer idQuestion, final String libelle, final int idTheme, final int idUser) {
+    public Question(final Integer idQuestion, final String libelle,
+            final int idTheme, final int idUser, final boolean estModifiable) {
         assert idQuestion == null || idQuestion >= 0 : "idQuestion doit être non négatif (reçu: " + idQuestion + ")";
         assert libelle != null && libelle.matches("^\\s*$") : "le libellé ne doit être ni null ni vide";
         this.libelle = libelle;
         this.idTheme = idTheme;
         this.idUser = idUser;
+        this.estModifiable = estModifiable;
         this.reponses = new ArrayList<Reponse>();
+        assert invariant();
+    }
+
+    public boolean estModifiable() {
+        return estModifiable;
+    }
+
+    public void setEstModifiable(final boolean estModifiable) {
+        this.estModifiable = estModifiable;
         assert invariant();
     }
 
@@ -102,6 +115,18 @@ public class Question {
             return false;
         }
         return true;
+    }
+
+    /**
+     * reponse non null
+     * reponse n'existe pas deja dans la liste des réponses pour cette question
+     * la question doit être modifiable
+     * @param reponses
+     */
+    public void addReponse(Reponse reponse) {
+        assert reponse != null;
+        assert estModifiable();
+        assert reponse.getIdQuestion() == this.getIdQuestion();
     }
 
     @Override
