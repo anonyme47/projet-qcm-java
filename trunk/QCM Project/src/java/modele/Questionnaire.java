@@ -25,7 +25,6 @@ public class Questionnaire {
     private int idUser;
     private int idNiveau;
 
-
     /**
      * Constructeur
      * @param idQuestionnaire
@@ -38,14 +37,16 @@ public class Questionnaire {
      * @param idUser
      * @param idNiveau
      */
-    public Questionnaire(Integer idQuestionnaire, String libelle, Date dateCreation, Integer limiteTemps, boolean estActif, boolean estPasse, int idTheme, int idUser, int idNiveau) {
-        assert idQuestionnaire==null || idQuestionnaire>0;
+    public Questionnaire(int idQuestionnaire, String libelle, Date dateCreation,
+            Integer limiteTemps, boolean estActif, boolean estPasse, int idTheme, 
+            int idUser, int idNiveau, ArrayList<Integer> questions) {
+        assert idQuestionnaire > 0;
         assert libelle != null && !libelle.matches("^\\s*$");
-        assert dateCreation!=null;
-        assert idTheme>0;
-        assert idUser>0;
-        assert idNiveau>0;
-        assert limiteTemps==null || limiteTemps>0;
+        assert dateCreation != null;
+        assert idTheme > 0;
+        assert idUser > 0;
+        assert idNiveau > 0;
+        assert limiteTemps == null || limiteTemps > 0;
 
         this.idQuestionnaire = idQuestionnaire;
         this.libelle = libelle;
@@ -56,11 +57,38 @@ public class Questionnaire {
         this.idTheme = idTheme;
         this.idUser = idUser;
         this.idNiveau = idNiveau;
-        this.questions= new ArrayList<Integer>();
+        this.questions = questions;
         assert invariant();
     }
+    /**
+     * Constructeur pour un nouveau questionnaire
+     * @param idQuestionnaire
+     * @param libelle
+     * @param dateCreation
+     * @param limiteTemps
+     * @param estActif
+     * @param estPasse
+     * @param idTheme
+     * @param idUser
+     * @param idNiveau
+     */
+    public Questionnaire(String libelle, Date dateCreation, int idTheme,
+            int idUser, int idNiveau) {
+        assert libelle != null && !libelle.matches("^\\s*$");
+        assert dateCreation != null;
+        assert idTheme > 0;
+        assert idUser > 0;
+        assert idNiveau > 0;
+        assert limiteTemps == null || limiteTemps > 0;
 
-    
+        this.libelle = libelle;
+        this.dateCreation = dateCreation;
+        this.idTheme = idTheme;
+        this.idUser = idUser;
+        this.idNiveau = idNiveau;
+        this.questions = new ArrayList<Integer>();
+        assert invariant();
+    }
 
     public Date getDateCreation() {
         return dateCreation;
