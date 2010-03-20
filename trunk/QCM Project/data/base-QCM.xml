@@ -46,6 +46,9 @@
 
 
 
+	<questionnaire_has_question id_questionnaire="1" id_question="1" />
+	<questionnaire_has_question id_questionnaire="1" id_question="2" />
+	<questionnaire_has_question id_questionnaire="1" id_question="3" />
 	<questionnaire_has_question id_questionnaire="4" id_question="21" />
 
 
