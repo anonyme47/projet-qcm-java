@@ -21,7 +21,6 @@ public class Questionnaire {
     private List<Integer> questions;
     private boolean estActif;
     private boolean estPasse;
-
     private int idTheme;
     private int idUser;
     private int idNiveau;
@@ -35,7 +34,7 @@ public class Questionnaire {
      * @param idUser
      * @param idNiveau
      */
-    public Questionnaire(final Integer idQuestionnaire, final String libelle, 
+    public Questionnaire(final Integer idQuestionnaire, final String libelle,
             final Date dateCreation, final int idTheme, final int idUser, final int idNiveau) {
         this.libelle = libelle;
         this.dateCreation = dateCreation;
