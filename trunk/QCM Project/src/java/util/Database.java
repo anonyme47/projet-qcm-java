@@ -1,9 +1,55 @@
 package util;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 /**
- *
- * @author maria rabarison et lou ferrand
+ * Classe qui encapsule la connexion à la base de données et stocke les
+ * informations de connexion (pilote, URL et identifiants)
+ * @author Maria Rabarison et Lou Ferrand
  */
 public class Database {
 
+    /**
+     * Nom du pilote (driver) de connexion à la base de données
+     */
+    public static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
+    /**
+     * URL de connexion a la base de données
+     */
+    public static final String URL         = "jdbc:mysql://localhost/qcm";
+    /**
+     * Identifiant de l'utilisateur à fournir lors de la connexion
+     */
+    public static final String USER        = "root";
+    /**
+     * Mot de passe de l'utilisateur à fournir lors de la connexion
+     */
+    public static final String PASSWORD    = "";
+
+    static {
+        /* Chargement du pilote, ne doit avoir lieu qu'une fois */
+        try {
+            Class.forName(DRIVER_NAME).newInstance();
+            System.out.println("*** Driver loaded.");
+        } catch (ClassNotFoundException e) {
+            System.err.println("*** ERROR: Driver " + DRIVER_NAME + " not found");
+        } catch (InstantiationException e) {
+            System.err.println("*** ERROR: Impossible to create an instance of " + DRIVER_NAME);
+            System.err.println(e.getMessage());
+        } catch (IllegalAccessException e) {
+            System.err.println("*** ERROR: Impossible to create an instance of " + DRIVER_NAME);
+            System.err.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Fournit la connexion à la base de données
+     * @return La connexion
+     * @throws java.sql.SQLException
+     */
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
+    }
 }
