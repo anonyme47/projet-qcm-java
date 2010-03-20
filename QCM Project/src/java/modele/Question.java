@@ -83,6 +83,7 @@ public class Question {
     public void setReponses(List<Reponse> reponses) {
         assert reponses != null;
         this.reponses = reponses;
+        assert invariant();
     }
 
     @Override
@@ -116,7 +117,7 @@ public class Question {
         return "[ " + idQuestion + " : " + libelle + " : " + idTheme + " ]";
     }
 
-    public boolean invariant() {
+    protected boolean invariant() {
         assert getIdQuestion() > 0 : "Le numéro de la question doit être positif";
         assert getIdUser() > 0 : "L'identifiant de l'utilisateur doit être positif";
         assert getLibelle() != null && !getLibelle().matches("^\\s*$") : "le libellé ne doit être ni null ni vide";
