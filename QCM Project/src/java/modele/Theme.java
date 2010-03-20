@@ -53,7 +53,7 @@ public class Theme {
         assert invariant();
     }
 
-    public boolean invariant() {
+    protected boolean invariant() {
         assert getLibelle() != null && !getLibelle().matches("^\\s*$") : "Le Libelle ne doit être ni null ni vide";
         assert getIdUser() > 0;
         assert getIdTheme() == null || getIdTheme() > 0;

@@ -73,7 +73,7 @@ public class Niveau {
         return " [ " + getLibelle() + " : " + getIdNiveau() + " ] ";
     }
 
-    public boolean invariant() {
+    protected boolean invariant() {
         assert getLibelle() != null && !getLibelle().matches("^\\s*$") : "Le Libelle ne doit être ni null ni vide";
         assert getIdNiveau() > 0;
         return true;
