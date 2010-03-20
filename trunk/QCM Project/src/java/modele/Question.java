@@ -12,7 +12,6 @@ import java.util.List;
  * @author Maria Rabarison et Lou Ferrand
  */
 public class Question {
-
     private Integer idQuestion;
     private String libelle;
     private List<Reponse> reponses;
