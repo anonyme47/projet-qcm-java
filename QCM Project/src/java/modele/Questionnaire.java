@@ -25,25 +25,42 @@ public class Questionnaire {
     private int idUser;
     private int idNiveau;
 
+
     /**
-     * Constructeur pour un nouveau questionnaire
-     * @param idQuestionnaire 
+     * Constructeur
+     * @param idQuestionnaire
      * @param libelle
      * @param dateCreation
+     * @param limiteTemps
+     * @param estActif
+     * @param estPasse
      * @param idTheme
      * @param idUser
      * @param idNiveau
      */
-    public Questionnaire(final Integer idQuestionnaire, final String libelle,
-            final Date dateCreation, final int idTheme, final int idUser, final int idNiveau) {
+    public Questionnaire(Integer idQuestionnaire, String libelle, Date dateCreation, Integer limiteTemps, boolean estActif, boolean estPasse, int idTheme, int idUser, int idNiveau) {
+        assert idQuestionnaire==null || idQuestionnaire>0;
+        assert libelle != null && !libelle.matches("^\\s*$");
+        assert dateCreation!=null;
+        assert idTheme>0;
+        assert idUser>0;
+        assert idNiveau>0;
+        assert limiteTemps==null || limiteTemps>0;
+
+        this.idQuestionnaire = idQuestionnaire;
         this.libelle = libelle;
         this.dateCreation = dateCreation;
+        this.limiteTemps = limiteTemps;
+        this.estActif = estActif;
+        this.estPasse = estPasse;
         this.idTheme = idTheme;
         this.idUser = idUser;
         this.idNiveau = idNiveau;
-        this.questions = new ArrayList<Integer>();
+        this.questions= new ArrayList<Integer>();
         assert invariant();
     }
+
+    
 
     public Date getDateCreation() {
         return dateCreation;
