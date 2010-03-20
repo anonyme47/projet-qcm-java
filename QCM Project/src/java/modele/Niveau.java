@@ -7,7 +7,7 @@ package modele;
  * @author maria Rabarison et Lou Ferrand
  */
 public class Niveau {
-    private Integer idNiveau;
+    private int idNiveau;
     private String libelle;
 
     /**
@@ -16,17 +16,23 @@ public class Niveau {
      * @param libelle Le libelle du niveau
      */
     public Niveau(int idNiveau, String libelle){
+        assert idNiveau>0;
+        assert libelle != null && !libelle.matches("^\\s*$") : "Le Libelle ne doit être ni null ni vide";
+
         this.idNiveau=idNiveau;
         this.libelle=libelle;
+        assert invariant();
     }
 
     
-    public Integer getIdNiveau() {
+    public int getIdNiveau() {
         return idNiveau;
     }
 
-    public void setIdNiveau(Integer idNiveau) {
+    public void setIdNiveau(int idNiveau) {
+        assert idNiveau>0;
         this.idNiveau = idNiveau;
+        assert invariant();
     }
 
     public String getLibelle() {
@@ -34,7 +40,9 @@ public class Niveau {
     }
 
     public void setLibelle(String libelle) {
+        assert libelle != null && !libelle.matches("^\\s*$") : "Le Libelle ne doit être ni null ni vide";
         this.libelle = libelle;
+        assert invariant();
     }
 
     @Override
@@ -64,7 +72,13 @@ public class Niveau {
      * Permet d'avoir les informations sur le niveau
      */
     public String toString(){
-        return "Niveau : "+getIdNiveau()+" - "+getLibelle();
+        return " [ " +getLibelle()+" : "+ getIdNiveau() +" ] ";
     }
-    
+
+
+    public boolean  invariant(){
+        assert getLibelle() != null && !getLibelle().matches("^\\s*$") : "Le Libelle ne doit être ni null ni vide";
+        assert getIdNiveau()>0;
+        return true;
+    }
 }
