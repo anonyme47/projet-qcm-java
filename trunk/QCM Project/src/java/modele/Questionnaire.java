@@ -60,6 +60,7 @@ public class Questionnaire {
 
     public void setEstActif(boolean estActif) {
         this.estActif = estActif;
+        assert invariant();
     }
 
     public boolean estPasse() {
@@ -68,6 +69,7 @@ public class Questionnaire {
 
     public void setEstPasse(boolean estPasse) {
         this.estPasse = estPasse;
+        assert invariant();
     }
 
     public int getIdNiveau() {
@@ -87,6 +89,7 @@ public class Questionnaire {
     public void setIdQuestionnaire(final Integer idQuestionnaire) {
         assert idQuestionnaire == null || idQuestionnaire > 0 : "Le numéro du questionnaire doit être positif";
         this.idQuestionnaire = idQuestionnaire;
+        assert invariant();
     }
 
     public int getIdTheme() {
@@ -96,6 +99,7 @@ public class Questionnaire {
     public void setIdTheme(final int idTheme) {
         assert idTheme > 0;
         this.idTheme = idTheme;
+        assert invariant();
     }
 
     public int getIdUser() {
@@ -105,6 +109,7 @@ public class Questionnaire {
     public void setIdUser(final int idUser) {
         assert idUser > 0;
         this.idUser = idUser;
+        assert invariant();
     }
 
     public String getLibelle() {
@@ -114,6 +119,7 @@ public class Questionnaire {
     public void setLibelle(final String libelle) {
         assert libelle != null && !libelle.matches("^\\s*$");
         this.libelle = libelle;
+        assert invariant();
     }
 
     public Integer getLimiteTemps() {
@@ -123,6 +129,7 @@ public class Questionnaire {
     public void setLimiteTemps(final Integer limiteTemps) {
         assert limiteTemps == null || limiteTemps > 0;
         this.limiteTemps = limiteTemps;
+        assert invariant();
     }
 
     public List<Integer> getQuestions() {
@@ -132,6 +139,7 @@ public class Questionnaire {
     public void setQuestions(final List<Integer> questions) {
         assert questions != null;
         this.questions = questions;
+        assert invariant();
     }
 
     @Override
@@ -169,7 +177,7 @@ public class Questionnaire {
         return "[" + libelle + ":" + idTheme + ":" + idNiveau + "]";
     }
 
-    public boolean invariant() {
+    protected boolean invariant() {
         assert getLibelle() != null && !getLibelle().matches("^\\s*$");
         assert getLimiteTemps() == null || getLimiteTemps() > 0;
         assert getIdQuestionnaire() == null || getIdQuestionnaire() > 0 : "Le numéro du questionnaire doit être positif";
