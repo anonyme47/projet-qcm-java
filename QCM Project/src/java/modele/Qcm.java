@@ -62,6 +62,14 @@ public class Qcm {
         assert invariant();
     }
 
+    public Iterator<Integer> getIterateur() {
+        return iterateur;
+    }
+
+    public void setIterateur(Iterator<Integer> iterateur) {
+        this.iterateur = iterateur;
+    }
+
     public int getNote() {
         return note;
     }
@@ -123,5 +131,4 @@ public class Qcm {
         assert getQuestionCourante() > 0;
         return true;
     }
-
 }
