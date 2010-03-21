@@ -61,6 +61,7 @@ public class DatabaseTest extends QCMTestCase {
      */
     @Test
     public void testInsert() throws SQLException {
+        //Ce test doit echouer!!
         int idQuestionnaire = 1;
         int idQuestion = 1;
         Connection connexion = Database.getConnection();
@@ -72,6 +73,6 @@ public class DatabaseTest extends QCMTestCase {
         ordre.close();
         connexion.close();
         System.out.println(ok);
-        assertTrue(ok != 0);
+        assertTrue(ok == 0);
     }
 }
