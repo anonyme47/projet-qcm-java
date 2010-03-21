@@ -96,9 +96,9 @@ public class Qcm {
         return userReponses;
     }
 
-    public void setUserReponses(final Map<Integer, List<Integer>> userReponses) {
-        assert userReponses != null;
-        this.userReponses = userReponses;
+    public void setUserReponses(Integer idQuestion, List<Integer> userReponses) {
+        assert userReponses != null && !userReponses.isEmpty();
+        this.userReponses.put(idQuestion,userReponses);
         assert invariant();
     }
 
