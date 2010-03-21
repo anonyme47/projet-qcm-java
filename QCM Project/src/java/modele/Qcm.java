@@ -134,4 +134,11 @@ public class Qcm {
         assert getQuestionCourante() > 0;
         return true;
     }
+
+
+    public void save() throws SQLException{
+        /**
+         * TODO: créer un QCM DAO
+         */
+    }
 }
