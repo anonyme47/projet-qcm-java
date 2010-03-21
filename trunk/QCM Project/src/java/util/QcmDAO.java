@@ -20,6 +20,7 @@ public class QcmDAO {
        int idQuestionnaire = qcm.getIdQuestionnaire();
        Connection connexion = Database.getConnection();
        String sql="INSERT INTO user_reponse(id_contenu,id_reponse) VALUES (?,?)";
+       
        /*
         * TODO: pour chaque clé de userReponses on prend idQuestion
         * faire un Qcm.getIdContenu => renvoie le id_contenu
