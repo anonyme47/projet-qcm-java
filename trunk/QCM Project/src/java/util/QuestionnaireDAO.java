@@ -55,13 +55,16 @@ public class QuestionnaireDAO {
     public static ArrayList<Integer> getQuestions(int idQuestionnaire) throws SQLException {
         ArrayList<Integer> questions = new ArrayList<Integer>();
         Connection connexion = Database.getConnection();
-        String sql = "SELECT id_question FROM contenu";
-        sql += " WHERE id_questionnaire = ?";
+        String sql = "SELECT contenu.id_question, question.id_theme AS theme_question, questionnaire.id_theme AS theme_questionnaire FROM contenu";
+        sql += " INNER JOIN question ON (question.id_question=contenu.id_question)";
+        sql += " INNER JOIN questionnaire ON (questionnaire.id_questionnaire=contenu.id_questionnaire)";
+        sql += " WHERE contenu.id_questionnaire = ?";
         PreparedStatement ordre = connexion.prepareStatement(sql);
         ordre.setInt(1, idQuestionnaire);
         ResultSet rs = ordre.executeQuery();
 
         while (rs.next()) {
+            assert rs.getInt("theme_question") == rs.getInt("theme_questionnaire");
             questions.add(rs.getInt("id_question"));
         }
         rs.close();
