@@ -157,11 +157,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `QCM`.`historique`
+-- Table `QCM`.`questionnaire_passe`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `QCM`.`historique` ;
+DROP TABLE IF EXISTS `QCM`.`questionnaire_passe` ;
 
-CREATE  TABLE IF NOT EXISTS `QCM`.`historique` (
+CREATE  TABLE IF NOT EXISTS `QCM`.`questionnaire_passe` (
   `id_questionnaire` INT NOT NULL ,
   `id_user` INT NOT NULL ,
   `note` INT NOT NULL ,
@@ -203,6 +203,37 @@ CREATE  TABLE IF NOT EXISTS `QCM`.`contenu` (
   CONSTRAINT `fk_contenu_question`
     FOREIGN KEY (`id_question` )
     REFERENCES `QCM`.`question` (`id_question` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `QCM`.`user_reponse`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `QCM`.`user_reponse` ;
+
+CREATE  TABLE IF NOT EXISTS `QCM`.`user_reponse` (
+  `id_contenu` INT NOT NULL ,
+  `id_user` INT NOT NULL ,
+  `id_reponse` INT NOT NULL ,
+  INDEX `fk_contenu_has_reponse_contenu` (`id_contenu` ASC) ,
+  INDEX `fk_contenu_has_reponse_reponse` (`id_reponse` ASC) ,
+  INDEX `fk_user_reponse_user` (`id_user` ASC) ,
+  PRIMARY KEY (`id_contenu`, `id_user`) ,
+  CONSTRAINT `fk_contenu_has_reponse_contenu`
+    FOREIGN KEY (`id_contenu` )
+    REFERENCES `QCM`.`contenu` (`id_contenu` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_contenu_has_reponse_reponse`
+    FOREIGN KEY (`id_reponse` )
+    REFERENCES `QCM`.`reponse` (`id_reponse` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_reponse_user`
+    FOREIGN KEY (`id_user` )
+    REFERENCES `QCM`.`user` (`id_user` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -327,19 +358,19 @@ insert into `QCM`.`reponse` (`id_reponse`, `libelle`, `descriptif`, `est_correct
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `QCM`.`historique`
+-- Data for table `QCM`.`questionnaire_passe`
 -- -----------------------------------------------------
 SET AUTOCOMMIT=0;
 USE `QCM`;
-insert into `QCM`.`historique` (`id_questionnaire`, `id_user`, `note`, `date`) values (1, 1, 15, 'NOW()');
-insert into `QCM`.`historique` (`id_questionnaire`, `id_user`, `note`, `date`) values (2, 1, 10, 'NOW()');
-insert into `QCM`.`historique` (`id_questionnaire`, `id_user`, `note`, `date`) values (3, 1, 5, 'NOW()');
-insert into `QCM`.`historique` (`id_questionnaire`, `id_user`, `note`, `date`) values (1, 2, 15, 'NOW()');
-insert into `QCM`.`historique` (`id_questionnaire`, `id_user`, `note`, `date`) values (2, 2, 10, 'NOW()');
-insert into `QCM`.`historique` (`id_questionnaire`, `id_user`, `note`, `date`) values (3, 2, 5, 'NOW()');
-insert into `QCM`.`historique` (`id_questionnaire`, `id_user`, `note`, `date`) values (1, 3, 15, 'NOW()');
-insert into `QCM`.`historique` (`id_questionnaire`, `id_user`, `note`, `date`) values (2, 3, 10, 'NOW()');
-insert into `QCM`.`historique` (`id_questionnaire`, `id_user`, `note`, `date`) values (3, 3, 5, 'NOW()');
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (1, 1, 15, 'NOW()');
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (2, 1, 10, 'NOW()');
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (3, 1, 5, 'NOW()');
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (1, 2, 15, 'NOW()');
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (2, 2, 10, 'NOW()');
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (3, 2, 5, 'NOW()');
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (1, 3, 15, 'NOW()');
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (2, 3, 10, 'NOW()');
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (3, 3, 5, 'NOW()');
 
 COMMIT;
 

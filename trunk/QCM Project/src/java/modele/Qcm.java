@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import util.QcmDAO;
 import util.ReponseDAO;
 
 /**
@@ -139,11 +140,14 @@ public class Qcm {
         return true;
     }
 
+    public boolean estEnregistrable() {
+        return !iterateur.hasNext();
+    }
+
     public void save() throws SQLException {
         assert invariant();
-        /**
-         * TODO: créer un QCM DAO
-         */
+        assert estEnregistrable();
+        QcmDAO.insert(this);
         assert estFini();
     }
 
@@ -156,5 +160,4 @@ public class Qcm {
         questionCourante = iterateur.next();
         assert invariant();
     }
-
 }
