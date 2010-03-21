@@ -28,17 +28,15 @@ public class QcmTest extends QCMTestCase {
     /**
      * Test of getQuestionCourante method, of class Qcm.
      */
-//    @Test
-//    public void testGetQuestionCourante() {
-//        System.out.println("getQuestionCourante");
-//        Qcm instance = null;
-//        int expResult = 0;
-//        int result = instance.getQuestionCourante();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
+    @Test
+    public void testGetQuestionCourante() {
+        System.out.println("getQuestionCourante");
+        Qcm instance = new Qcm(1, 1);
+        int expResult = 1;
+        int result = instance.getQuestionCourante();
+        assertEquals(expResult, result);
+    }
+
 //    /**
 //     * Test of setQuestionCourante method, of class Qcm.
 //     */

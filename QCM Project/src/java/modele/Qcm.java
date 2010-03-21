@@ -35,6 +35,7 @@ public class Qcm {
                 userReponses.put(i, new ArrayList<Integer>());
             }
             iterateur = userReponses.keySet().iterator();
+            questionCourante = iterateur.next();
             this.note = 0;
         } catch (SQLException ex) {
             Logger.getLogger(Qcm.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,7 +81,9 @@ public class Qcm {
     }
 
     public int getQuestionCourante() {
-        return questionCourante;
+        int idQuestionCourante = questionCourante;
+        questionCourante = iterateur.next();
+        return idQuestionCourante;
     }
 
     public void setQuestionCourante(final int questionCourante) {
