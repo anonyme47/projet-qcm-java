@@ -1,9 +1,13 @@
 package modele;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import org.junit.Test;
 import tools.QCMTestCase;
+import util.Database;
 import util.QuestionnaireDAO;
 
 /**
@@ -29,14 +33,13 @@ public class QcmTest extends QCMTestCase {
      * Test of getQuestionCourante method, of class Qcm.
      */
     @Test
-    public void testGetQuestionCourante() {
+    public void testGetQuestionCourante() throws SQLException {
         System.out.println("getQuestionCourante");
         Qcm instance = new Qcm(1, 1);
         int expResult = 1;
         int result = instance.getQuestionCourante();
         assertEquals(expResult, result);
     }
-
 //    /**
 //     * Test of setQuestionCourante method, of class Qcm.
 //     */
@@ -49,8 +52,6 @@ public class QcmTest extends QCMTestCase {
 //        // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
 //    }
-
-
     /**
      * Test of invariant method, of class Qcm.
      */
@@ -64,5 +65,4 @@ public class QcmTest extends QCMTestCase {
 //        // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
 //    }
-
 }

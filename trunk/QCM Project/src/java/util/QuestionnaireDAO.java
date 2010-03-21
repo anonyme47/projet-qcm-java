@@ -55,7 +55,7 @@ public class QuestionnaireDAO {
     public static ArrayList<Integer> getQuestions(int idQuestionnaire) throws SQLException {
         ArrayList<Integer> questions = new ArrayList<Integer>();
         Connection connexion = Database.getConnection();
-        String sql = "SELECT id_question FROM questionnaire_has_question";
+        String sql = "SELECT id_question FROM contenu";
         sql += " WHERE id_questionnaire = ?";
         PreparedStatement ordre = connexion.prepareStatement(sql);
         ordre.setInt(1, idQuestionnaire);
