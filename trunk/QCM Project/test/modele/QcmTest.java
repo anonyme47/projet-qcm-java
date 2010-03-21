@@ -27,7 +27,6 @@ public class QcmTest extends QCMTestCase {
         expResult.add(3);
         ArrayList<Integer> result = QuestionnaireDAO.getQuestions(instance.getIdQuestionnaire());
         assertTrue(expResult.containsAll(result) && result.containsAll(expResult));
-        assertTrue(instance.getIterateur() != null);
     }
 
     /**
@@ -88,4 +87,23 @@ public class QcmTest extends QCMTestCase {
 //        // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
 //    }
+
+    /**
+     *
+     */
+    @Test
+    public void testGetNote() throws SQLException {
+        System.out.println("getNote");
+        int idQuestionnaire = 1;
+        int idQuestion = 1;
+        Qcm instance = new Qcm(idQuestionnaire, idQuestion);
+        List<Integer> reponses= new ArrayList<Integer>();
+        reponses.add(1);
+        reponses.add(3);
+        instance.setUserReponses(idQuestion,reponses);
+        int expResult = 5;
+        instance.setEstFini(true);
+        int result = instance.getNote();
+        assertEquals(expResult, result);
+    }
 }

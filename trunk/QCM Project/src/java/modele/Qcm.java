@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import util.ReponseDAO;
 
 /**
  *
@@ -18,8 +19,8 @@ public class Qcm {
 
     private int idQuestionnaire;
     private int idUser;
-    private int note;
     private int questionCourante;
+    private boolean estFini;
     private Map<Integer, List<Integer>> userReponses;
     private Iterator<Integer> iterateur;
 
@@ -36,7 +37,7 @@ public class Qcm {
             }
             iterateur = userReponses.keySet().iterator();
             questionCourante = iterateur.next();
-            this.note = 0;
+            this.estFini = false;
         } catch (SQLException ex) {
             Logger.getLogger(Qcm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -47,36 +48,29 @@ public class Qcm {
         return idQuestionnaire;
     }
 
-    public void setIdQuestionnaire(final int idQuestionnaire) {
-        assert idQuestionnaire > 0;
-        this.idQuestionnaire = idQuestionnaire;
-        assert invariant();
-    }
-
     public int getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(final int idUser) {
-        assert idUser > 0;
-        this.idUser = idUser;
-        assert invariant();
-    }
-
-    public Iterator<Integer> getIterateur() {
-        return iterateur;
-    }
-
-    public void setIterateur(Iterator<Integer> iterateur) {
-        this.iterateur = iterateur;
-    }
-
-    public int getNote() {
+    public int getNote() throws SQLException {
+        assert estFini;
+        int note = 0;
+        List<Integer> reponses = null;
+        for (Integer idQuestion : userReponses.keySet()) {
+            reponses = userReponses.get(idQuestion);
+            for (Integer reponse : reponses) {
+                note += ReponseDAO.getNoteById(reponse);
+            }
+        }
         return note;
     }
 
-    public void setNote(final int note) {
-        this.note = note;
+    public boolean estFini() {
+        return estFini;
+    }
+
+    public void setEstFini(boolean estFini) {
+        this.estFini = estFini;
         assert invariant();
     }
 
@@ -98,7 +92,7 @@ public class Qcm {
 
     public void setUserReponses(Integer idQuestion, List<Integer> reponses) {
         assert reponses != null && !reponses.isEmpty();
-        this.userReponses.put(idQuestion,reponses);
+        this.userReponses.put(idQuestion, reponses);
         assert invariant();
     }
 
@@ -129,16 +123,29 @@ public class Qcm {
     }
 
     protected boolean invariant() {
-        assert getUserReponses() != null;
+        assert !estFini();
+        assert getUserReponses() != null && getUserReponses().size() > 0;
         assert getIdQuestionnaire() > 0;
         assert getQuestionCourante() > 0;
         return true;
     }
 
-
-    public void save() throws SQLException{
+    public void save() throws SQLException {
+        assert invariant();
         /**
          * TODO: créer un QCM DAO
          */
+        assert estFini();
     }
+
+    /**
+     * Remet l'itérateur au debut de la map pour recommencer le questionnaire
+     */
+    public void reset() {
+        assert !estFini();
+        iterateur = userReponses.keySet().iterator();
+        questionCourante = iterateur.next();
+        assert invariant();
+    }
+
 }
