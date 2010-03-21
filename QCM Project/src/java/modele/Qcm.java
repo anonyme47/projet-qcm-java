@@ -76,7 +76,9 @@ public class Qcm {
 
     public int getQuestionCourante() {
         int idQuestionCourante = questionCourante;
-        questionCourante = iterateur.next();
+        if (iterateur.hasNext()) {
+            questionCourante = iterateur.next();
+        }
         return idQuestionCourante;
     }
 
@@ -90,8 +92,15 @@ public class Qcm {
         return userReponses;
     }
 
+    /**
+     * 
+     * @param idQuestion
+     * @param reponses
+     */
     public void setUserReponses(Integer idQuestion, List<Integer> reponses) {
-        assert reponses != null && !reponses.isEmpty();
+        assert idQuestion != null && idQuestion > 0;
+        assert userReponses.containsKey(idQuestion);
+        assert reponses != null;
         this.userReponses.put(idQuestion, reponses);
         assert invariant();
     }
