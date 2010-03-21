@@ -106,4 +106,22 @@ public class QcmTest extends QCMTestCase {
         int result = instance.getNote();
         assertEquals(expResult, result);
     }
+
+        @Test
+    public void testSave() throws SQLException {
+        System.out.println("save");
+        int idQuestionnaire = 1;
+        int idQuestion = 1;
+        Qcm instance = new Qcm(idQuestionnaire, idQuestion);
+        List<Integer> reponses= new ArrayList<Integer>();
+        reponses.add(1);
+        reponses.add(3);
+        instance.setUserReponses(idQuestion,reponses);
+        System.out.println(instance.getQuestionCourante());
+        System.out.println(instance.getQuestionCourante());
+        System.out.println(instance.getQuestionCourante());
+        instance.save();
+        assertTrue(instance.estFini());
+    }
+
 }
