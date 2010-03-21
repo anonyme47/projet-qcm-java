@@ -256,7 +256,7 @@ insert into `QCM`.`theme` (`id_theme`, `libelle`, `descriptif`, `id_user`) value
 insert into `QCM`.`theme` (`id_theme`, `libelle`, `descriptif`, `id_user`) values (3, 'C++', 'C++', 2);
 insert into `QCM`.`theme` (`id_theme`, `libelle`, `descriptif`, `id_user`) values (4, 'PHP', 'PHP', 2);
 insert into `QCM`.`theme` (`id_theme`, `libelle`, `descriptif`, `id_user`) values (5, 'UML', 'UML', 3);
-insert into `QCM`.`theme` (`id_theme`, `libelle`, `descriptif`, `id_user`) values (6, 'POO', 'Programmation Orientée Objet', 2);
+insert into `QCM`.`theme` (`id_theme`, `libelle`, `descriptif`, `id_user`) values (6, 'POO', 'Programmation Orientée Objet', 3);
 
 COMMIT;
 
