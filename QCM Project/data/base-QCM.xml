@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
 <dataset>
 
+    <contenu id_contenu="1" id_questionnaire="1" id_question="1" />
+    <contenu id_contenu="2" id_questionnaire="1" id_question="2" />
+    <contenu id_contenu="3" id_questionnaire="1" id_question="3" />
+    <contenu id_contenu="4" id_questionnaire="2" id_question="11" />
+    <contenu id_contenu="5" id_questionnaire="2" id_question="12" />
+    <contenu id_contenu="6" id_questionnaire="4" id_question="21" />
+
+
     <historique id_questionnaire = "1" id_user = "1" note = "15" date = "0002-11-30 00:00:00" />
     <historique id_questionnaire = "2" id_user = "1" note = "10" date = "0002-11-30 00:00:00" />
     <historique id_questionnaire = "3" id_user = "1" note = "5"  date = "0002-11-30 00:00:00" />
@@ -26,17 +34,17 @@
     <question id_question = "7"  libelle = "Question 7 Theme 1"  id_theme = "1" id_user = "2" />
     <question id_question = "8"  libelle = "Question 8 Theme 1"  id_theme = "1" id_user = "2" />
     <question id_question = "9"  libelle = "Question 9 Theme 1"  id_theme = "1" id_user = "2" />
-    <question id_question = "10" libelle = "Question 10 Theme 1" id_theme = "1" id_user = "2" />
-    <question id_question = "11" libelle = "Question 11 Theme 2" id_theme = "2" id_user = "1" />
-    <question id_question = "12" libelle = "Question 12 Theme 2" id_theme = "2" id_user = "1" />
-    <question id_question = "13" libelle = "Question 13 Theme 2" id_theme = "2" id_user = "1" />
-    <question id_question = "14" libelle = "Question 14 Theme 2" id_theme = "2" id_user = "1" />
-    <question id_question = "15" libelle = "Question 15 Theme 2" id_theme = "2" id_user = "1" />
-    <question id_question = "16" libelle = "Question 16 Theme 2" id_theme = "2" id_user = "1" />
-    <question id_question = "17" libelle = "Question 17 Theme 2" id_theme = "2" id_user = "1" />
-    <question id_question = "18" libelle = "Question 18 Theme 2" id_theme = "2" id_user = "1" />
-    <question id_question = "19" libelle = "Question 19 Theme 2" id_theme = "2" id_user = "1" />
-    <question id_question = "20" libelle = "Question 20 Theme 2" id_theme = "2" id_user = "1" />
+    <question id_question = "10" libelle = "Question 1 Theme 1" id_theme = "1" id_user = "2" />
+    <question id_question = "11" libelle = "Question 2 Theme 2" id_theme = "2" id_user = "1" />
+    <question id_question = "12" libelle = "Question 3 Theme 2" id_theme = "2" id_user = "1" />
+    <question id_question = "13" libelle = "Question 4 Theme 2" id_theme = "2" id_user = "1" />
+    <question id_question = "14" libelle = "Question 5 Theme 2" id_theme = "2" id_user = "1" />
+    <question id_question = "15" libelle = "Question 6 Theme 2" id_theme = "2" id_user = "1" />
+    <question id_question = "16" libelle = "Question 7 Theme 2" id_theme = "2" id_user = "1" />
+    <question id_question = "17" libelle = "Question 8 Theme 2" id_theme = "2" id_user = "1" />
+    <question id_question = "18" libelle = "Question 9 Theme 2" id_theme = "2" id_user = "1" />
+    <question id_question = "19" libelle = "Question 10 Theme 2" id_theme = "2" id_user = "1" />
+    <question id_question = "20" libelle = "Question 11 Theme 2" id_theme = "2" id_user = "1" />
     <question id_question = "21" libelle = "Question 1 Theme 4" id_theme = "4" id_user = "2" />
 
 
@@ -44,14 +52,6 @@
     <questionnaire id_questionnaire = "2" libelle = "L'héritage en Ruby" 	  date_creation = "0002-11-30 00:00:00" limite_temps = "20" id_niveau = "2" id_theme = "2" id_user = "1" est_actif="1" />
     <questionnaire id_questionnaire = "3" libelle = "Le polymorphisme en C++" date_creation = "0002-11-30 00:00:00" limite_temps = "45" id_niveau = "1" id_theme = "3" id_user = "2" est_actif="1" />
     <questionnaire id_questionnaire = "4" libelle = "Test" date_creation = "0002-11-30 00:00:00" limite_temps = "45" id_niveau = "1" id_theme = "4" id_user = "2" est_actif="1"/>
-
-
-    <contenu id_contenu="1" id_questionnaire="1" id_question="1" />
-    <contenu id_contenu="2" id_questionnaire="1" id_question="2" />
-    <contenu id_contenu="3" id_questionnaire="1" id_question="3" />
-    <contenu id_contenu="4" id_questionnaire="2" id_question="11" />
-    <contenu id_contenu="5" id_questionnaire="2" id_question="12" />
-    <contenu id_contenu="6" id_questionnaire="4" id_question="21" />
 
 
     <reponse id_reponse = "1"  libelle = "Réponse 1" descriptif = "Descriptif Réponse 1 Question 1" est_correcte = "0" note = "0" id_question = "1" />
