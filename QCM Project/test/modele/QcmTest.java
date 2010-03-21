@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
 import tools.QCMTestCase;
 import util.Database;
@@ -40,6 +41,28 @@ public class QcmTest extends QCMTestCase {
         int result = instance.getQuestionCourante();
         assertEquals(expResult, result);
     }
+
+
+
+    /**
+     * Test of setUserReponse method, of class Qcm.
+     */
+    @Test
+    public void testSetUserReponses() {
+        System.out.println("setUserReponse");
+        int idQuestionnaire = 1;
+        int idQuestion = 1;
+        Qcm instance = new Qcm(idQuestionnaire, idQuestion);
+        List<Integer> reponses= new ArrayList<Integer>();
+        reponses.add(1);
+        reponses.add(2);
+        instance.setUserReponses(idQuestion,reponses);
+        assertTrue(instance.getUserReponses().get(idQuestion).containsAll(reponses));
+        assertTrue(reponses.containsAll(instance.getUserReponses().get(idQuestion)));
+    }
+
+
+
 //    /**
 //     * Test of setQuestionCourante method, of class Qcm.
 //     */
