@@ -1,7 +1,7 @@
 package modele;
 
 /**
- *
+ * Classe Niveau, déterminant le niveau d'un questionnaire
  * @author Maria Rabarison et Lou Ferrand
  */
 public class Niveau {
@@ -73,6 +73,11 @@ public class Niveau {
         return " [ " + getLibelle() + " : " + getIdNiveau() + " ] ";
     }
 
+
+    /**
+     * 
+     * @return true si les invariants sont vérifiés, sinon s'arrête
+     */
     protected boolean invariant() {
         assert getLibelle() != null && !getLibelle().matches("^\\s*$") : "Le Libelle ne doit être ni null ni vide";
         assert getIdNiveau() > 0;
