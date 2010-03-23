@@ -1,14 +1,10 @@
 package modele;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import tools.QCMTestCase;
-import util.Database;
 import util.QuestionnaireDAO;
 
 /**
