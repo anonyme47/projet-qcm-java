@@ -47,20 +47,6 @@
     <question id_question = "21" libelle = "Question 1 Theme 4" id_theme = "4" id_user = "2" />
 
 
-    <questionnaire id_questionnaire = "1" libelle = "Les exceptions en Java"  date_creation = "0002-11-30 00:00:00" limite_temps = "30" id_niveau = "1" id_theme = "1" id_user = "1" est_actif="1" />
-    <questionnaire id_questionnaire = "2" libelle = "L'héritage en Ruby" 	  date_creation = "0002-11-30 00:00:00" limite_temps = "20" id_niveau = "2" id_theme = "2" id_user = "1" est_actif="1" />
-    <questionnaire id_questionnaire = "3" libelle = "Le polymorphisme en C++" date_creation = "0002-11-30 00:00:00" limite_temps = "45" id_niveau = "1" id_theme = "3" id_user = "2" est_actif="1" />
-    <questionnaire id_questionnaire = "4" libelle = "Test" date_creation = "0002-11-30 00:00:00" limite_temps = "45" id_niveau = "1" id_theme = "4" id_user = "2" est_actif="1"/>
-
-
-    <contenu id_contenu="1" id_questionnaire="1" id_question="1" />
-    <contenu id_contenu="2" id_questionnaire="1" id_question="2" />
-    <contenu id_contenu="3" id_questionnaire="1" id_question="3" />
-    <contenu id_contenu="4" id_questionnaire="2" id_question="11" />
-    <contenu id_contenu="5" id_questionnaire="2" id_question="12" />
-    <contenu id_contenu="6" id_questionnaire="4" id_question="21" />
-
-
     <reponse id_reponse = "1"  libelle = "Réponse 1" descriptif = "Descriptif Réponse 1 Question 1" est_correcte = "0" note = "0" id_question = "1" />
     <reponse id_reponse = "2"  libelle = "Réponse 2" descriptif = "Descriptif Réponse 2 Question 1" est_correcte = "0" note = "0" id_question = "1" />
     <reponse id_reponse = "3"  libelle = "Réponse 3" descriptif = "Descriptif Réponse 3 Question 1" est_correcte = "1" note = "5" id_question = "1" />
@@ -80,6 +66,24 @@
     <reponse id_reponse = "17" libelle = "Réponse 5" descriptif = "Descriptif Réponse 5 Question 21" est_correcte = "0" note = "0" id_question = "21" />
 
 
+
+    <questionnaire id_questionnaire = "1" libelle = "Les exceptions en Java"  date_creation = "0002-11-30 00:00:00" limite_temps = "30" id_niveau = "1" id_theme = "1" id_user = "1" est_actif="1" />
+    <questionnaire id_questionnaire = "2" libelle = "L'héritage en Ruby" 	  date_creation = "0002-11-30 00:00:00" limite_temps = "20" id_niveau = "2" id_theme = "2" id_user = "1" est_actif="1" />
+    <questionnaire id_questionnaire = "3" libelle = "Le polymorphisme en C++" date_creation = "0002-11-30 00:00:00" limite_temps = "45" id_niveau = "1" id_theme = "3" id_user = "2" est_actif="1" />
+    <questionnaire id_questionnaire = "4" libelle = "Test" date_creation = "0002-11-30 00:00:00" limite_temps = "45" id_niveau = "1" id_theme = "4" id_user = "2" est_actif="1"/>
+
+
+    <contenu id_contenu="1" id_questionnaire="1" id_question="1" />
+    <contenu id_contenu="2" id_questionnaire="1" id_question="2" />
+    <contenu id_contenu="3" id_questionnaire="1" id_question="3" />
+    <contenu id_contenu="4" id_questionnaire="2" id_question="11" />
+    <contenu id_contenu="5" id_questionnaire="2" id_question="12" />
+    <contenu id_contenu="6" id_questionnaire="4" id_question="21" />
+   
+
+
+    
+<!--
     <questionnaire_passe id_questionnaire = "1" id_user = "1" note = "15" date = "0002-11-30 00:00:00" />
     <questionnaire_passe id_questionnaire = "2" id_user = "1" note = "10" date = "0002-11-30 00:00:00" />
     <questionnaire_passe id_questionnaire = "3" id_user = "1" note = "5"  date = "0002-11-30 00:00:00" />
@@ -89,5 +93,7 @@
     <questionnaire_passe id_questionnaire = "1" id_user = "3" note = "15" date = "0002-11-30 00:00:00" />
     <questionnaire_passe id_questionnaire = "2" id_user = "3" note = "10" date = "0002-11-30 00:00:00" />
     <questionnaire_passe id_questionnaire = "3" id_user = "3" note = "5"  date = "0002-11-30 00:00:00" />
-
+-->
+    <questionnaire_passe /><!-- Pour le respect des contraintes d'intégrité-->
+    <user_reponse /> <!-- Pour le respect des contraintes d'intégrité-->
 </dataset>
