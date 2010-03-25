@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+import modele.Questionnaire;
 
 /**
  *
@@ -19,11 +19,11 @@ public class QuestionnaireDAO {
      * @return Le questionnaire identifié par idQuestionnaire
      * @throws SQLException
      */
-/*
+
     public static Questionnaire getById(int idQuestionnaire) throws SQLException {
         Questionnaire questionnaire = null;
         Connection connexion = Database.getConnection();
-        String sql = "SELECT * FROM questionnaire WHERE id_questionnaire = ?";
+        String sql = "SELECT questionnaire.libelle,questionnaire.date_creation,questionnaire.limite_temps,questionnaire.est_actif,questionnaire.id_theme,questionnaire.id_user,questionnaire.id_niveau,COUNT(questionnaire_passe.id_questionnaire) AS est_passe FROM questionnaire INNER JOIN questionnaire_passe ON questionnaire_passe.id_questionnaire=questionnaire.id_questionnaire WHERE questionnaire.id_questionnaire = ?";
         PreparedStatement ordre = connexion.prepareStatement(sql);
         ordre.setInt(1, idQuestionnaire);
         ResultSet rs = ordre.executeQuery();
@@ -31,21 +31,22 @@ public class QuestionnaireDAO {
         if (rs.next()) {
             questionnaire = new Questionnaire(
                     idQuestionnaire,
-                    rs.getInt("id_theme"),
-                    rs.getInt("id_niveau"),
-                    rs.getInt("id_user"),
                     rs.getString("libelle"),
                     rs.getDate("date_creation"),
                     rs.getInt("limite_temps"),
                     rs.getBoolean("est_actif"),
-                    QuestionnaireDAO.getQuestions(idQuestionnaire));
+                    rs.getInt("id_theme"),
+                    rs.getInt("id_user"),
+                    rs.getInt("id_niveau"),
+                    QuestionnaireDAO.getQuestions(idQuestionnaire),
+                    rs.getInt("est_passe")); //remplacer true
         }
         rs.close();
         ordre.close();
         connexion.close();
         return questionnaire;
     }
-*/
+
     /**
      * Récupérer la liste de toutes les questions relatives à un questionnaire
      * @param idQuestionnaire L'identifiant du questionnaire dont on veut les questions
