@@ -118,6 +118,7 @@ public class QcmTest extends QCMTestCase {
         System.out.println(instance.getQuestionCourante());
         instance.save();
         assertTrue(instance.estFini());
+        assertTrue(instance.getNote()==5);
     }
 
 }
