@@ -22,7 +22,7 @@ public class QcmDAO {
             connexion = Database.getConnection();
             connexion.setAutoCommit(false);
             int idQuestionnaire = qcm.getIdQuestionnaire();
-            String sql = "INSERT INTO user_reponse(id_contenu,id_reponse) VALUES (?,?)";
+            String sql = "INSERT INTO user_reponse(id_contenu, id_reponse, id_user) VALUES (?,?,?)";
             ordre = connexion.prepareStatement(sql);
             Integer idContenu = null;
             List<Integer> reponses = null;
@@ -33,6 +33,7 @@ public class QcmDAO {
                 for (Integer idReponse : reponses) {
                     ordre.setInt(1, idContenu);
                     ordre.setInt(2, idReponse);
+                    ordre.setInt(3, qcm.getIdUser());
                     ordre.executeUpdate();
                 }
             }
