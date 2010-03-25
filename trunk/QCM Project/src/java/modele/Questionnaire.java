@@ -39,7 +39,7 @@ public class Questionnaire {
      */
     public Questionnaire(int idQuestionnaire, String libelle, Date dateCreation,
             Integer limiteTemps, boolean estActif, int idTheme, 
-            int idUser, int idNiveau, ArrayList<Integer> questions , int estPasse) {
+            int idUser, int idNiveau, ArrayList<Integer> questions , int nbPasseParUser) {
         assert idQuestionnaire > 0;
         assert libelle != null && !libelle.matches("^\\s*$");
         assert dateCreation != null;
@@ -54,7 +54,7 @@ public class Questionnaire {
         this.limiteTemps = limiteTemps;
         this.estActif = estActif;
         
-        if(estPasse>0){
+        if(nbPasseParUser>0){
             this.estPasse = true;
         }else{
             this.estPasse = false;

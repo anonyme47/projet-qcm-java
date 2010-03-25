@@ -33,7 +33,7 @@ public class Qcm {
             this.idQuestionnaire = idQuestionnaire;
             this.idUser = idUser;
             userReponses = new HashMap<Integer, List<Integer>>();
-            ArrayList<Integer> questions = QuestionnaireDAO.getQuestions(idQuestionnaire);
+            ArrayList<Integer> questions = QuestionnaireDAO.getQuestionsById(idQuestionnaire);
             for (Integer i : questions) {
                 userReponses.put(i, new ArrayList<Integer>());
             }
