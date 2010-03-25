@@ -26,7 +26,7 @@ public class Questionnaire {
     private int idNiveau;
 
     /**
-     * Constructeur
+     * Constructeur pour un questionnaire existant
      * @param idQuestionnaire
      * @param libelle
      * @param dateCreation
@@ -38,8 +38,8 @@ public class Questionnaire {
      * @param idNiveau
      */
     public Questionnaire(int idQuestionnaire, String libelle, Date dateCreation,
-            Integer limiteTemps, boolean estActif, boolean estPasse, int idTheme, 
-            int idUser, int idNiveau, ArrayList<Integer> questions) {
+            Integer limiteTemps, boolean estActif, int idTheme, 
+            int idUser, int idNiveau, ArrayList<Integer> questions , int estPasse) {
         assert idQuestionnaire > 0;
         assert libelle != null && !libelle.matches("^\\s*$");
         assert dateCreation != null;
@@ -53,7 +53,12 @@ public class Questionnaire {
         this.dateCreation = dateCreation;
         this.limiteTemps = limiteTemps;
         this.estActif = estActif;
-        this.estPasse = estPasse;
+        if(estPasse>0){
+            this.estPasse = true;
+        }else{
+            this.estPasse = false;
+        }
+        
         this.idTheme = idTheme;
         this.idUser = idUser;
         this.idNiveau = idNiveau;
@@ -72,17 +77,13 @@ public class Questionnaire {
      * @param idUser
      * @param idNiveau
      */
-    public Questionnaire(String libelle, Date dateCreation, int idTheme,
-            int idUser, int idNiveau) {
+    public Questionnaire(String libelle, int idTheme, int idUser, int idNiveau) {
         assert libelle != null && !libelle.matches("^\\s*$");
-        assert dateCreation != null;
         assert idTheme > 0;
         assert idUser > 0;
         assert idNiveau > 0;
-        assert limiteTemps == null || limiteTemps > 0;
 
         this.libelle = libelle;
-        this.dateCreation = dateCreation;
         this.idTheme = idTheme;
         this.idUser = idUser;
         this.idNiveau = idNiveau;
@@ -112,10 +113,7 @@ public class Questionnaire {
         return estPasse;
     }
 
-    public void setEstPasse(boolean estPasse) {
-        this.estPasse = estPasse;
-        assert invariant();
-    }
+    
 
     public int getIdNiveau() {
         return idNiveau;
@@ -222,7 +220,7 @@ public class Questionnaire {
         return "[" + libelle + ":" + idTheme + ":" + idNiveau + "]";
     }
 
-    protected boolean invariant() {
+    public boolean invariant() {
         assert getLibelle() != null && !getLibelle().matches("^\\s*$");
         assert getLimiteTemps() == null || getLimiteTemps() > 0;
         assert getIdQuestionnaire() == null || getIdQuestionnaire() > 0 : "Le numéro du questionnaire doit être positif";
