@@ -35,7 +35,8 @@ public class QuestionnaireDAOTest {
         assert result.invariant();
         assertTrue(result.equals(questionnaire));
         assertFalse(result.getQuestions().isEmpty());
-        assertTrue(result.estPasse());
+
+        assertFalse(result.estPasse());
     }
 
     /**
