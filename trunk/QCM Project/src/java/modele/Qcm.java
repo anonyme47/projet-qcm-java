@@ -24,6 +24,7 @@ public class Qcm {
     private boolean estFini;
     private Map<Integer, List<Integer>> userReponses;
     private Iterator<Integer> iterateur;
+    private int note;
 
     public Qcm(final int idQuestionnaire, final int idUser) {
         assert idQuestionnaire > 0;
@@ -54,15 +55,7 @@ public class Qcm {
     }
 
     public int getNote() throws SQLException {
-        assert estFini;
-        int note = 0;
-        List<Integer> reponses = null;
-        for (Integer idQuestion : userReponses.keySet()) {
-            reponses = userReponses.get(idQuestion);
-            for (Integer reponse : reponses) {
-                note += ReponseDAO.getNoteById(reponse);
-            }
-        }
+        setNote();
         return note;
     }
 
@@ -159,5 +152,18 @@ public class Qcm {
         iterateur = userReponses.keySet().iterator();
         questionCourante = iterateur.next();
         assert invariant();
+    }
+
+    private void setNote()throws SQLException {
+        assert estFini;
+        int score = 0;
+        List<Integer> reponses = null;
+        for (Integer idQuestion : userReponses.keySet()) {
+            reponses = userReponses.get(idQuestion);
+            for (Integer reponse : reponses) {
+                score += ReponseDAO.getNoteById(reponse);
+            }
+        }
+        note=score;
     }
 }
