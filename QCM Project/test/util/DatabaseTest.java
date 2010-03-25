@@ -63,7 +63,7 @@ public class DatabaseTest extends QCMTestCase {
     public void testInsert() throws SQLException {
         //Ce test doit echouer!!
         int idQuestionnaire = 1;
-        int idQuestion = 1;
+        int idQuestion = 6;
         Connection connexion = Database.getConnection();
         String sql = "INSERT INTO contenu (id_questionnaire, id_question) VALUES (?, ?)";
         PreparedStatement ordre = connexion.prepareStatement(sql);
@@ -73,6 +73,6 @@ public class DatabaseTest extends QCMTestCase {
         ordre.close();
         connexion.close();
         System.out.println(ok);
-        assertTrue(ok == 0);
+        assertTrue(ok != 0);
     }
 }
