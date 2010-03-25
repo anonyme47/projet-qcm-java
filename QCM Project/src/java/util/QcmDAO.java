@@ -22,9 +22,10 @@ public class QcmDAO {
             connexion = Database.getConnection();
             connexion.setAutoCommit(false);
             int idQuestionnaire = qcm.getIdQuestionnaire();
+            int idUser=qcm.getIdUser();
             String sql = "INSERT INTO user_reponse(id_contenu, id_reponse, id_user) VALUES (?,?,?)";
             ordre = connexion.prepareStatement(sql);
-            ordre.setInt(3, qcm.getIdUser());
+            ordre.setInt(3, idUser);
             Integer idContenu = null;
             List<Integer> reponses = null;
             Map<Integer, List<Integer>> userReponses = qcm.getUserReponses();
@@ -37,8 +38,15 @@ public class QcmDAO {
                     ordre.executeUpdate();
                 }
             }
-            connexion.commit();
             qcm.setEstFini(true);
+            sql="INSERT INTO questionnaire_passe(id_questionnaire, id_user, note, date) VALUES ("+idQuestionnaire+","+idUser+","+qcm.getNote()+",NOW())";
+            int result= connexion.createStatement().executeUpdate(sql);
+            if(result>0){
+              connexion.commit();
+            }else{
+                throw new SQLException("Insertion questionnaire_passe failed.");
+            }
+            
         } catch (SQLException ex) {
             if (connexion != null) {
                 connexion.rollback();
