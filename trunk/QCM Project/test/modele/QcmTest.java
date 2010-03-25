@@ -57,32 +57,7 @@ public class QcmTest extends QCMTestCase {
     }
 
 
-
-//    /**
-//     * Test of setQuestionCourante method, of class Qcm.
-//     */
-//    @Test
-//    public void testSetQuestionCourante() {
-//        System.out.println("setQuestionCourante");
-//        int questionCourante = 0;
-//        Qcm instance = null;
-//        instance.setQuestionCourante(questionCourante);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-    /**
-     * Test of invariant method, of class Qcm.
-     */
-//    @Test
-//    public void testInvariant() {
-//        System.out.println("invariant");
-//        Qcm instance = null;
-//        boolean expResult = false;
-//        boolean result = instance.invariant();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+  
 
     /**
      *
@@ -116,6 +91,7 @@ public class QcmTest extends QCMTestCase {
         System.out.println(instance.getQuestionCourante());
         System.out.println(instance.getQuestionCourante());
         System.out.println(instance.getQuestionCourante());
+        assert instance.invariant();
         instance.save();
         assertTrue(instance.estFini());
         assertTrue(instance.getNote()==5);
