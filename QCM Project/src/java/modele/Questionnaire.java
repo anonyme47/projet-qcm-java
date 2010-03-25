@@ -53,6 +53,7 @@ public class Questionnaire {
         this.dateCreation = dateCreation;
         this.limiteTemps = limiteTemps;
         this.estActif = estActif;
+        
         if(estPasse>0){
             this.estPasse = true;
         }else{
