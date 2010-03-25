@@ -24,6 +24,7 @@ public class QcmDAO {
             int idQuestionnaire = qcm.getIdQuestionnaire();
             String sql = "INSERT INTO user_reponse(id_contenu, id_reponse, id_user) VALUES (?,?,?)";
             ordre = connexion.prepareStatement(sql);
+            ordre.setInt(3, qcm.getIdUser());
             Integer idContenu = null;
             List<Integer> reponses = null;
             Map<Integer, List<Integer>> userReponses = qcm.getUserReponses();
@@ -33,7 +34,6 @@ public class QcmDAO {
                 for (Integer idReponse : reponses) {
                     ordre.setInt(1, idContenu);
                     ordre.setInt(2, idReponse);
-                    ordre.setInt(3, qcm.getIdUser());
                     ordre.executeUpdate();
                 }
             }
