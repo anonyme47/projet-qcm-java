@@ -139,6 +139,10 @@ public class Question {
         assert invariant();
     }
 
+    public boolean hasMultipleResponse(){
+        return (reponses.size() > 1);
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
