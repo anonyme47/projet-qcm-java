@@ -9,11 +9,14 @@ public class User {
     private String login;
     private String password;
     private String email;
+    private Statut statut;
+    
 
-    public User(Integer idUser, String login, String password) {
+    public User(Integer idUser, String login, String password,String email,Statut statut) {
         this.idUser = idUser;
         this.login = login;
         this.password = password;
+        this.email=email;
         assert invariant();
     }
 
