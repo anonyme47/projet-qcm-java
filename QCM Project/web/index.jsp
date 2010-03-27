@@ -1,19 +1,22 @@
-<%-- 
-    Document   : index
-    Created on : 20 mars 2010, 13:11:13
-    Author     : marya
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
-
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen" title="css" charset="utf-8" />
+        <title>Projet QCM</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div id="content">
+            <jsp:include page="scripts/header.jsp" />
+
+            <div id="body">
+            <jsp:include page="scripts/login.jsp" />
+            </div>
+
+            <div id="footer">
+                <p>&copy; Copyright 2009 Ferrand &ndash; Rabarison &mdash; Design: Lou Ferrand &ndash; Maria Rabarison, <a href="#" title="Projet Java">DagoFly</a></p>
+            </div>
+        </div>
     </body>
 </html>
