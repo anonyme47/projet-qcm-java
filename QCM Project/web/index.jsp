@@ -8,7 +8,17 @@
     </head>
     <body>
         <div id="content">
-            <jsp:include page="scripts/header.jsp" />
+            <p id="top">Bienvenue, merci de vous authentifier.</p>
+            <div id="logo">
+                <h1><a href="index.jsp">iQCM</a></h1>
+            </div>
+            <ul id="menu">
+                <li class="current"><a href="#">Accueil</a></li>
+                <li><a href="#">Actualité</a></li>
+                <li><a href="#">A propos</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="line"></div>
 
             <div id="body">
             <jsp:include page="scripts/login.jsp" />

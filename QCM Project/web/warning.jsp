@@ -1,10 +1,6 @@
-<%-- 
-    Document   : warning
-    Created on : 27 mars 2010, 11:58:25
-    Author     : Lou
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="modele.Questionnaire" %>
+<%@page errorPage="index.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -28,30 +24,43 @@
                             <li>Certains questionnaires ont une limite de temps, vous ne pourrez plus répondre aux questions passé cette limite et votre note sera automatiquement calculée en fonction des réponses que vous aurez déjà données;</li>
                             <li>Vous pouvez choisir de terminer le questionnaire à tout moment en cliquant sur le bouton "Terminer maintenant", le questionnaire s'arrêtera et votre note sera calculée;</li>
                         </ul>
-
+                        <%
+                            Questionnaire questionnaire= (Questionnaire) request.getAttribute("questionnaire");
+                            if(questionnaire!=null){
+                                
+                        %>
                         <div class="recapitule_questionnaire liste">
                             <h5>Récapitulé du questionnaire</h5>
                             <table>
                                 <tr>
                                     <td class="static">Titre</td>
-                                    <td>Questionnaire numéro 1 : [Java Avancé]</td>
+                                    <td><%=questionnaire.getLibelle()%></td>
                                 </tr>
                                 <tr>
                                     <td class="static">Thème</td>
-                                    <td>Java</td>
+                                    <td><%=request.getAttribute("theme").toString()%></td>
                                 </tr>
                                 <tr>
                                     <td class="static">Niveau</td>
-                                    <td>Débutant</td>
+                                    <td><%=request.getAttribute("niveau").toString()%></td>
+                                </tr>
+                                <tr>
+                                    <td class="static">Nombre de questions</td>
+                                    <td><%=questionnaire.getQuestions().size()%> minutes</td>
                                 </tr>
                                 <tr>
                                     <td class="static">Temps accordé</td>
-                                    <td>20 minutes</td>
+                                    <td><%=questionnaire.getLimiteTemps()%> minutes</td>
                                 </tr>
                             </table>
                         </div>
-                        <a href="choisir_questionnaire.jsp" class="button">Retourner à l'accueil</a>
-                        <a href="passer_questionnaire.jsp" class="button">Continuer</a>
+                        <%
+                            }
+                        %>
+
+                        
+                        <a href="Accueil" class="button">Retourner à l'accueil</a>
+                        <a href="QcmServlet" class="button">Commencer</a>
                     </div>
                 </div>
             </div>

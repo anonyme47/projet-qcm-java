@@ -1,11 +1,15 @@
-<%--
-    Document   : header
-    Created on : 27 mars 2010, 11:34:43
-    Author     : Lou
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-            <p id="top">Duis rutrum dapibus diam. Sed turpis sem, suscipit et, ullamcorper vel, aliquam in, tellus.</p>
+<%@page import="modele.User" %>
+<%
+    User user = (User) request.getSession().getAttribute("user");
+    if(user==null){
+        request.setAttribute("errorMessage", "Vous n'êtes pas connecté");
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
+%>
+
+            <p id="top"><%= user.getNom() %></p>
             <div id="logo">
                 <h1><a href="index.jsp">iQCM</a></h1>
             </div>
