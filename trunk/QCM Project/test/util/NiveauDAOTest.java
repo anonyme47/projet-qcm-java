@@ -1,46 +1,29 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package util;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import java.util.HashMap;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
  *
- * @author marya
+ * @author Lou
  */
 public class NiveauDAOTest {
 
-    public NiveauDAOTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
+    /**
+     * Test of getAll method, of class NiveauDAO.
+     */
     @Test
-    public void testSomeMethod() {
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testGetAll() throws Exception {
+        System.out.println("getAll");
+        HashMap<Integer, String> expResult = new HashMap<Integer, String>();
+        expResult.put(1, "Débutant");
+        expResult.put(2, "Avancé");
+        expResult.put(3, "Expert");
+        HashMap<Integer, String> result = NiveauDAO.getAll();
+        assertEquals(expResult.get(1), result.get(1));
+        assertEquals(expResult.get(2), result.get(2));
+        assertEquals(expResult.get(3), result.get(3));
     }
 
 }

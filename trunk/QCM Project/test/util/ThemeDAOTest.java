@@ -1,46 +1,35 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package util;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import java.util.HashMap;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
  *
- * @author marya
+ * @author Lou
  */
 public class ThemeDAOTest {
 
-    public ThemeDAOTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
+    /**
+     * Test of getAll method, of class ThemeDAO.
+     */
     @Test
-    public void testSomeMethod() {
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testGetAll() throws Exception {
+        System.out.println("getAll");
+        HashMap<Integer, String> expResult = new HashMap<Integer, String>();
+        expResult.put(1, "Java");
+        expResult.put(2, "Ruby");
+        expResult.put(3, "C++");
+        expResult.put(4, "PHP");
+        expResult.put(5, "UML");
+        expResult.put(6, "POO");
+        HashMap<Integer, String> result = ThemeDAO.getAll();
+        assertEquals(expResult.get(1), result.get(1));
+        assertEquals(expResult.get(2), result.get(2));
+        assertEquals(expResult.get(3), result.get(3));
+        assertEquals(expResult.get(4), result.get(4));
+        assertEquals(expResult.get(5), result.get(5));
+        assertEquals(expResult.get(6), result.get(6));
     }
 
 }
