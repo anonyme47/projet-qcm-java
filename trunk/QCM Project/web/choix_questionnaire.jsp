@@ -1,10 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.Map" %>
 <%
-    if(request.getSession().getAttribute("user")==null){
-        request.setAttribute("errorMessage", "Vous n'êtes pas connecté");
-        request.getRequestDispatcher("index.jsp").forward(request, response);
-    }
+    
     int theme=0;
     if(request.getAttribute("theme")!=null){
         theme= (Integer) request.getAttribute("theme");

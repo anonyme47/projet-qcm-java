@@ -8,6 +8,10 @@
         <servlet-name>ChoixQuestionnaire</servlet-name>
         <servlet-class>servlet.ChoixQuestionnaire</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Warning</servlet-name>
+        <servlet-class>servlet.Warning</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Accueil</servlet-name>
         <url-pattern>/Accueil</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>ChoixQuestionnaire</servlet-name>
         <url-pattern>/ChoixQuestionnaire</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Warning</servlet-name>
+        <url-pattern>/Warning</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
