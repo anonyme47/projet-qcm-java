@@ -1,6 +1,7 @@
 package util;
 
 import java.util.HashMap;
+import modele.Niveau;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -24,6 +25,17 @@ public class NiveauDAOTest {
         assertEquals(expResult.get(1), result.get(1));
         assertEquals(expResult.get(2), result.get(2));
         assertEquals(expResult.get(3), result.get(3));
+    }
+
+    /**
+     * Test of getById method, of class NiveauDAO.
+     */
+    @Test
+    public void testGetById() throws Exception {
+        System.out.println("getById");
+        Niveau expResult = new Niveau(1, "Débutant");
+        Niveau result = NiveauDAO.getById(1);
+        assertEquals(expResult, result);
     }
 
 }
