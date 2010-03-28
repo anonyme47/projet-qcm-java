@@ -41,7 +41,7 @@
                                     if(themes!=null){
                                         for(Integer id_theme : themes.keySet()){
                                             out.println("<option value='"+id_theme+"'");
-                                            if(id_theme==theme) out.print(" selected ");
+                                            if(id_theme==theme) out.print(" selected='selected' ");
                                             out.print(">"+themes.get(id_theme)+"</option>");
                                         }
                                     }
@@ -56,7 +56,7 @@
                                     if(niveaux!=null){
                                         for(Integer id_niveau : niveaux.keySet()){
                                             out.println("<option value='"+id_niveau+"'");
-                                            if(id_niveau==niveau) out.print(" selected ");
+                                            if(id_niveau==niveau) out.print(" selected='selected' ");
                                             out.print(">"+niveaux.get(id_niveau)+"</option>");
                                         }
                                     }
@@ -77,7 +77,7 @@
                             out.println("<p>Cliquez sur un questionnaire pour le commencer.</p>");
                             out.println("<ol class='liste'>");
                             for(Integer idQuestionnaire : questionnaires.keySet()){
-                                out.println("<a href=''><li>"+questionnaires.get(idQuestionnaire)+"</li></a>");
+                                out.println("<a href='Questionnaire?questionnaire="+idQuestionnaire+"'><li>"+questionnaires.get(idQuestionnaire)+"</li></a>");
                             }
                             out.println("</ol>");
                         }else{
