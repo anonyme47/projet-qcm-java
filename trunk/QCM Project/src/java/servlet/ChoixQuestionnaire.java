@@ -6,7 +6,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import util.QuestionnaireDAO;
 import util.ThemeDAO;
+import util.NiveauDAO;
 
 /**
  *
@@ -29,25 +29,11 @@ public class ChoixQuestionnaire extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ChoixQuestionnaire</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ChoixQuestionnaire at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-            */
-        } finally { 
-            out.close();
-        }
-    } 
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException , SQLException{
+        request.setAttribute("themes", ThemeDAO.getAll());
+        request.setAttribute("niveaux", NiveauDAO.getAll());
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -65,25 +51,19 @@ public class ChoixQuestionnaire extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         try{
            if(request.getSession().getAttribute("user")!=null){
-                //request.setAttribute("themes", ThemeDAO.getAll());
-                //request.setAttribute("niveaux", NiveauDAO.getAll());
+                processRequest(request, response);
                 request.getRequestDispatcher("choix_questionnaire.jsp").forward(request, response);
             }else{
                 request.setAttribute("errorMessage", "Vous n'êtes pas connecté");
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
+        }catch(SQLException e){
+            request.setAttribute("errorMessage", "Erreur interne :"+e.getMessage());
         }catch(NullPointerException e){
             request.setAttribute("errorMessage", "Vous n'êtes pas authentifié");
         }
     } 
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
@@ -110,8 +90,7 @@ public class ChoixQuestionnaire extends HttpServlet {
                 questionnaires = QuestionnaireDAO.getQuestionnairesByThemeAndNiveau(theme, niveau);
             }
             request.setAttribute("questionnaires", questionnaires);
-            //request.setAttribute("themes", ThemeDAO.getAll());
-            //request.setAttribute("niveaux", NiveauDAO.getAll());
+            processRequest(request, response);
             page="choix_questionnaire.jsp";
             
             
@@ -135,7 +114,7 @@ public class ChoixQuestionnaire extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Short description : "+this.getServletInfo();
     }// </editor-fold>
 
 }
