@@ -1,6 +1,7 @@
 package util;
 
 import java.util.HashMap;
+import modele.Theme;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -32,4 +33,14 @@ public class ThemeDAOTest {
         assertEquals(expResult.get(6), result.get(6));
     }
 
+    /**
+     * Test of getById method, of class ThemeDAO.
+     */
+    @Test
+    public void testGetById() throws Exception {
+        System.out.println("getById");
+        Theme expResult = new Theme(1, 1, "Java");
+        Theme result = ThemeDAO.getById(1);
+        assertEquals(expResult, result);
+    }
 }
