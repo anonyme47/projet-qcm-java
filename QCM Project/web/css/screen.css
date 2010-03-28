@@ -11,7 +11,7 @@ img {
 body {
     font: 13px Arial, Tahoma, Verdana;
     background: #fff url('../img/bg.gif') repeat-x;
-    color: #777;
+    color: #555;
 }
 a {
     text-decoration: none;
@@ -75,15 +75,19 @@ h5 {
 #logo {
     float: left;
     background: url('../img/redbg.gif') repeat-x;
-    padding: 50px 25px 15px;
+    padding: 50px 25px 15px; /* top largeur, bottom*/
     margin: -46px 0 20px;
 }
 #logo h1 {
     text-shadow: 1px 1px 1px #7E0E0E;
 }
-#menu {
+ul#menu {
     float: right;
     margin: 20px 20px 0;
+    list-style: none;
+}
+ul.menu_gauche {
+    list-style: none;
 }
 #menu li {
     display: inline;
@@ -181,9 +185,9 @@ div#navigation ul a li:hover {
     border: 1px solid #B20F0F;
     border-right: none;
 }
-ul {
-    list-style:none;
-}
+/*ul {
+    list-style: none;
+}*/
 #contenu {
     width: 770px;
     min-height: 550px;
@@ -238,13 +242,13 @@ dl#resultat {
 dl#resultat > dt + dd {
     border-bottom: 1px solid #ddd;
 }
-div#recapitule_questionnaire {
+div.recapitule_questionnaire {
     margin-bottom: 20px;
 }
-div#recapitule_questionnaire table {
+div.recapitule_questionnaire table {
     margin-left: 20px;
 }
-div#recapitule_questionnaire table td.static {
+div.recapitule_questionnaire table td.static {
     padding-right: 50px;
     font-weight: bold;
 }
@@ -254,31 +258,42 @@ div#recapitule_questionnaire table td.static {
 .bon {
     color: green;
 }
-.warning-qcm {
-    float:left;
+.warning-qcm ul {
+    list-style-position: inside;
+}
+.warning-qcm ul li {
+    margin-bottom: 10px;
+    margin-left: 20px;
 }
 img#warning-image {
-    float:left;
-    display:block;
-    margin: 0 auto;
+    display: inline;
+    margin-right: 5px;
+    float: left;
+    height: 40px;
 }
 
 .button {
-	display: inline;
-	font: 100% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
-	border: 1px solid #999;
-	-moz-border-radius: 2px; -webkit-border-radius: 2px;
-	border-radius: 2px;
-	background: #f7f7f7 url(button_bg.png) repeat-x;
-	background-position: 0 9px;
-	padding: 2px 10px;
-	color: #B20F0F;
-	text-decoration: none;
+    display: inline-block;
+    font: 100% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+    border: 1px solid #999;
+    -moz-border-radius: 2px; -webkit-border-radius: 2px;
+    border-radius: 2px;
+    background: #f7f7f7 url(../img/button_bg.png) repeat-x;
+    background-position: 0 9px;
+    padding: 2px 10px;
+    color: #B20F0F;
+    text-decoration: none;
 }
 .button:hover {
-	background: #ccc url(button_bg.png) repeat-x top;
+    background: #ccc url(../img/button_bg.png) repeat-x top;
+}
+a.button + a.button {
+    margin-left: 20px;
 }
 
 .error {
     color: red;
+}
+ol.liste a li:hover {
+    background-color: #fff;
 }

@@ -10,13 +10,16 @@ public class User {
     private String password;
     private String email;
     private Statut statut;
-    
+    private String nom;
+    private String prenom;
 
-    public User(Integer idUser, String login, String password,String email,Statut statut) {
+    public User(Integer idUser, String login, String password, String email, String nom, String prenom, Statut statut) {
         this.idUser = idUser;
         this.login = login;
         this.password = password;
         this.email=email;
+        this.nom=nom;
+        this.prenom=prenom;
         assert invariant();
     }
 
@@ -58,6 +61,22 @@ public class User {
         assert email != null && !email.matches("^[a-z0-9._#&*-]+@[a-z0-9.#&*-]{2,}\\.[a-z]{2,4}$") : "L'email ne doit être ni null ni non valide ";
         this.email = email;
         assert invariant();
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
     @Override
