@@ -60,7 +60,7 @@ public class QuestionnaireDAO {
         String sql = "SELECT contenu.id_question, question.id_theme AS theme_question, questionnaire.id_theme AS theme_questionnaire FROM contenu";
         sql += " INNER JOIN question ON (question.id_question=contenu.id_question)";
         sql += " INNER JOIN questionnaire ON (questionnaire.id_questionnaire=contenu.id_questionnaire)";
-        sql += " WHERE contenu.id_questionnaire = ?";
+        sql += " WHERE contenu.id_questionnaire = ? ORDER BY id_contenu ASC";
         PreparedStatement ordre = connexion.prepareStatement(sql);
         ordre.setInt(1, idQuestionnaire);
         ResultSet rs = ordre.executeQuery();
