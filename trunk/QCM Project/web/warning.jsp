@@ -46,7 +46,7 @@
                                 </tr>
                                 <tr>
                                     <td class="static">Nombre de questions</td>
-                                    <td><%=questionnaire.getQuestions().size()%> minutes</td>
+                                    <td><%=questionnaire.getQuestions().size()%></td>
                                 </tr>
                                 <tr>
                                     <td class="static">Temps accordé</td>
@@ -55,6 +55,8 @@
                             </table>
                         </div>
                         <%
+                            }else{
+                                out.println("khsdf");
                             }
                         %>
 
