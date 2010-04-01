@@ -1,16 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.Map" %>
 <%
-    
-    int theme=0;
-    if(request.getAttribute("theme")!=null){
-        theme= (Integer) request.getAttribute("theme");
-    }
-    int niveau=0;
-    if(request.getAttribute("niveau")!=null){
-        niveau= (Integer) request.getAttribute("niveau");
-    }
-
+    Integer theme = (Integer) request.getAttribute("theme");
+    Integer niveau = (Integer) request.getAttribute("niveau");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -74,7 +66,7 @@
                             out.println("<p>Cliquez sur un questionnaire pour le commencer.</p>");
                             out.println("<ol class='liste'>");
                             for(Integer idQuestionnaire : questionnaires.keySet()){
-                                out.println("<a href='Questionnaire?questionnaire="+idQuestionnaire+"'><li>"+questionnaires.get(idQuestionnaire)+"</li></a>");
+                                out.println("<a href='Warning?questionnaire="+idQuestionnaire+"'><li>"+questionnaires.get(idQuestionnaire)+"</li></a>");
                             }
                             out.println("</ol>");
                         }else{

@@ -65,10 +65,12 @@ public class Warning extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         try{
            if(request.getSession().getAttribute("user")!=null){
+               System.out.println("Avant appel DAO");
                 Questionnaire questionnaire = QuestionnaireDAO.getById(Integer.parseInt(request.getParameter("questionnaire").toString()));
                 request.setAttribute("questionnaire", questionnaire);
                 //request.setAttribute("theme",ThemeDAO.getById(questionnaire.getIdTheme()).getLibelle());
                 //request.setAttribute("theme",NiveauDAO.getById(questionnaire.getIdNiveau()).getLibelle());
+                System.out.println("questionnaire"+questionnaire.toString());
                 request.setAttribute("theme","Theme");
                 request.setAttribute("niveau","niveau");
                 request.getRequestDispatcher("warning.jsp").forward(request, response);
