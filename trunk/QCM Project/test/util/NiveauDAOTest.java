@@ -1,5 +1,6 @@
 package util;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import modele.Niveau;
 import org.junit.Test;
@@ -36,6 +37,19 @@ public class NiveauDAOTest {
         Niveau expResult = new Niveau(1, "Débutant");
         Niveau result = NiveauDAO.getById(1);
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getLibelleById, of class NiveauDAO
+     * @throws SQLException
+     */
+    @Test
+    public void testGetLibelleById() throws SQLException {
+        System.out.println("getLibelleById");
+        Niveau instance = new Niveau(1, "Débutant");
+        String expResult = "Débutant";
+        String result = NiveauDAO.getLibelleById(instance.getIdNiveau());
+        assertTrue(result.equals(expResult));
     }
 
 }

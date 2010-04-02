@@ -37,8 +37,7 @@ public class ThemeDAO {
             theme = new Theme(
                     rs.getInt("id_theme"),
                     rs.getInt("id_user"),
-                    rs.getString("libelle")
-            );
+                    rs.getString("libelle"));
         }
         rs.close();
         ordre.close();
@@ -46,4 +45,19 @@ public class ThemeDAO {
         return theme;
     }
 
+    public static String getLibelleById(int idTheme) throws SQLException {
+        String libelle = null;
+        Connection connexion = Database.getConnection();
+        String sql = "SELECT libelle FROM theme WHERE id_theme = ?";
+        PreparedStatement ordre = connexion.prepareStatement(sql);
+        ordre.setInt(1, idTheme);
+        ResultSet rs = ordre.executeQuery();
+        if (rs.next()) {
+            libelle = rs.getString("libelle");
+        }
+        rs.close();
+        ordre.close();
+        connexion.close();
+        return libelle;
+    }
 }

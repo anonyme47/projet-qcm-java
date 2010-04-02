@@ -36,12 +36,27 @@ public class NiveauDAO {
         if (rs.next()) {
             niveau = new Niveau(
                     rs.getInt("id_niveau"),
-                    rs.getString("libelle")
-                    );
+                    rs.getString("libelle"));
         }
         rs.close();
         ordre.close();
         connexion.close();
         return niveau;
+    }
+
+    public static String getLibelleById(int idNiveau) throws SQLException {
+        String libelle = null;
+        Connection connexion = Database.getConnection();
+        String sql = "SELECT libelle FROM niveau WHERE id_niveau = ?";
+        PreparedStatement ordre = connexion.prepareStatement(sql);
+        ordre.setInt(1, idNiveau);
+        ResultSet rs = ordre.executeQuery();
+        if (rs.next()) {
+            libelle = rs.getString("libelle");
+        }
+        rs.close();
+        ordre.close();
+        connexion.close();
+        return libelle;
     }
 }

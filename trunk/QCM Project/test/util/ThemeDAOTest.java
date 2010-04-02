@@ -1,5 +1,6 @@
 package util;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import modele.Theme;
 import org.junit.Test;
@@ -42,5 +43,18 @@ public class ThemeDAOTest {
         Theme expResult = new Theme(1, 1, "Java");
         Theme result = ThemeDAO.getById(1);
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getLibelleById, of class ThemeDAO
+     * @throws SQLException
+     */
+    @Test
+    public void testGetLibelleById() throws SQLException {
+        System.out.println("getLibelleById");
+        Theme instance = new Theme(1, 1, "Java");
+        String expResult = "Java";
+        String result = ThemeDAO.getLibelleById(instance.getIdTheme());
+        assertTrue(result.equals(expResult));
     }
 }
