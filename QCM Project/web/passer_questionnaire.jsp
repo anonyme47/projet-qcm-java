@@ -1,4 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.Map" %>
+<%@page import="java.util.List" %>
+<%@page import="modele.Reponse" %>
+<%@page import="modele.Question" %>
+<%@page import="modele.Questionnaire" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -11,58 +16,51 @@
             <jsp:include page="scripts/header.jsp" />
 
             <div id="body">
-            <jsp:include page="scripts/menu_left.jsp" />
+                <jsp:include page="scripts/menu_left.jsp" />
 
                 <div id="contenu">
                     <fieldset id="modifier_reponses" class="">
                         <legend>Modifier mes réponses</legend>
                         <ul class="questions">
-                            <a href="#"><li>titre question 1</li></a>
-                            <a href="#"><li>titre question 2</li></a>
-                            <a href="#"><li>titre question 3</li></a>
-                            <a href="#"><li>titre question 1</li></a>
-                            <a href="#"><li>titre question 2</li></a>
-                            <a href="#"><li>titre question 3</li></a>
-                            <a href="#"><li>titre question 1</li></a>
-                            <a href="#"><li>titre question 2</li></a>
-                            <a href="#"><li>titre question 3</li></a>
-                            <a href="#"><li>titre question 1</li></a>
-                            <a href="#"><li>titre question 2</li></a>
-                            <a href="#"><li>titre question 3</li></a>
-                            <a href="#"><li>titre question 1</li></a>
-                            <a href="#"><li>titre question 2</li></a>
-                            <a href="#"><li>titre question 3</li></a>
-                            <a href="#"><li>titre question 1</li></a>
-                            <a href="#"><li>titre question 2</li></a>
-                            <a href="#"><li>titre question 3</li></a>
-                            <a href="#"><li>titre question 1</li></a>
-                            <a href="#"><li>titre question 2</li></a>
-                            <a href="#"><li>titre question 3</li></a>
-                            <a href="#"><li>titre question 1</li></a>
-                            <a href="#"><li>titre question 2</li></a>
-                            <a href="#"><li>titre question 3</li></a>
-                            <a href="#"><li>titre question 1</li></a>
-                            <a href="#"><li>titre question 2</li></a>
-                            <a href="#"><li>titre question 3</li></a>
+                            <%
+                                        Map<Integer, String> questions = (Map) request.getAttribute("questions");
+                                        if (questions != null) {
+                                            for (Integer idQuestion : questions.keySet()) {
+                                                out.println("<a href=" + idQuestion + "><li>" + questions.get(idQuestion) + "</li></a>");
+                                            }
+                                        }
+                            %>
                         </ul>
                     </fieldset>
-                    <form class="question" action="passer_questionnaire_suite.jsp" method="post" accept-charset="utf-8">
+                    <form class="question" action="PasserQuestionnaire?action=questionSuivante" method="post" accept-charset="utf-8">
+                        <%
+                                    Questionnaire questionnaire = (Questionnaire) request.getAttribute("questionnaire");
+                                    Question questionCourante = (Question) request.getAttribute("questionCourante");
+                        %>
                         <fieldset id="titre_questionnaire" class="">
-                            <legend><strong>Questionnaire numéro 1 : [Java Avancé]</strong></legend>
+                            <legend><strong><%= questionnaire.getLibelle()%></strong></legend>
+                            <%--<legend><strong>Questionnaire numéro 1 : [Java Avancé]</strong></legend>--%>
                             <p>
-				Java est un langage
+                                <%= questionCourante.getLibelle()%>
                             </p>
                         </fieldset>
                         <div id="reponses">
-                            <input type="checkbox" name="reponse1" value="{id_reponse1}" id="reponse_1" /><label for="reponse_1">Compilé</label><br />
-                            <input type="checkbox" name="reponse2" value="{id_reponse2}" id="reponse_2" /><label for="reponse_2">Interprété</label><br />
-                            <input type="checkbox" name="reponse3" value="{id_reponse3}" id="reponse_3" /><label for="reponse_3">Compilé et interprété</label><br />
-                            <input type="checkbox" name="reponse4" value="{id_reponse4}" id="reponse_4" /><label for="reponse_4">Ni compilé ni interprété</label><br />
+                            <%
+                                        List<Reponse> reponses = (List) request.getAttribute("reponses");
+                                        if (reponses != null) {
+                                            for (Reponse reponse : reponses) {
+                                                out.println("<input type='checkbox' name='" + reponse.getIdReponse() + "' id='" + reponse.getIdReponse() + "' /><label for='" + reponse.getIdReponse() + "'>" + reponse.getLibelle() + "</label><br />");
+                                            }
+                                        }
+                            %>
                         </div>
                         <p><input type="submit" value="Valider la question" /></p>
                     </form>
-                    <a class="button" href="resultat.jsp">Terminer maintenant &rarr;</a>
+                    <a class="button" href="PasserQuestionnaire?action=terminer">Terminer maintenant &rarr;</a>
                     <div id="temps_restant">
+                        <%
+
+                        %>
                         <p>Il vous reste XX questions<br />et XX:XX minutes.</p>
                     </div>
                 </div>
