@@ -55,14 +55,19 @@
                             </table>
                         </div>
                         <%
-                            }else{
-                                out.println("khsdf");
                             }
                         %>
 
                         
                         <a href="Accueil" class="button">Retourner à l'accueil</a>
-                        <a href="QcmServlet" class="button">Commencer</a>
+                        
+                            <form action="PasserQuestionnaire" method="post" id="commencer_qcm_form">
+                                <input type="hidden" name="questionnaire" value="<%= questionnaire.getIdQuestionnaire() %>" />
+                                <input type="hidden" name="action" value="commencer_qcm" />
+                                <input type="submit" value="Commencer" />
+                            </form>
+                        
+                        
                     </div>
                 </div>
             </div>

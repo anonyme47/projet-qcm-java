@@ -8,7 +8,8 @@ import exception.ExpiredSessionException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
-import modele.Questionnaire;
+import modele.Qcm;
+import modele.User;
 import util.*;
 /**
  *
@@ -47,6 +48,20 @@ public class PasserQuestionnaireHelper extends RequestHelper{
                 request.setAttribute("niveau",niveau);
                 questionnaires = QuestionnaireDAO.getQuestionnairesByThemeAndNiveau(theme, niveau);
             }
+            setAttributeNiveaux();
+            setAttributeThemes();
             request.setAttribute("questionnaires", questionnaires);
+    }
+
+
+
+    public void setSessionAttributeQcm() throws SQLException,Exception{
+        int idQuestionnaire = Integer.parseInt(request.getParameter("questionnaire").toString());
+        int idUser = ((User) request.getSession().getAttribute("user")).getIdUser();
+        Qcm qcm = new Qcm(idQuestionnaire, idUser);
+        if(qcm==null){
+            throw new Exception("Impossible d'initialiser le qcm");
+        }
+        request.getSession().setAttribute("qcm", qcm);
     }
 }
