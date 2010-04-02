@@ -21,7 +21,7 @@
                 <div id="contenu">
                     <div id="choix_questionnaire">
                         <p>blablablabl blablabla</p>
-                        <form id="choix_questionnaire_form"  action="ChoixQuestionnaire" method="post" accept-charset="utf-8">
+                        <form id="choix_questionnaire_form"  action="PasserQuestionnaire" method="post" accept-charset="utf-8">
                             <label for="theme">Choisissez le thème</label>
                             <select name="theme" id="theme" onchange="document.getElementById('choix_questionnaire_form').submit();">
                                 <option value="0"/>
@@ -51,6 +51,7 @@
                                     }
                                 %>
                             </select>
+                            <input type="hidden" name="action" value="choix_questionnaire"/>
                         </form>
                         
                         <br />
@@ -66,7 +67,7 @@
                             out.println("<p>Cliquez sur un questionnaire pour le commencer.</p>");
                             out.println("<ol class='liste'>");
                             for(Integer idQuestionnaire : questionnaires.keySet()){
-                                out.println("<a href='Warning?questionnaire="+idQuestionnaire+"'><li>"+questionnaires.get(idQuestionnaire)+"</li></a>");
+                                out.println("<a href='PasserQuestionnaire?action=afficher_info_questionnaire&questionnaire="+idQuestionnaire+"'><li>"+questionnaires.get(idQuestionnaire)+"</li></a>");
                             }
                             out.println("</ol>");
                         }else{

@@ -92,6 +92,8 @@ public class Accueil extends HttpServlet {
             errorMessage = e.getMessage();
         } catch (NullPointerException e) {
             errorMessage = e.getMessage();
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
         } finally {
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher(page).forward(request, response);
@@ -107,30 +109,23 @@ public class Accueil extends HttpServlet {
         return "Short description : " + this.getServletInfo();
     }// </editor-fold>
 
-    public String checkUser(HttpServletRequest request) throws SQLException {
+    public String checkUser(HttpServletRequest request) throws SQLException , Exception{
         String page = "error.jsp";
-        String errorMessage = null;
-        int authentification = Integer.parseInt(request.getParameter("authentification").toString());
-        if (authentification != 1) {
-            errorMessage = "Authentification non initialisée";
-        } else {
-            User user = null;
-            String login = request.getParameter("login").toString();
-            String password = request.getParameter("password").toString();
-            if (login == null || login.trim().isEmpty()) {
-                throw new IllegalArgumentException("Veuillez renseigner votre login");
-            } else if (password == null || password.trim().isEmpty()) {
-                throw new IllegalArgumentException("Veuillez renseigner votre mot de passe");
-            }
-            user = UserDAO.getByLoginAndPassword(login, password);
-            if (user == null) {
-                errorMessage = "Echec de l'authentification, login ou mot de passe incorrecte.";
-//                throw new QcmException().UnknownUserException;
-            } else {
-                request.getSession().setAttribute("user", user);
-                page = "accueil.jsp";
-            }
+        User user = null;
+        String login = request.getParameter("login").toString();
+        String password = request.getParameter("password").toString();
+        if (login == null || login.trim().isEmpty()) {
+            throw new IllegalArgumentException("Veuillez renseigner votre login");
+        } else if (password == null || password.trim().isEmpty()) {
+            throw new IllegalArgumentException("Veuillez renseigner votre mot de passe");
         }
+        user = UserDAO.getByLoginAndPassword(login, password);
+        if (user == null) {
+            throw QcmException.UnknownUserException;
+        } 
+        request.getSession().setAttribute("user", user);
+        page = "accueil.jsp";
+        
         return page;
     }
 }

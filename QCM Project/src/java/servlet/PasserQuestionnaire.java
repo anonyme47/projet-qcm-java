@@ -1,15 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlet;
 
 import exception.ExpiredSessionException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,12 +28,6 @@ public class PasserQuestionnaire extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-        } finally {
-            out.close();
-        }
     }
 
     /** 
@@ -54,10 +41,9 @@ public class PasserQuestionnaire extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String forward = "choix_questionnaire.jsp";
-        RequestHelper helper = null;
+        String forward = "error.jsp";
         try {
-            helper = new RequestHelper(request);
+            RequestHelper helper = new RequestHelper(request);
             String action = request.getParameter("action").toString();
             if (action != null) {
                 if(action.equals("afficher_choix_themes_niveau")){
@@ -69,9 +55,6 @@ public class PasserQuestionnaire extends HttpServlet {
                     helper.setAttributeThemeAndNiveau(questionnaire.getIdTheme(), questionnaire.getIdNiveau());
                     forward = "warning.jsp";
                 }
-
-
-
             }
                 
         } catch (NullPointerException e) {
@@ -95,10 +78,9 @@ public class PasserQuestionnaire extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String forward = "choix_questionnaire.jsp";
-        PasserQuestionnaireHelper helper = null;
+        String forward = "error.jsp";
         try{
-            helper = new PasserQuestionnaireHelper(request);
+            PasserQuestionnaireHelper helper = new PasserQuestionnaireHelper(request);
             String action = request.getParameter("action").toString();
             if (action != null) {
                 if(action.equals("choix_questionnaire")){
@@ -106,17 +88,29 @@ public class PasserQuestionnaire extends HttpServlet {
                     forward = "choix_questionnaire.jsp";
                 }else if(action.equals("question_validee")){
                     //On avance le compteur => à mettre en session
+                    forward = "afficher_question.jsp";
                 }else if(action.equals("question_modifiee")){
                     //On n'avance pas le compteur, on garde celui qui est en session
+                    forward = "afficher_question.jsp";
                 }else if(action.equals("modifier_reponses")){
                     //On met en attribut
+                    forward = "afficher_question.jsp";
+                }else if(action.equals("commencer_qcm")){
+                    helper.setSessionAttributeQcm();
+                    forward = "affiche_question.jsp";
                 }
             }
         } catch (NullPointerException e) {
+            e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
         } catch (SQLException e) {
+            e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
         } catch (ExpiredSessionException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
         }
         request.getRequestDispatcher(forward).forward(request, response);
