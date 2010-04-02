@@ -12,6 +12,14 @@
         <servlet-name>Warning</servlet-name>
         <servlet-class>servlet.Warning</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PasserQuestionnaire</servlet-name>
+        <servlet-class>servlet.PasserQuestionnaire</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreerQuestionnaire</servlet-name>
+        <servlet-class>servlet.CreerQuestionnaire</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Accueil</servlet-name>
         <url-pattern>/Accueil</url-pattern>
@@ -23,6 +31,14 @@
     <servlet-mapping>
         <servlet-name>Warning</servlet-name>
         <url-pattern>/Warning</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PasserQuestionnaire</servlet-name>
+        <url-pattern>/PasserQuestionnaire</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreerQuestionnaire</servlet-name>
+        <url-pattern>/CreerQuestionnaire</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

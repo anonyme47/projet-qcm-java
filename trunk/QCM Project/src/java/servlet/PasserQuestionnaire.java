@@ -4,6 +4,7 @@
  */
 package servlet;
 
+import exception.ExpiredSessionException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -14,15 +15,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modele.Questionnaire;
-import util.NiveauDAO;
 import util.QuestionnaireDAO;
-import util.ThemeDAO;
+import servlet.helper.*;
 
 /**
  *
  * @author Lou
  */
 public class PasserQuestionnaire extends HttpServlet {
+
+      
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -52,31 +54,32 @@ public class PasserQuestionnaire extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         String forward = "choix_questionnaire.jsp";
+        RequestHelper helper = null;
         try {
-            String action = request.getParameter("action");
+            helper = new RequestHelper(request);
+            String action = request.getParameter("action").toString();
             if (action != null) {
-                request.setAttribute("themes", ThemeDAO.getAll());
-                request.setAttribute("niveaux", NiveauDAO.getAll());
-                forward = "choix_questionnaire.jsp";
-            } else if (action.equals("afficherInfoQuestionnaire")) {
-                Questionnaire questionnaire = QuestionnaireDAO.getById(Integer.parseInt(request.getParameter("questionnaire").toString()));
-                request.setAttribute("questionnaire", questionnaire);
-                request.setAttribute("theme", ThemeDAO.getById(questionnaire.getIdTheme()).getLibelle());
-                request.setAttribute("niveau", NiveauDAO.getById(questionnaire.getIdNiveau()).getLibelle());
-                forward = "warning.jsp";
+                if(action.equals("afficher_choix_themes_niveau")){
+                    helper.setAttributeThemesAndNiveaux();
+                    forward = "choix_questionnaire.jsp";
+                } else if (action.equals("afficher_info_questionnaire")) {
+                    Questionnaire questionnaire = QuestionnaireDAO.getById(Integer.parseInt(request.getParameter("questionnaire").toString()));
+                    request.setAttribute("questionnaire", questionnaire);
+                    helper.setAttributeThemeAndNiveau(questionnaire.getIdTheme(), questionnaire.getIdNiveau());
+                    forward = "warning.jsp";
+                }
+
+
+
             }
+                
         } catch (NullPointerException e) {
-            Logger.getLogger(PasserQuestionnaire.class.getName()).log(Level.SEVERE, null, e);
             request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
-//            request.getRequestDispatcher("warning.jsp").forward(request, response);
         } catch (SQLException e) {
-            Logger.getLogger(PasserQuestionnaire.class.getName()).log(Level.SEVERE, null, e);
             request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
-//            request.getRequestDispatcher("warning.jsp").forward(request, response);
-        } finally {
-            out.close();
+        } catch (ExpiredSessionException e) {
+            request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
         }
         request.getRequestDispatcher(forward).forward(request, response);
     }
@@ -91,7 +94,33 @@ public class PasserQuestionnaire extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        String forward = "choix_questionnaire.jsp";
+        PasserQuestionnaireHelper helper = null;
+        try{
+            helper = new PasserQuestionnaireHelper(request);
+            String action = request.getParameter("action").toString();
+            if (action != null) {
+                if(action.equals("choix_questionnaire")){
+                    helper.setAttributeQuestionnairesByChoice();
+                    forward = "choix_questionnaire.jsp";
+                }else if(action.equals("question_validee")){
+                    //On avance le compteur => à mettre en session
+                }else if(action.equals("question_modifiee")){
+                    //On n'avance pas le compteur, on garde celui qui est en session
+                }else if(action.equals("modifier_reponses")){
+                    //On met en attribut
+                }
+            }
+        } catch (NullPointerException e) {
+            request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
+        } catch (SQLException e) {
+            request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
+        } catch (ExpiredSessionException e) {
+            request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
+        }
+        request.getRequestDispatcher(forward).forward(request, response);
+        //setAttributeQuestionnairesByChoice(
     }
 
     /** 

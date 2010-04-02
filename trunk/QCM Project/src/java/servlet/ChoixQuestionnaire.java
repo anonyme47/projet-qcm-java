@@ -90,7 +90,6 @@ public class ChoixQuestionnaire extends HttpServlet {
                 questionnaires = QuestionnaireDAO.getQuestionnairesByThemeAndNiveau(theme, niveau);
             }
             request.setAttribute("questionnaires", questionnaires);
-            processRequest(request, response);
             page="choix_questionnaire.jsp";
             
             
