@@ -21,5 +21,5 @@
                         </table>
 
                     </fieldset>
-                    <input type="hidden" name="authentification" value="authentification" />
+                    <input type="hidden" name="action" value="authentification" />
                 </form>
