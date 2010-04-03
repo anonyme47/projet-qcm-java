@@ -32,6 +32,7 @@ public class Question {
             final int idTheme, final int idUser, final int nbQuestionnairePasseAppelant, List<Reponse> reponses) {
         assert idQuestion == null || idQuestion >= 0 : "idQuestion doit être non négatif (reçu: " + idQuestion + ")";
         assert libelle != null && libelle.matches("^\\s*$") : "le libellé ne doit être ni null ni vide";
+        this.idQuestion = idQuestion;
         this.libelle = libelle;
         this.idTheme = idTheme;
         this.idUser = idUser;
