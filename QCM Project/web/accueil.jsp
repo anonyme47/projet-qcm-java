@@ -22,7 +22,7 @@
                 <div id="contenu">
                     <h4>Accueil d'iQCM</h4>
                     <div class="start-qcm">
-                        <a href="choisir_questionnaire.jsp">Choisissez un questionnaire</a>
+                        <a href="ChoixQuestionnaire">Choisissez un questionnaire</a>
                     </div>
                     <div id="statistiques">
                         <p>Voici les derniers questionnaire auxquels vous avez répondu :

@@ -19,15 +19,15 @@
                     <h3>Attention : veuillez lire ceci avant de débuter votre questionnaire</h3>
                     <div class="warning-qcm">
 
-                        <p><img id="warning-image" src="img/warning.gif" alt="Attention" />Vous êtes sur le point de passer un questionnaire et il y a certains points sur lesquels nous nous sentons obligés de vous informer :</p>
+                        <p><img id="warning-image" src="img/warning.gif" alt="Attention" height="40px" />Vous êtes sur le point de passer un questionnaire et il y a certains points sur lesquels nous nous sentons obligés de vous informer :</p>
                         <ul>
                             <li>Certains questionnaires ont une limite de temps, vous ne pourrez plus répondre aux questions passé cette limite et votre note sera automatiquement calculée en fonction des réponses que vous aurez déjà données;</li>
                             <li>Vous pouvez choisir de terminer le questionnaire à tout moment en cliquant sur le bouton "Terminer maintenant", le questionnaire s'arrêtera et votre note sera calculée;</li>
                         </ul>
                         <%
-                            Questionnaire questionnaire= (Questionnaire) request.getAttribute("questionnaire");
-                            if(questionnaire!=null){
-                                
+                                    Questionnaire questionnaire = (Questionnaire) request.getAttribute("questionnaire");
+                                    if (questionnaire != null) {
+
                         %>
                         <div class="recapitule_questionnaire liste">
                             <h5>Récapitulé du questionnaire</h5>
@@ -55,19 +55,19 @@
                             </table>
                         </div>
                         <%
-                            }
+                                    }
                         %>
 
-                        
+
                         <a href="Accueil" class="button">Retourner à l'accueil</a>
-                        
-                            <form action="PasserQuestionnaire" method="post" id="commencer_qcm_form">
-                                <input type="hidden" name="questionnaire" value="<%= questionnaire.getIdQuestionnaire() %>" />
-                                <input type="hidden" name="action" value="commencer_qcm" />
-                                <input type="submit" value="Commencer" />
-                            </form>
-                        
-                        
+
+                        <form action="PasserQuestionnaire" method="post" id="commencer_qcm_form">
+                            <input type="hidden" name="questionnaire" value="<%= questionnaire.getIdQuestionnaire()%>" />
+                            <input type="hidden" name="action" value="commencerQcm" />
+                            <input type="submit" value="Commencer" class="button" />
+                        </form>
+
+
                     </div>
                 </div>
             </div>

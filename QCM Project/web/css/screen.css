@@ -89,6 +89,12 @@ ul#menu {
 ul.menu_gauche {
     list-style: none;
 }
+ul.menu_gauche a li {
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-bottomleft: 5px;
+}
 #menu li {
     display: inline;
 
@@ -112,6 +118,7 @@ ul.menu_gauche {
     font-size: .84em;
     border-top: 1px solid #ddd;
     padding: 20px 0 0;
+    margin-top: 20px;
 }
 fieldset {
     padding: 20px;
@@ -166,8 +173,9 @@ fieldset#modifier_reponses {
 fieldset#modifier_reponses ul.questions {
     height: 280px;
     /*	width: 180px;/*30%;*/
-    text-align: center;
+    text-align: left;
     overflow-y: auto;
+    margin-left: 10px;
 }
 div#navigation {
     float:left;
@@ -296,4 +304,7 @@ a.button + a.button {
 }
 ol.liste a li:hover {
     background-color: #fff;
+}
+a+form {
+    display: inline-block;
 }

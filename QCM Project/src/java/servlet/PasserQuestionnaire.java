@@ -16,8 +16,6 @@ import servlet.helper.*;
  */
 public class PasserQuestionnaire extends HttpServlet {
 
-      
-
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -45,23 +43,23 @@ public class PasserQuestionnaire extends HttpServlet {
             RequestHelper helper = new RequestHelper(request);
             String action = request.getParameter("action").toString();
             if (action != null) {
-                if(action.equals("afficher_choix_themes_niveau")){
+                if (action.equals("afficherChoixThemesNiveau")) {
                     helper.setAttributeThemesAndNiveaux();
-                    forward = "choix_questionnaire.jsp";
-                } else if (action.equals("afficher_info_questionnaire")) {
+                    forward = "choixQuestionnaire.jsp";
+                } else if (action.equals("afficherInfoQuestionnaire")) {
                     Questionnaire questionnaire = QuestionnaireDAO.getById(Integer.parseInt(request.getParameter("questionnaire").toString()));
                     request.setAttribute("questionnaire", questionnaire);
                     helper.setAttributeThemeAndNiveau(questionnaire.getIdTheme(), questionnaire.getIdNiveau());
                     forward = "warning.jsp";
                 }
             }
-                
+
         } catch (NullPointerException e) {
-            request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
         } catch (SQLException e) {
-            request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
         } catch (Exception e) {
-            request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
         }
         request.getRequestDispatcher(forward).forward(request, response);
     }
@@ -78,33 +76,37 @@ public class PasserQuestionnaire extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String forward = "error.jsp";
-        try{
+        try {
             PasserQuestionnaireHelper helper = new PasserQuestionnaireHelper(request);
             String action = request.getParameter("action").toString();
             if (action != null) {
-                if(action.equals("choixQuestionnaire")){
+                if (action.equals("choixQuestionnaire")) {
                     helper.setAttributeQuestionnairesByChoice();
-                    forward = "choix_questionnaire.jsp";
-                }else if(action.equals("validerQuestion")){
-                    
-                    forward = "afficher_question.jsp";
-                }else if(action.equals("modifierReponses")){
+                    forward = "choixQuestionnaire.jsp";
+                } else if (action.equals("validerQuestion")) {
+                    // Faire avancer l'iterateur du QCM
+                    helper.setSessionAttributeQuestionSuivante();
+                    forward = "afficherQuestion.jsp";
+                } else if (action.equals("modifierReponses")) {
                     //On met en attribut
-                    forward = "afficher_question.jsp";
-                }else if(action.equals("commencerQcm")){
+                    forward = "afficherQuestion.jsp";
+                } else if (action.equals("commencerQcm")) {
                     helper.setSessionAttributeQcm();
-                    forward = "affiche_question.jsp";
+                    forward = "afficherQuestion.jsp";
+                } else if (action.equals("terminer")) {
+                    helper.prepareResultats();
+                    forward = "resultat.jsp";
                 }
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
-            request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
         } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
         }
         request.getRequestDispatcher(forward).forward(request, response);
         //setAttributeQuestionnairesByChoice(

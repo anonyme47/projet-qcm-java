@@ -15,7 +15,7 @@ import modele.User;
 import util.UserDAO;
 
 /**
- * 
+ *
  * @author marya
  */
 public class Accueil extends HttpServlet {
@@ -122,10 +122,10 @@ public class Accueil extends HttpServlet {
         user = UserDAO.getByLoginAndPassword(login, password);
         if (user == null) {
             throw QcmException.UnknownUserException;
-        } 
+        }
         request.getSession().setAttribute("user", user);
         page = "accueil.jsp";
-        
+
         return page;
     }
 }
