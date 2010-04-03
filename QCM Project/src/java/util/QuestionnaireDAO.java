@@ -40,7 +40,7 @@ public class QuestionnaireDAO {
                     rs.getInt("id_user"),
                     rs.getInt("id_niveau"),
                     QuestionnaireDAO.getQuestionsById(idQuestionnaire),
-                    rs.getInt("nbPasseParUser")); //remplacer true
+                    rs.getInt("nbPasseParUser")); 
         }
         rs.close();
         ordre.close();

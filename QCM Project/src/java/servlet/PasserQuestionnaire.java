@@ -1,6 +1,5 @@
 package servlet;
 
-import exception.ExpiredSessionException;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -61,7 +60,7 @@ public class PasserQuestionnaire extends HttpServlet {
             request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
         } catch (SQLException e) {
             request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
-        } catch (ExpiredSessionException e) {
+        } catch (Exception e) {
             request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
         }
         request.getRequestDispatcher(forward).forward(request, response);
@@ -83,19 +82,16 @@ public class PasserQuestionnaire extends HttpServlet {
             PasserQuestionnaireHelper helper = new PasserQuestionnaireHelper(request);
             String action = request.getParameter("action").toString();
             if (action != null) {
-                if(action.equals("choix_questionnaire")){
+                if(action.equals("choixQuestionnaire")){
                     helper.setAttributeQuestionnairesByChoice();
                     forward = "choix_questionnaire.jsp";
-                }else if(action.equals("question_validee")){
-                    //On avance le compteur => à mettre en session
+                }else if(action.equals("validerQuestion")){
+                    
                     forward = "afficher_question.jsp";
-                }else if(action.equals("question_modifiee")){
-                    //On n'avance pas le compteur, on garde celui qui est en session
-                    forward = "afficher_question.jsp";
-                }else if(action.equals("modifier_reponses")){
+                }else if(action.equals("modifierReponses")){
                     //On met en attribut
                     forward = "afficher_question.jsp";
-                }else if(action.equals("commencer_qcm")){
+                }else if(action.equals("commencerQcm")){
                     helper.setSessionAttributeQcm();
                     forward = "affiche_question.jsp";
                 }
@@ -104,9 +100,6 @@ public class PasserQuestionnaire extends HttpServlet {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
         } catch (SQLException e) {
-            e.printStackTrace();
-            request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
-        } catch (ExpiredSessionException e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur :" + e.getMessage());
         } catch (Exception e) {

@@ -4,7 +4,7 @@
  */
 
 package servlet.helper;
-import exception.ExpiredSessionException;
+import exception.*;
 import java.sql.SQLException;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +17,7 @@ import util.*;
  */
 public class PasserQuestionnaireHelper extends RequestHelper{
 
-    public PasserQuestionnaireHelper(HttpServletRequest request) throws ExpiredSessionException{
+    public PasserQuestionnaireHelper(HttpServletRequest request) throws Exception{
         super(request);
     }
 
@@ -60,8 +60,12 @@ public class PasserQuestionnaireHelper extends RequestHelper{
         int idUser = ((User) request.getSession().getAttribute("user")).getIdUser();
         Qcm qcm = new Qcm(idQuestionnaire, idUser);
         if(qcm==null){
-            throw new Exception("Impossible d'initialiser le qcm");
+            throw QcmException.UnknowQuestionnaireException;
         }
         request.getSession().setAttribute("qcm", qcm);
+        request.getSession().setAttribute("titreQuetionnaire", QuestionnaireDAO.getById(idQuestionnaire).getLibelle());
+        request.getSession().setAttribute("questions", qcm.getQuestions());
+        request.setAttribute("questionCourante", qcm.getQuestionCourante());
+        
     }
 }
