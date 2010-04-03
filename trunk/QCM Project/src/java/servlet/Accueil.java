@@ -15,7 +15,7 @@ import modele.User;
 import util.UserDAO;
 
 /**
- *
+ * 
  * @author marya
  */
 public class Accueil extends HttpServlet {
@@ -44,21 +44,24 @@ public class Accueil extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
+        String page = "index.jsp";
         try {
             String action = request.getParameter("action");
             if (action.equals("logout")) {
+                request.setAttribute("errorMessage", "Vous avez été déconnecté.");
                 request.getSession().invalidate();
             } else if (request.getSession().getAttribute("user") != null) {
-                request.getRequestDispatcher("accueil.jsp").forward(request, response);
+                page = "accueil.jsp";
             } else {
                 request.setAttribute("errorMessage", "Vous n'êtes pas connecté");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         } catch (NullPointerException e) {
             request.setAttribute("errorMessage", "Vous n'êtes pas authentifié");
         } catch (IllegalArgumentException e) {
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
         }
+        request.getRequestDispatcher(page).forward(request, response);
+
     }
 
     /**
@@ -71,7 +74,6 @@ public class Accueil extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Trace: doPost§");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
@@ -80,9 +82,7 @@ public class Accueil extends HttpServlet {
         try {
             String action = request.getParameter("action");
             if (action.equals("authentification")) {
-                System.out.println("Avant le check user");
                 page = checkUser(request);
-                System.out.println("Après le check user");
             }
         } catch (SQLException e) {
             errorMessage = e.getMessage();
@@ -129,4 +129,5 @@ public class Accueil extends HttpServlet {
         return page;
     }
 }
+
 
