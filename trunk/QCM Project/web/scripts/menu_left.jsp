@@ -11,6 +11,6 @@
                         <a href="creer_un_questionnaire.jsp"><li>Créer un questionnaire</li></a>
                         <a href="mes_questionnaires.jsp"><li>Mes questionnaires</li></a>
                         <a href="mes_resultats.jsp"><li>Mes résultats</li></a>
-                        <a href="index.jsp"><li>Déconnexion</li></a>
+                        <a href="Accueil?action=logout"><li>Déconnexion</li></a>
                     </ul>
                 </div>

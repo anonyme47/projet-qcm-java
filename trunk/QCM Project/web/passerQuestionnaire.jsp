@@ -23,19 +23,25 @@
                         <legend>Modifier mes réponses</legend>
                         <ul class="questions">
                             <%
+                                        Question questionCourante = (Question) request.getAttribute("questionCourante");
+
                                         Map<Integer, String> questions = (Map) request.getAttribute("questions");
                                         if (questions != null) {
                                             for (Integer idQuestion : questions.keySet()) {
-                                                out.println("<a href=" + idQuestion + "><li>" + questions.get(idQuestion) + "</li></a>");
+                                                if (questionCourante.getIdQuestion() == idQuestion) {
+                                                    out.println("<li><strong>" + questions.get(idQuestion) + "</strong></li>");
+                                                } else {
+                                                    out.println("<li>" + questions.get(idQuestion) + "</li>");
+                                                }
                                             }
                                         }
+                                        
                             %>
                         </ul>
                     </fieldset>
                     <form class="question" action="PasserQuestionnaire?action=questionSuivante" method="post" accept-charset="utf-8">
                         <%
                                     Questionnaire questionnaire = (Questionnaire) request.getAttribute("questionnaire");
-                                    Question questionCourante = (Question) request.getAttribute("questionCourante");
                         %>
                         <fieldset id="titre_questionnaire" class="">
                             <legend><strong><%= questionnaire.getLibelle()%></strong></legend>
