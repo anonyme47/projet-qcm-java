@@ -18,10 +18,10 @@ public class RequestHelper {
 
     protected HttpServletRequest request;
 
-    public RequestHelper(HttpServletRequest request) throws ExpiredSessionException{
+    public RequestHelper(HttpServletRequest request) throws Exception{
         this.request=request;
         if(!isUserAuthentificated()){
-            throw new ExpiredSessionException("Vous n'êtes pas connecté");
+            throw QcmException.ExpiredSessionException;
         }
     }
 

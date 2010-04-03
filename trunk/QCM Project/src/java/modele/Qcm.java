@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import util.QcmDAO;
+import util.QuestionDAO;
 import util.ReponseDAO;
 
 /**
@@ -85,6 +86,15 @@ public class Qcm {
     public Map<Integer, List<Integer>> getUserReponses() {
         return userReponses;
     }
+
+    public Map<Integer , String> getQuestions() throws SQLException{
+        Map<Integer, String> questions = new HashMap<Integer, String>();
+        for(Integer i : userReponses.keySet()){
+            questions.put(i, QuestionDAO.getById(i).getLibelle());
+        }
+        return questions;
+    }
+
 
     /**
      * 
