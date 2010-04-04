@@ -39,30 +39,30 @@
                         </ul>
                     </fieldset>
                     <%
-                        String titre_questionnaire = request.getSession().getAttribute("titreQuestionnaire").toString();
-                        if(questionCourante!=null){
+                                String titre_questionnaire = request.getSession().getAttribute("titreQuestionnaire").toString();
+                                if (questionCourante != null) {
                     %>
 
 
                     <form class="question" action="PasserQuestionnaire?action=validerQuestion" method="post" accept-charset="utf-8">
                         <fieldset id="titre_questionnaire">
-                            <legend><strong>Questionnaire : <%= titre_questionnaire %></strong></legend>
+                            <legend><strong>Questionnaire : <%= titre_questionnaire%></strong></legend>
                             <p>
                                 <%= questionCourante.getLibelle()%>
                             </p>
                         </fieldset>
                         <div id="reponses">
                             <%
-                                        List<Reponse> reponses = questionCourante.getReponses();
-                                        if (reponses != null) {
-                                            for (Reponse reponse : reponses) {
-                                                out.println("<input type='checkbox' name='reponses' value='"+reponse.getIdReponse()+"' /><label for='" + reponse.getIdReponse() + "'>" + reponse.getLibelle() + "</label><br />");
-                                            }
-                                        }
+                                                        List<Reponse> reponses = questionCourante.getReponses();
+                                                        if (reponses != null) {
+                                                            for (Reponse reponse : reponses) {
+                                                                out.println("<input type='checkbox' name='reponses' value='" + reponse.getIdReponse() + "' id='" + reponse.getIdReponse() + "' /><label for='" + reponse.getIdReponse() + "'>" + reponse.getLibelle() + "</label><br />");
+                                                            }
+                                                        }
                             %>
                         </div>
                         <p><input type="submit" value="Valider la question" /></p>
-                        <input type="hidden" name="idQuestion" value="<%= questionCourante.getIdQuestion() %>"/>
+                        <input type="hidden" name="idQuestion" value="<%= questionCourante.getIdQuestion()%>"/>
                     </form>
                     <div id="temps_restant">
                         <%
@@ -73,13 +73,13 @@
                             <input type="hidden" name="action" value="terminer" />
                         </form>
                     </div>
-                        <%
-                            }else if(request.getAttribute("estFini")!=null){
-                                out.println("Questionnaire fini");
-                            }else{
-                                out.println("Erreur");
-                             }
-                        %>
+                    <%
+                                            } else if (request.getAttribute("estFini") != null) {
+                                                out.println("Questionnaire fini");
+                                            } else {
+                                                out.println("Erreur");
+                                            }
+                    %>
                 </div>
             </div>
 
