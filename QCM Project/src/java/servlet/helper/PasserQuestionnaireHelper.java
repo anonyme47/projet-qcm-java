@@ -99,4 +99,13 @@ public class PasserQuestionnaireHelper extends RequestHelper {
         request.setAttribute("niveau", NiveauDAO.getLibelleById(questionnaire.getIdNiveau()));
         request.setAttribute("questionnaire", questionnaire);
     }
+
+
+    public void applyToModifyResponses() throws SQLException {
+        int modifyQuestion = Integer.parseInt(request.getParameter("modifyQuestion").toString());
+        request.setAttribute("questionCourante",QuestionDAO.getById(modifyQuestion) );
+    }
+
+   
+
 }
