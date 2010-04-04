@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import modele.Question;
 import modele.Questionnaire;
 
 /**
@@ -54,8 +55,8 @@ public class QuestionnaireDAO {
      * @return La liste des questions incluses dans le questionnaire spécifié en paramètre
      * @throws SQLException
      */
-    public static ArrayList<Integer> getQuestionsById(int idQuestionnaire) throws SQLException {
-        ArrayList<Integer> questions = new ArrayList<Integer>();
+    public static ArrayList<Question> getQuestionsById(int idQuestionnaire) throws SQLException {
+        ArrayList<Question> questions = new ArrayList<Question>();
         Connection connexion = Database.getConnection();
         String sql = "SELECT contenu.id_question, question.id_theme AS theme_question, questionnaire.id_theme AS theme_questionnaire FROM contenu";
         sql += " INNER JOIN question ON (question.id_question=contenu.id_question)";
@@ -67,7 +68,7 @@ public class QuestionnaireDAO {
 
         while (rs.next()) {
             assert rs.getInt("theme_question") == rs.getInt("theme_questionnaire");
-            questions.add(rs.getInt("id_question"));
+            questions.add(QuestionDAO.getById(rs.getInt("id_question")));
         }
         rs.close();
         ordre.close();

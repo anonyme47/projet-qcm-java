@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import tools.QCMTestCase;
+import util.QuestionDAO;
 import util.QuestionnaireDAO;
 
 /**
@@ -17,11 +18,11 @@ public class QcmTest extends QCMTestCase {
     public void testQcm() throws SQLException {
         System.out.println("Qcm");
         Qcm instance = new Qcm(1, 1);
-        ArrayList<Integer> expResult = new ArrayList<Integer>();
-        expResult.add(1);
-        expResult.add(2);
-        expResult.add(3);
-        ArrayList<Integer> result = QuestionnaireDAO.getQuestionsById(instance.getQuestionnaire().getIdQuestionnaire());
+        ArrayList<Question> expResult = new ArrayList<Question>();
+        expResult.add(QuestionDAO.getById(1));
+        expResult.add(QuestionDAO.getById(2));
+        expResult.add(QuestionDAO.getById(3));
+        ArrayList<Question> result = QuestionnaireDAO.getQuestionsById(instance.getQuestionnaire().getIdQuestionnaire());
         assertTrue(expResult.containsAll(result) && result.containsAll(expResult));
     }
 
