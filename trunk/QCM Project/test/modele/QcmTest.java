@@ -21,7 +21,7 @@ public class QcmTest extends QCMTestCase {
         expResult.add(1);
         expResult.add(2);
         expResult.add(3);
-        ArrayList<Integer> result = QuestionnaireDAO.getQuestionsById(instance.getIdQuestionnaire());
+        ArrayList<Integer> result = QuestionnaireDAO.getQuestionsById(instance.getQuestionnaire().getIdQuestionnaire());
         assertTrue(expResult.containsAll(result) && result.containsAll(expResult));
     }
 

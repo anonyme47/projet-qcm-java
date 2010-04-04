@@ -18,7 +18,7 @@ public class Questionnaire {
     private String libelle;
     private Date dateCreation;
     private Integer limiteTemps;
-    private List<Integer> questions;
+    private List<Question> questions;
     private boolean estActif;
     private boolean estPasse;
     private int idTheme;
@@ -39,7 +39,7 @@ public class Questionnaire {
      */
     public Questionnaire(int idQuestionnaire, String libelle, Date dateCreation,
             Integer limiteTemps, boolean estActif, int idTheme, 
-            int idUser, int idNiveau, ArrayList<Integer> questions , int nbPasseParUser) {
+            int idUser, int idNiveau, ArrayList<Question> questions , int nbPasseParUser) {
         assert idQuestionnaire > 0;
         assert libelle != null && !libelle.matches("^\\s*$");
         assert dateCreation != null;
@@ -88,7 +88,7 @@ public class Questionnaire {
         this.idTheme = idTheme;
         this.idUser = idUser;
         this.idNiveau = idNiveau;
-        this.questions = new ArrayList<Integer>();
+        this.questions = new ArrayList<Question>();
         assert invariant();
     }
 
@@ -176,11 +176,11 @@ public class Questionnaire {
         assert invariant();
     }
 
-    public List<Integer> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(final List<Integer> questions) {
+    public void setQuestions(final List<Question> questions) {
         assert questions != null;
         this.questions = questions;
         assert invariant();

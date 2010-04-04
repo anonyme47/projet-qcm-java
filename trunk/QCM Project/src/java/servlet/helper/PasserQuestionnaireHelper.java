@@ -61,10 +61,7 @@ public class PasserQuestionnaireHelper extends RequestHelper {
             throw QcmException.UnknowQuestionnaireException;
         }
         request.getSession().setAttribute("qcm", qcm);
-        request.getSession().setAttribute("titreQuestionnaire", QuestionnaireDAO.getById(idQuestionnaire).getLibelle());
-        request.getSession().setAttribute("questions", qcm.getQuestions());
         request.setAttribute("questionCourante", QuestionDAO.getById(qcm.getQuestionSuivante()));
-//        request.setAttribute("questionCourante", qcm.getQuestionSuivante());
     }
 
     public void setAttributeQuestionSuivante() throws SQLException, Exception {
@@ -92,12 +89,10 @@ public class PasserQuestionnaireHelper extends RequestHelper {
     public void prepareResultats() throws SQLException {
         Qcm qcm = (Qcm) request.getSession().getAttribute("qcm");
         qcm.setEstFini(true);
-        Questionnaire questionnaire = QuestionnaireDAO.getById(qcm.getIdQuestionnaire());
 
         request.setAttribute("note", qcm.getNote());
-        request.setAttribute("theme", ThemeDAO.getLibelleById(questionnaire.getIdTheme()));
-        request.setAttribute("niveau", NiveauDAO.getLibelleById(questionnaire.getIdNiveau()));
-        request.setAttribute("questionnaire", questionnaire);
+        request.setAttribute("theme", ThemeDAO.getLibelleById(qcm.getQuestionnaire().getIdTheme()));
+        request.setAttribute("niveau", NiveauDAO.getLibelleById(qcm.getQuestionnaire().getIdNiveau()));
     }
 
 

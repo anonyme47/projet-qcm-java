@@ -19,7 +19,7 @@ import util.ReponseDAO;
  */
 public class Qcm {
 
-    private int idQuestionnaire;
+    private Questionnaire questionnaire;
     private int idUser;
     private boolean estFini;
     private Map<Integer, List<Integer>> userReponses;
@@ -30,12 +30,12 @@ public class Qcm {
         assert idQuestionnaire > 0;
         assert idUser > 0;
         try {
-            this.idQuestionnaire = idQuestionnaire;
             this.idUser = idUser;
             userReponses = new HashMap<Integer, List<Integer>>();
-            ArrayList<Integer> questions = QuestionnaireDAO.getQuestionsById(idQuestionnaire);
-            for (Integer i : questions) {
-                userReponses.put(i, new ArrayList<Integer>());
+            this.questionnaire = QuestionnaireDAO.getById(idQuestionnaire);
+            List<Question> questions = questionnaire.getQuestions();
+            for (int i = 0; i< questions.size(); i++) {
+                userReponses.put(questions.get(i).getIdQuestion(), new ArrayList<Integer>());
             }
             iterateur = userReponses.keySet().iterator();
             this.estFini = false;
@@ -45,8 +45,8 @@ public class Qcm {
         assert invariant();
     }
 
-    public int getIdQuestionnaire() {
-        return idQuestionnaire;
+    public Questionnaire getQuestionnaire() {
+        return questionnaire;
     }
 
     public int getIdUser() {
@@ -81,13 +81,6 @@ public class Qcm {
         return userReponses;
     }
 
-    public Map<Integer , Question> getQuestions() throws SQLException{
-        Map<Integer, Question> questions = new HashMap<Integer, Question>();
-        for(Integer i : userReponses.keySet()){
-            questions.put(i, QuestionDAO.getById(i));
-        }
-        return questions;
-    }
 
 
     /**
@@ -112,7 +105,7 @@ public class Qcm {
             return false;
         }
         final Qcm other = (Qcm) obj;
-        if (this.idQuestionnaire != other.idQuestionnaire) {
+        if (this.questionnaire.getIdQuestionnaire() != other.getQuestionnaire().getIdQuestionnaire()) {
             return false;
         }
         if (this.idUser != other.idUser) {
@@ -124,7 +117,7 @@ public class Qcm {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 53 * hash + this.idQuestionnaire;
+        hash = 53 * hash + this.questionnaire.getIdQuestionnaire();
         hash = 53 * hash + this.idUser;
         return hash;
     }
@@ -132,7 +125,7 @@ public class Qcm {
     protected boolean invariant() {
         assert !estFini();
         assert getUserReponses() != null && getUserReponses().size() > 0;
-        assert getIdQuestionnaire() > 0;
+        assert getQuestionnaire() != null;
         assert getQuestionSuivante() > 0;
         return true;
     }
