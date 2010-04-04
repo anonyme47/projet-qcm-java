@@ -59,7 +59,7 @@
                         %>
 
 
-                        <a href="Accueil" class="button">Retourner à l'accueil</a>
+                        <a href="Accueil?action=retourAccueil" class="button">Retourner à l'accueil</a>
 
                         <form action="PasserQuestionnaire" method="post" id="commencer_qcm_form">
                             <input type="hidden" name="questionnaire" value="<%= questionnaire.getIdQuestionnaire()%>" />

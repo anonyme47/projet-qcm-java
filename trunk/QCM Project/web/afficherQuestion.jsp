@@ -24,14 +24,15 @@
                         <ul class="questions">
                             <%
                                         Question questionCourante = (Question) request.getAttribute("questionCourante");
+                                        Qcm qcm = (Qcm) request.getSession().getAttribute("qcm");
 
-                                        Map<Integer, Question> questions = (Map) request.getSession().getAttribute("questions");
+                                        List<Question> questions = qcm.getQuestionnaire().getQuestions();
                                         if (questions != null) {
-                                            for (Integer idQuestion : questions.keySet()) {
-                                                if (questionCourante != null && questionCourante.getIdQuestion() == idQuestion) {
-                                                    out.println("<li><strong>" + questions.get(idQuestion).getLibelle() + "</strong></li>");
+                                            for (Question question : questions) {
+                                                if (questionCourante != null && questionCourante.getIdQuestion() == question.getIdQuestion()) {
+                                                    out.println("<li><strong>" + question.getLibelle() + "</strong></li>");
                                                 } else {
-                                                    out.println("<li>" + questions.get(idQuestion).getLibelle() + "</li>");
+                                                    out.println("<li>" + question.getLibelle() + "</li>");
                                                 }
                                             }
                                         }
@@ -39,7 +40,7 @@
                         </ul>
                     </fieldset>
                     <%
-                                String titre_questionnaire = request.getSession().getAttribute("titreQuestionnaire").toString();
+                                String titre_questionnaire = qcm.getQuestionnaire().getLibelle();
                                 if (questionCourante != null) {
                     %>
 
