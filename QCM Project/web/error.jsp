@@ -8,12 +8,21 @@
     </head>
     <body>
         <div id="content">
-            <jsp:include page="scripts/header.jsp" />
+           <div id="logo">
+                <h1><a href="index.jsp">iQCM</a></h1>
+            </div>
+            <ul id="menu">
+                <li><a href="accueil.jsp">Accueil</a></li>
+                <li><a href="#">Actualité</a></li>
+                <li><a href="#">A propos</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="line"></div>
             <div id="body">
                 <h1>Vous avez rencontré une erreur</h1><br/><br/>
                 <%
                     if(request.getAttribute("errorMessage")!=null){
-                        out.println(request.getAttribute("errorMessage").toString());
+                        out.println((String) request.getAttribute("errorMessage"));
                     }
 
                     
