@@ -48,7 +48,7 @@ public class NiveauDAOTest {
         System.out.println("getLibelleById");
         Niveau instance = new Niveau(1, "Débutant");
         String expResult = "Débutant";
-        String result = NiveauDAO.getLibelleById(instance.getIdNiveau());
+        String result = NiveauDAO.getById(instance.getIdNiveau()).getLibelle();
         assertTrue(result.equals(expResult));
     }
 

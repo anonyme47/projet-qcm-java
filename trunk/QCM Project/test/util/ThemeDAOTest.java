@@ -54,7 +54,7 @@ public class ThemeDAOTest {
         System.out.println("getLibelleById");
         Theme instance = new Theme(1, 1, "Java");
         String expResult = "Java";
-        String result = ThemeDAO.getLibelleById(instance.getIdTheme());
+        String result = ThemeDAO.getById(instance.getIdTheme()).getLibelle();
         assertTrue(result.equals(expResult));
     }
 }

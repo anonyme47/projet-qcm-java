@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import modele.Qcm;
-import modele.Question;
-import modele.Questionnaire;
 import modele.User;
 import util.*;
 
@@ -91,8 +89,8 @@ public class PasserQuestionnaireHelper extends RequestHelper {
         qcm.setEstFini(true);
 
         request.setAttribute("note", qcm.getNote());
-        request.setAttribute("theme", ThemeDAO.getLibelleById(qcm.getQuestionnaire().getIdTheme()));
-        request.setAttribute("niveau", NiveauDAO.getLibelleById(qcm.getQuestionnaire().getIdNiveau()));
+        request.setAttribute("theme", ThemeDAO.getById(qcm.getQuestionnaire().getIdTheme()).getLibelle());
+        request.setAttribute("niveau", NiveauDAO.getById(qcm.getQuestionnaire().getIdNiveau()).getLibelle());
     }
 
 
