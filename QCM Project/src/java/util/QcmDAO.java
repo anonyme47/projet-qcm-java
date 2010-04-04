@@ -21,7 +21,7 @@ public class QcmDAO {
         try {
             connexion = Database.getConnection();
             connexion.setAutoCommit(false);
-            int idQuestionnaire = qcm.getIdQuestionnaire();
+            int idQuestionnaire = qcm.getQuestionnaire().getIdQuestionnaire();
             int idUser=qcm.getIdUser();
             String sql = "INSERT INTO user_reponse(id_contenu, id_reponse, id_user) VALUES (?,?,?)";
             ordre = connexion.prepareStatement(sql);
