@@ -38,10 +38,14 @@ public class PasserQuestionnaire extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String forward = "error.jsp";
+        String forward = "index.jsp";
         try {
+            
             RequestHelper helper = new RequestHelper(request);
+            System.out.println("debut");
             String action = request.getParameter("action").toString();
+            
+            System.out.println(action);
             if (action != null) {
                 if (action.equals("afficherChoixThemesNiveau")) {
                     helper.setAttributeThemesAndNiveaux();
@@ -53,14 +57,28 @@ public class PasserQuestionnaire extends HttpServlet {
                     forward = "warning.jsp";
                 }
             }
-
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
         } catch (NullPointerException e) {
+            e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
         } catch (SQLException e) {
+            e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
+        } catch (IOException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
         } catch (Exception e) {
+            e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
         }
+        System.out.println("Forward = "+forward);
         request.getRequestDispatcher(forward).forward(request, response);
     }
 
@@ -85,7 +103,7 @@ public class PasserQuestionnaire extends HttpServlet {
                     forward = "choixQuestionnaire.jsp";
                 } else if (action.equals("validerQuestion")) {
                     // Faire avancer l'iterateur du QCM
-                    helper.setSessionAttributeQuestionSuivante();
+                    helper.setAttributeQuestionSuivante();
                     forward = "afficherQuestion.jsp";
                 } else if (action.equals("modifierReponses")) {
                     //On met en attribut
@@ -97,11 +115,16 @@ public class PasserQuestionnaire extends HttpServlet {
                     helper.prepareResultats();
                     forward = "resultat.jsp";
                 }
+            } else {
+                forward = "index.jsp";
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
         } catch (SQLException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+        } catch (IOException e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
         } catch (Exception e) {

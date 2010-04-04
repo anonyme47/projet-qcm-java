@@ -12,7 +12,11 @@
             <div id="body">
                 <h1>Vous avez rencontré une erreur</h1><br/><br/>
                 <%
-                    out.println(request.getAttribute("errorMessage").toString());
+                    if(request.getAttribute("errorMessage")!=null){
+                        out.println(request.getAttribute("errorMessage").toString());
+                    }
+
+                    
                 %>
             </div>
 

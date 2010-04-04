@@ -21,7 +21,6 @@ public class Qcm {
 
     private int idQuestionnaire;
     private int idUser;
-    private int questionCourante;
     private boolean estFini;
     private Map<Integer, List<Integer>> userReponses;
     private Iterator<Integer> iterateur;
@@ -39,7 +38,6 @@ public class Qcm {
                 userReponses.put(i, new ArrayList<Integer>());
             }
             iterateur = userReponses.keySet().iterator();
-            questionCourante = iterateur.next();
             this.estFini = false;
         } catch (SQLException ex) {
             Logger.getLogger(Qcm.class.getName()).log(Level.SEVERE, null, ex);
@@ -69,19 +67,15 @@ public class Qcm {
         assert invariant();
     }
 
-    public int getQuestionCourante() {
-        int idQuestionCourante = questionCourante;
+    public Integer getQuestionSuivante() {
+        Integer idQuestion = null;
         if (iterateur.hasNext()) {
-            questionCourante = iterateur.next();
+            idQuestion= iterateur.next();
         }
-        return idQuestionCourante;
+        return idQuestion;
     }
 
-    public void setQuestionCourante(final int questionCourante) {
-        assert questionCourante > 0;
-        this.questionCourante = questionCourante;
-        assert invariant();
-    }
+    
 
     public Map<Integer, List<Integer>> getUserReponses() {
         return userReponses;
@@ -139,7 +133,7 @@ public class Qcm {
         assert !estFini();
         assert getUserReponses() != null && getUserReponses().size() > 0;
         assert getIdQuestionnaire() > 0;
-        assert getQuestionCourante() > 0;
+        assert getQuestionSuivante() > 0;
         return true;
     }
 
@@ -160,7 +154,6 @@ public class Qcm {
     public void reset() {
         assert !estFini();
         iterateur = userReponses.keySet().iterator();
-        questionCourante = iterateur.next();
         assert invariant();
     }
 
