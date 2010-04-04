@@ -25,13 +25,13 @@
                             <%
                                         Question questionCourante = (Question) request.getAttribute("questionCourante");
 
-                                        Map<Integer, String> questions = (Map) request.getSession().getAttribute("questions");
+                                        Map<Integer, Question> questions = (Map) request.getSession().getAttribute("questions");
                                         if (questions != null) {
                                             for (Integer idQuestion : questions.keySet()) {
                                                 if (questionCourante != null && questionCourante.getIdQuestion() == idQuestion) {
-                                                    out.println("<li><strong>" + questions.get(idQuestion) + "</strong></li>");
+                                                    out.println("<li><strong>" + questions.get(idQuestion).getLibelle() + "</strong></li>");
                                                 } else {
-                                                    out.println("<li>" + questions.get(idQuestion) + "</li>");
+                                                    out.println("<li>" + questions.get(idQuestion).getLibelle() + "</li>");
                                                 }
                                             }
                                         }

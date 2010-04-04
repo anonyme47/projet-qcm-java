@@ -81,10 +81,10 @@ public class Qcm {
         return userReponses;
     }
 
-    public Map<Integer , String> getQuestions() throws SQLException{
-        Map<Integer, String> questions = new HashMap<Integer, String>();
+    public Map<Integer , Question> getQuestions() throws SQLException{
+        Map<Integer, Question> questions = new HashMap<Integer, Question>();
         for(Integer i : userReponses.keySet()){
-            questions.put(i, QuestionDAO.getById(i).getLibelle());
+            questions.put(i, QuestionDAO.getById(i));
         }
         return questions;
     }

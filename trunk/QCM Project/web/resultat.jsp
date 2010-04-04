@@ -24,7 +24,7 @@
                 <div id="contenu">
                     <h4 id="liste">Résultats pour ce questionnaire</h4>
                     <div id="score">
-                        <p>Votre note : <span class="score_value mauvais">10%</span></p>
+                        <p>Votre note : <span class="score_value mauvais"><%= request.getAttribute("note") %></span></p>
                     </div>
                     <div class="recapitule_questionnaire">
                         <h5>Récapitulatif du questionnaire</h5>
@@ -53,11 +53,10 @@
                     </div>
 
                     <dl id="resultat" class="liste">
-                        <!-- foreach question dans le questionnaire -->
                         <%
                             for (Integer question : qcm.getQuestions().keySet()) {
                                 out.println("<dt>Question " + question + "</dt>");
-                                out.println("<dd>Votre réponse : " + qcm.getQuestions().get(question) + "</dd>");
+                                out.println("<dd>Votre réponse : " + qcm.getQuestions().get(question).getLibelle() + "</dd>");
                             }
                         %>
 <%--                        <dt>Question 1</dt>
