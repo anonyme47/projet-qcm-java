@@ -99,6 +99,7 @@ public class Questionnaire {
 
     public void setDateCreation(Date dateCreation) {
         assert dateCreation != null;
+        assert !estPasse();
         this.dateCreation = dateCreation;
     }
 
@@ -123,6 +124,7 @@ public class Questionnaire {
 
     public void setIdNiveau(final int idNiveau) {
         assert idNiveau > 0 : "L'identifiant du niveau doit être > 0";
+        assert !estPasse();
         this.idNiveau = idNiveau;
         assert invariant();
     }
@@ -133,6 +135,7 @@ public class Questionnaire {
 
     public void setIdQuestionnaire(final Integer idQuestionnaire) {
         assert idQuestionnaire == null || idQuestionnaire > 0 : "Le numéro du questionnaire doit être positif";
+        assert !estPasse();
         this.idQuestionnaire = idQuestionnaire;
         assert invariant();
     }
@@ -143,6 +146,7 @@ public class Questionnaire {
 
     public void setIdTheme(final int idTheme) {
         assert idTheme > 0;
+        assert !estPasse();
         this.idTheme = idTheme;
         assert invariant();
     }
@@ -153,6 +157,7 @@ public class Questionnaire {
 
     public void setIdUser(final int idUser) {
         assert idUser > 0;
+        assert !estPasse();
         this.idUser = idUser;
         assert invariant();
     }
@@ -163,6 +168,7 @@ public class Questionnaire {
 
     public void setLibelle(final String libelle) {
         assert libelle != null && !libelle.matches("^\\s*$");
+        assert !estPasse();
         this.libelle = libelle;
         assert invariant();
     }
@@ -174,6 +180,7 @@ public class Questionnaire {
     public void setLimiteTemps(final Integer limiteTemps) {
         assert limiteTemps == null || limiteTemps > 0;
         this.limiteTemps = limiteTemps;
+        assert !estPasse();
         assert invariant();
     }
 
@@ -184,7 +191,16 @@ public class Questionnaire {
     public void setQuestions(final List<Question> questions) {
         assert questions != null;
         this.questions = questions;
+        assert !estPasse();
         assert invariant();
+    }
+
+    public void addQuestion(Question q){
+        this.questions.add(q);
+    }
+
+    public void removeQuestion(Question q){
+        this.questions.remove(q);
     }
 
     @Override

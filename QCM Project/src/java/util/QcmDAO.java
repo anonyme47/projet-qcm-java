@@ -38,11 +38,11 @@ public class QcmDAO {
                     ordre.executeUpdate();
                 }
             }
-            qcm.setEstFini(true);
             sql="INSERT INTO questionnaire_passe(id_questionnaire, id_user, note, date) VALUES ("+idQuestionnaire+","+idUser+","+qcm.getNote()+",NOW())";
             int result= connexion.createStatement().executeUpdate(sql);
             if(result>0){
               connexion.commit();
+              qcm.setEstFini(true);
             }else{
                 throw new SQLException("Insertion questionnaire_passe failed.");
             }
