@@ -56,12 +56,13 @@
                                         List<Reponse> reponses = questionCourante.getReponses();
                                         if (reponses != null) {
                                             for (Reponse reponse : reponses) {
-                                                out.println("<input type='checkbox' name='reponses' id='" + reponse.getIdReponse() + "' /><label for='" + reponse.getIdReponse() + "'>" + reponse.getLibelle() + "</label><br />");
+                                                out.println("<input type='checkbox' name='reponses' value='"+reponse.getIdReponse()+"' /><label for='" + reponse.getIdReponse() + "'>" + reponse.getLibelle() + "</label><br />");
                                             }
                                         }
                             %>
                         </div>
                         <p><input type="submit" value="Valider la question" /></p>
+                        <input type="hidden" name="idQuestion" value="<%= questionCourante.getIdQuestion() %>"/>
                     </form>
                     <div id="temps_restant">
                         <%
