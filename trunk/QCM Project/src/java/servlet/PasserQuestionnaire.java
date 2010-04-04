@@ -102,11 +102,10 @@ public class PasserQuestionnaire extends HttpServlet {
                     helper.setAttributeQuestionnairesByChoice();
                     forward = "choixQuestionnaire.jsp";
                 } else if (action.equals("validerQuestion")) {
-                    // Faire avancer l'iterateur du QCM
                     helper.setAttributeQuestionSuivante();
                     forward = "afficherQuestion.jsp";
                 } else if (action.equals("modifierReponses")) {
-                    //On met en attribut
+                    helper.applyToModifyResponses();
                     forward = "afficherQuestion.jsp";
                 } else if (action.equals("commencerQcm")) {
                     helper.setSessionAttributeQcm();
