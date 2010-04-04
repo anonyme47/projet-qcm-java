@@ -1,6 +1,7 @@
 package modele;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -155,6 +156,23 @@ public class Question {
     @Override
     public String toString() {
         return "[ " + idQuestion + " : " + libelle + " : " + idTheme + " ]";
+    }
+
+
+    public int getNoteMax() {
+        int note = 0;
+        Iterator<Reponse> it = this.getReponses().iterator();
+        Reponse rep = null;
+
+        while (it.hasNext()) {
+
+            rep =it.next();
+            if(rep.estCorrecte()){
+                note+=rep.getNote();
+            }
+        }
+        return note;
+
     }
 
     protected boolean invariant() {

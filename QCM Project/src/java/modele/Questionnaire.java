@@ -2,6 +2,7 @@ package modele;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -220,6 +221,20 @@ public class Questionnaire {
     public String toString() {
         return "[" + libelle + ":" + idTheme + ":" + idNiveau + "]";
     }
+
+
+    public int getNoteMax() {
+        assert invariant();
+        int note = 0;
+        Iterator<Question> itQuest = this.questions.iterator();
+        Question q = null;
+        while (itQuest.hasNext()) {
+            q = itQuest.next();
+            note += q.getNoteMax();
+        }
+        return note;
+    }
+
 
     public boolean invariant() {
         assert getLibelle() != null && !getLibelle().matches("^\\s*$");
