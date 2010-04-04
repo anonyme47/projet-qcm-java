@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
                 <div id="navigation">
                     <ul class="menu_gauche">
-                        <a href="ChoixQuestionnaire"><li>Passer un questionnaire</li></a>
+                        <a href="PasserQuestionnaire?action=afficherChoixThemesNiveau"><li>Passer un questionnaire</li></a>
                         <a href="creer_un_questionnaire.jsp"><li>Créer un questionnaire</li></a>
                         <a href="mes_questionnaires.jsp"><li>Mes questionnaires</li></a>
                         <a href="mes_resultats.jsp"><li>Mes résultats</li></a>

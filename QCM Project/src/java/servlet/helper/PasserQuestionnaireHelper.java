@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import modele.Qcm;
+import modele.Reponse;
 import modele.User;
 import util.*;
 
@@ -64,41 +65,38 @@ public class PasserQuestionnaireHelper extends RequestHelper {
 
     public void setAttributeQuestionSuivante() throws SQLException, Exception {
         Qcm qcm = (Qcm) request.getSession().getAttribute("qcm");
-//        Question questionCourante = (Question) request.getAttribute("questionCourante");
         String[] reponses = request.getParameterValues("reponses");
         if (reponses != null && reponses.length != 0) {
             List<Integer> userReponses = new ArrayList<Integer>();
             for (String reponse : reponses) {
                 userReponses.add(Integer.parseInt(reponse));
             }
-            qcm.setUserReponses(Integer.parseInt(request.getParameter("idQuestion")), userReponses);
+            int idQuestion = Integer.parseInt(request.getParameter("idQuestion"));
+            List<Reponse> reponsesDeQuestion = QuestionDAO.getById(idQuestion).getReponses();
+            if (reponsesDeQuestion.size() > userReponses.size()) {
+                qcm.setUserReponses(idQuestion, userReponses);
+            }
         }
         Integer questionCourante = qcm.getQuestionSuivante();
-        if(questionCourante==null){
+        if (questionCourante == null) {
             request.setAttribute("questionCourante", null);
-            request.setAttribute("estFini",true);
-        }else{
-            request.setAttribute("questionCourante", QuestionDAO.getById( (int) questionCourante ));
+            request.setAttribute("estFini", true);
+        } else {
+            request.setAttribute("questionCourante", QuestionDAO.getById((int) questionCourante));
         }
-       
-//        request.setAttribute("questionCourante", qcm.getQuestionSuivante());
     }
 
     public void prepareResultats() throws SQLException {
         Qcm qcm = (Qcm) request.getSession().getAttribute("qcm");
-        qcm.setEstFini(true);
+        qcm.save();
 
         request.setAttribute("note", qcm.getNote());
         request.setAttribute("theme", ThemeDAO.getById(qcm.getQuestionnaire().getIdTheme()).getLibelle());
         request.setAttribute("niveau", NiveauDAO.getById(qcm.getQuestionnaire().getIdNiveau()).getLibelle());
     }
 
-
     public void applyToModifyResponses() throws SQLException {
         int modifyQuestion = Integer.parseInt(request.getParameter("modifyQuestion").toString());
-        request.setAttribute("questionCourante",QuestionDAO.getById(modifyQuestion) );
+        request.setAttribute("questionCourante", QuestionDAO.getById(modifyQuestion));
     }
-
-   
-
 }

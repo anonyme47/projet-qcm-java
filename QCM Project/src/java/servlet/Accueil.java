@@ -46,12 +46,12 @@ public class Accueil extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         String page = "index.jsp";
         try {
-            String action = request.getParameter("action");
-            if (action.equals("logout")) {
+            String action = request.getParameter("action").toString();
+            if (request.getSession().getAttribute("user") != null && action.equals("retourAccueil")) {
+                page = "accueil.jsp";
+            } else if (action.equals("logout")) {
                 request.setAttribute("errorMessage", "Vous avez été déconnecté.");
                 request.getSession().invalidate();
-            } else if (request.getSession().getAttribute("user") != null) {
-                page = "accueil.jsp";
             } else {
                 request.setAttribute("errorMessage", "Vous n'êtes pas connecté");
             }

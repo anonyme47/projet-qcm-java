@@ -222,6 +222,14 @@ div#temps_restant {
     padding: 15px 30px;
     margin: 20px 0px;
 }
+
+.liste_recapitulatif {
+    list-style-position: inside;
+    background-color: #ffb;
+    padding: 15px 30px;
+    margin: 20px 0px;
+}
+
 div#choix_questionnaire {
     background-color: #eee;
     padding: 15px 30px;
@@ -245,11 +253,22 @@ div#score span.score_value {
 }
 
 dl#resultat {
-    width: 80%;
+    width: 70%;
 }
-dl#resultat > dt + dd {
-    border-bottom: 1px solid #ddd;
+dl#resultat > dt + dd ul {
+    margin-left: 4em;
 }
+dl#resultat > dt + dd ul li {
+    line-height: 2em;
+}
+dl#resultat > dd + dt {
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: 1px solid #999;
+}
+
+
+
 div.recapitule_questionnaire {
     margin-bottom: 20px;
 }
