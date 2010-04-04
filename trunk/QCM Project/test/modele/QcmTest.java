@@ -26,14 +26,14 @@ public class QcmTest extends QCMTestCase {
     }
 
     /**
-     * Test of getQuestionCourante method, of class Qcm.
+     * Test of getQuestionSuivante method, of class Qcm.
      */
     @Test
     public void testGetQuestionCourante() throws SQLException {
         System.out.println("getQuestionCourante");
         Qcm instance = new Qcm(1, 1);
         int expResult = 1;
-        int result = instance.getQuestionCourante();
+        int result = instance.getQuestionSuivante();
         assertEquals(expResult, result);
     }
 
@@ -88,9 +88,9 @@ public class QcmTest extends QCMTestCase {
         reponses.add(1);
         reponses.add(3);
         instance.setUserReponses(1,reponses);
-        System.out.println(instance.getQuestionCourante());
-        System.out.println(instance.getQuestionCourante());
-        System.out.println(instance.getQuestionCourante());
+        System.out.println(instance.getQuestionSuivante());
+        System.out.println(instance.getQuestionSuivante());
+        System.out.println(instance.getQuestionSuivante());
         assert instance.invariant();
         instance.save();
         assertTrue(instance.estFini());

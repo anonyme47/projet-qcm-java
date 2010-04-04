@@ -60,11 +60,11 @@ public class PasserQuestionnaireHelper extends RequestHelper {
         request.getSession().setAttribute("qcm", qcm);
         request.getSession().setAttribute("titreQuestionnaire", QuestionnaireDAO.getById(idQuestionnaire).getLibelle());
         request.getSession().setAttribute("questions", qcm.getQuestions());
-        request.setAttribute("questionCourante", QuestionDAO.getById(qcm.getQuestionCourante()));
-//        request.setAttribute("questionCourante", qcm.getQuestionCourante());
+        request.setAttribute("questionCourante", QuestionDAO.getById(qcm.getQuestionSuivante()));
+//        request.setAttribute("questionCourante", qcm.getQuestionSuivante());
     }
 
-    public void setSessionAttributeQuestionSuivante() throws SQLException, Exception {
+    public void setAttributeQuestionSuivante() throws SQLException, Exception {
         Qcm qcm = (Qcm) request.getSession().getAttribute("qcm");
         String[] reponses = request.getParameterValues("reponses");
         if (reponses != null && reponses.length != 0) {
@@ -72,8 +72,15 @@ public class PasserQuestionnaireHelper extends RequestHelper {
                 System.out.println(reponse);
             }
         }
-        request.setAttribute("questionCourante", QuestionDAO.getById(qcm.getQuestionCourante()));
-//        request.setAttribute("questionCourante", qcm.getQuestionCourante());
+        Integer questionCourante = qcm.getQuestionSuivante();
+        if(questionCourante==null){
+            request.setAttribute("questionCourante", null);
+            request.setAttribute("estFini",true);
+        }else{
+            request.setAttribute("questionCourante", QuestionDAO.getById( (int) questionCourante ));
+        }
+       
+//        request.setAttribute("questionCourante", qcm.getQuestionSuivante());
     }
 
     public void prepareResultats() throws SQLException {

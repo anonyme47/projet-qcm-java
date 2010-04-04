@@ -28,7 +28,7 @@
                                         Map<Integer, String> questions = (Map) request.getSession().getAttribute("questions");
                                         if (questions != null) {
                                             for (Integer idQuestion : questions.keySet()) {
-                                                if (questionCourante.getIdQuestion() == idQuestion) {
+                                                if (questionCourante != null && questionCourante.getIdQuestion() == idQuestion) {
                                                     out.println("<li><strong>" + questions.get(idQuestion) + "</strong></li>");
                                                 } else {
                                                     out.println("<li>" + questions.get(idQuestion) + "</li>");
@@ -38,13 +38,15 @@
                             %>
                         </ul>
                     </fieldset>
+                    <%
+                        String titre_questionnaire = request.getSession().getAttribute("titreQuestionnaire").toString();
+                        if(questionCourante!=null){
+                    %>
+
+
                     <form class="question" action="PasserQuestionnaire?action=validerQuestion" method="post" accept-charset="utf-8">
-                        <%
-                                    Qcm qcm = (Qcm) request.getSession().getAttribute("qcm");
-                        %>
                         <fieldset id="titre_questionnaire">
-                            <legend><strong>Questionnaire : <%= request.getSession().getAttribute("titreQuestionnaire")%></strong></legend>
-                            <%--<legend><strong>Questionnaire numéro 1 : [Java Avancé]</strong></legend>--%>
+                            <legend><strong>Questionnaire : <%= titre_questionnaire %></strong></legend>
                             <p>
                                 <%= questionCourante.getLibelle()%>
                             </p>
@@ -70,6 +72,13 @@
                             <input type="hidden" name="action" value="terminer" />
                         </form>
                     </div>
+                        <%
+                            }else if(request.getAttribute("estFini")!=null){
+                                out.println("Questionnaire fini");
+                            }else{
+                                out.println("Erreur");
+                             }
+                        %>
                 </div>
             </div>
 
