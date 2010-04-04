@@ -2,7 +2,9 @@ package servlet.helper;
 
 import exception.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import modele.Qcm;
 import modele.Questionnaire;
@@ -68,9 +70,11 @@ public class PasserQuestionnaireHelper extends RequestHelper {
         Qcm qcm = (Qcm) request.getSession().getAttribute("qcm");
         String[] reponses = request.getParameterValues("reponses");
         if (reponses != null && reponses.length != 0) {
+            List<Integer> userReponses = new ArrayList<Integer>();
             for (String reponse : reponses) {
-                System.out.println(reponse);
+                userReponses.add(Integer.parseInt(reponse));
             }
+            qcm.setUserReponses(Integer.parseInt(request.getParameter("idQuestion")), userReponses);
         }
         Integer questionCourante = qcm.getQuestionSuivante();
         if(questionCourante==null){
@@ -85,10 +89,12 @@ public class PasserQuestionnaireHelper extends RequestHelper {
 
     public void prepareResultats() throws SQLException {
         Qcm qcm = (Qcm) request.getSession().getAttribute("qcm");
+        qcm.setEstFini(true);
         Questionnaire questionnaire = QuestionnaireDAO.getById(qcm.getIdQuestionnaire());
         request.setAttribute("theme", ThemeDAO.getLibelleById(questionnaire.getIdTheme()));
         request.setAttribute("niveau", NiveauDAO.getLibelleById(questionnaire.getIdNiveau()));
 
         request.setAttribute("questionnaire", questionnaire);
+        request.setAttribute("score", qcm.getNote());
     }
 }
