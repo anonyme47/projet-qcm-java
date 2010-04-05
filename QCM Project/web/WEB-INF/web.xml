@@ -20,6 +20,14 @@
         <servlet-name>CreerQuestionnaire</servlet-name>
         <servlet-class>servlet.CreerQuestionnaire</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MesQuestionnaires</servlet-name>
+        <servlet-class>servlet.MesQuestionnaires</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MesResultats</servlet-name>
+        <servlet-class>servlet.MesResultats</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Accueil</servlet-name>
         <url-pattern>/Accueil</url-pattern>
@@ -39,6 +47,14 @@
     <servlet-mapping>
         <servlet-name>CreerQuestionnaire</servlet-name>
         <url-pattern>/CreerQuestionnaire</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MesQuestionnaires</servlet-name>
+        <url-pattern>/MesQuestionnaires</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MesResultats</servlet-name>
+        <url-pattern>/MesResultats</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

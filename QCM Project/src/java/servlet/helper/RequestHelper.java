@@ -47,7 +47,7 @@ public class RequestHelper {
      * @param idNiveau
      * @throws SQLException
      */
-    public void setAttributeThemeAndNiveau(int idtheme, int idNiveau) throws SQLException{
+    protected void setAttributeThemeAndNiveau(int idtheme, int idNiveau) throws SQLException{
          request.setAttribute("theme", ThemeDAO.getById(idtheme).getLibelle());
          request.setAttribute("niveau", NiveauDAO.getById(idNiveau).getLibelle());
     }
