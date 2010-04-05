@@ -141,9 +141,8 @@ public class QuestionnaireDAO extends ModeleDAO{
      */
     public static Questionnaire search(final int idTheme, final int idNiveau, final String libelle) throws SQLException {
         Questionnaire questionnaire = null;
-        Connection connexion = getConnection();
         String sql = "SELECT id_user FROM questionnaire WHERE id_theme=? AND id_niveau=? AND libelle=? LIMIT 0,1";
-        PreparedStatement ordre = connexion.prepareStatement(sql);
+        PreparedStatement ordre = getConnection().prepareStatement(sql);
         ordre.setInt(1, idTheme);
         ordre.setInt(2, idNiveau);
         ordre.setString(3, libelle);
@@ -155,6 +154,16 @@ public class QuestionnaireDAO extends ModeleDAO{
         rs.close();
         ordre.close();
         return questionnaire;
+    }
+
+
+    public static void update(Questionnaire q) throws SQLException{
+        String sql = "UPDATE questionnaire SET libelle = ? , id_niveau = ? WHERE id_questionnaire = ?";
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+        ps.setString(1, q.getLibelle());
+        ps.setInt(2, q.getIdNiveau());
+        ps.setInt(3, q.getIdQuestionnaire());
+        ps.executeUpdate();
     }
 
 }
