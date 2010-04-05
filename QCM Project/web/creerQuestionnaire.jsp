@@ -18,48 +18,55 @@
 
                 <div id="contenu">
                     <div id="choix_questionnaire">
-                        <p>blablablabl blablabla</p>
-                        <form id="choix_questionnaire_form"  action="CreerQuestionnaire" method="post" accept-charset="utf-8">
-                            <label for="theme">Choisissez le thème</label>
-                            <select name="theme" id="theme" >
-                                <option value="0"/>
-                                <%
-                                            Map<Integer, Theme> themes = (Map<Integer,Theme>) request.getAttribute("themes");
-                                            if (themes != null) {
-                                                for (Integer idTheme : themes.keySet()) {
-                                                    out.println("<option value='" + idTheme + "'");
-                                                    out.print(">" + themes.get(idTheme).getLibelle() + "</option>");
-                                                }
-                                            }
-                                %>
-                            </select>
-
-                            <label for="niveau">Choisissez le niveau</label>
-                            <select name="niveau" id="niveau">
-                                <option value="0"/>
-                                <%
-                                            Map<Integer, Niveau> niveaux = (Map) request.getAttribute("niveaux");
-                                            if (niveaux != null) {
-                                                for (Integer idNiveau : niveaux.keySet()) {
-                                                    out.println("<option value='" + idNiveau + "'");
-                                                    out.print(">" + niveaux.get(idNiveau).getLibelle() + "</option>");
-                                                }
-                                            }
-                                %>
-                            </select>
-                            <br/>
-                            <input type="text" name="libelle" value="" />
-                            <input type="hidden" name="action" value="createQuestionnaire"/>
-                            <br/><br/>
-                            <input type="submit" value="Commencer" />
+                        <p>Veuillez sélectionner le thème et le niveau du questionnaire que vous souhaitez ajouter dans la base de données. </p>
+                        <form id="choix_questionnaire_form" action="CreerQuestionnaire" method="post" accept-charset="utf-8">
+                            <table>
+                                <tr>
+                                    <td class="static"><label for="theme">Choisissez le thème : </label></td>
+                                    <td>
+                                        <select name="theme" id="theme" class="medium-input">
+                                            <option value="0"></option>
+                                            <%
+                                                        Map<Integer, Theme> themes = (Map<Integer, Theme>) request.getAttribute("themes");
+                                                        if (themes != null) {
+                                                            for (Integer idTheme : themes.keySet()) {
+                                                                out.println("<option value='" + idTheme + "'");
+                                                                out.print(">" + themes.get(idTheme).getLibelle() + "</option>");
+                                                            }
+                                                        }
+                                            %>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="static"><label for="niveau">Choisissez le niveau : </label></td>
+                                    <td>
+                                        <select name="niveau" id="niveau" class="medium-input">
+                                            <option value="0"></option>
+                                            <%
+                                                        Map<Integer, Niveau> niveaux = (Map) request.getAttribute("niveaux");
+                                                        if (niveaux != null) {
+                                                            for (Integer idNiveau : niveaux.keySet()) {
+                                                                out.println("<option value='" + idNiveau + "'");
+                                                                out.print(">" + niveaux.get(idNiveau).getLibelle() + "</option>");
+                                                            }
+                                                        }
+                                            %>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="static"><label for="nom_questionnaire">Entrez le nom du questionnaire : </label></td>
+                                    <td>
+                                        <input type="text" name="libelle" value="" id="nom_questionnaire" class="medium-input" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <input type="hidden" name="action" value="createQuestionnaire" />
+                            <input type="submit" value="Commencer" class="button" />
                         </form>
-
-                        <br />
                     </div>
                     <div class="line"></div>
-
-                   
-
                 </div>
             </div>
 
