@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import modele.Question;
 import modele.Questionnaire;
+import modele.Reponse;
 
 /**
  *
@@ -164,6 +165,91 @@ public class QuestionnaireDAO extends ModeleDAO{
         ps.setInt(2, q.getIdNiveau());
         ps.setInt(3, q.getIdQuestionnaire());
         ps.executeUpdate();
+        ps.close();
+    }
+
+
+    private void insert(Questionnaire questionnaire) throws SQLException{
+        ResultSet rs = null;
+        Connection connexion = null;
+        try{
+             connexion = getConnection();
+             connexion.setAutoCommit(false);
+             String sql ="INSERT INTO questionnaire(libelle, limite_temps , id_niveau , id_theme,id_user , date_creation) " +
+                " VALUES(?,?,?,?,?,NOW())";
+            PreparedStatement psQ = connexion.prepareStatement(sql);
+            psQ.setString(1, questionnaire.getLibelle());
+            psQ.setInt(2, questionnaire.getLimiteTemps());
+            psQ.setInt(3, questionnaire.getIdNiveau());
+            psQ.setInt(4, questionnaire.getIdTheme());
+            psQ.setInt(5, questionnaire.getIdUser());
+            psQ.executeUpdate();
+            rs = psQ.getGeneratedKeys();
+            rs.next();
+            int idQuestionnaire = rs.getInt("id_questionnaire");
+            if(idQuestionnaire <= 0){
+                throw new SQLException("impossible d'enregistrer les informations concernant le questionnaire.");
+            }
+            /**
+             * Insertion des questions
+             */
+            sql = "INSERT INTO question(libelle,id_theme,id_user) VALUES (?,?,?)";
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(2, questionnaire.getIdTheme());
+
+            ResultSet rsContenu = null;
+            for(Question q : questionnaire.getQuestions()){
+                Integer idQuestion = q.getIdQuestion();
+                if(idQuestion==null){
+                    ps.setString(1, q.getLibelle());
+                    ps.setInt(3, q.getIdUser());
+                    ps.executeUpdate();
+                    rs = ps.getGeneratedKeys();
+                    rs.next();
+                    idQuestion = rs.getInt("id_question");
+                    if(idQuestion <= 0){
+                        throw new SQLException("impossible d'enregistrer les informations concernant la question "+q.getLibelle());
+                    }else{
+                        rs = null;
+                    }
+                        String sqlRep ="INSERT INTO reponse(libelle, descriptif , est_correcte , note , id_question) " +
+                            " VALUES(?,?,?,?,?)";
+                    PreparedStatement psRep = getConnection().prepareStatement(sqlRep);
+                    psRep.setInt(5, idQuestion);
+                    for(Reponse r : q.getReponses()){
+                        psRep.setString(1, r.getLibelle());
+                        psRep.setString(2, r.getDescriptif());
+                        psRep.setBoolean(3, r.estCorrecte());
+                        psRep.setInt(4, r.getNote());
+                        ps.execute();
+                    }
+                    psRep.close();
+                }
+                /**
+                 * Insertion dans la table contenu
+                 */
+                String sqlContenu = "INSERT INTO contenu(id_questionnaire,id_question) VALUES(?,?)";
+                PreparedStatement psContenu = connexion.prepareStatement(sqlContenu);
+                psContenu.setInt(1, idQuestionnaire);
+                psContenu.setInt(2, idQuestion);
+                psContenu.executeUpdate();
+                rsContenu = psContenu.getGeneratedKeys();
+                rsContenu.next();
+                if(rsContenu.getInt("id_contenu") <= 0){
+                    throw new SQLException("Impossible d'enregistrer les questions");
+                }else{
+                    rsContenu = null;
+                }
+            }
+            
+        }catch(SQLException e){
+            if(connexion!=null){
+                connexion.rollback();
+            }
+            throw e;
+        }finally{
+             rs.close();
+        }
     }
 
 }
