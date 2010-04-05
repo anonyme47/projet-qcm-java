@@ -1,20 +1,25 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import servlet.helper.RequestHelper;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import servlet.helper.CreerQuestionnaireHelper;
-import servlet.helper.PasserQuestionnaireHelper;
+import servlet.helper.MesQuestionnairesHelper;
+import servlet.helper.RequestHelper;
 
 /**
  *
  * @author marya
  */
-public class CreerQuestionnaire extends HttpServlet {
+public class MesQuestionnaires extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -27,6 +32,7 @@ public class CreerQuestionnaire extends HttpServlet {
     throws ServletException, IOException {
     } 
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -37,21 +43,21 @@ public class CreerQuestionnaire extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String forward = "error.jsp";
+         String forward = "error.jsp";
         try {
 
             RequestHelper helper = new RequestHelper(request);
-            
-           
+
+
             String action = request.getParameter("action").toString();
 
             if (action != null) {
-                if (action.equals("applyToCreate")) {
+                if (action.equals("getCreatedQuestionnaires")) {
                     helper.setAttributeThemesAndNiveaux();
                     forward = "creerQuestionnaire.jsp";
                 }
             }
-             
+
         } catch (IllegalStateException e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
@@ -85,32 +91,42 @@ public class CreerQuestionnaire extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String forward = "error.jsp";
+    throws ServletException, IOException {
+         String forward = "error.jsp";
         try {
-            CreerQuestionnaireHelper helper = new CreerQuestionnaireHelper(request);
+
+           MesQuestionnairesHelper helper = new MesQuestionnairesHelper(request);
+
+
             String action = request.getParameter("action").toString();
+
             if (action != null) {
-                if (action.equals("createQuestionnaire")) {
-                    helper.setSessionAttributeNewQuestionnaire();
-                    forward = "afficherNouvelleQuestion.jsp";
-                }else{
-                    forward = "creerQuestionnaire.jsp";
+                if (action.equals("getInfoCreatedQuestionnaire")) {
+                    helper.setAttributeInfoQuestionnaire();
+                    forward = "afficherInfoQuestionnaire.jsp";
                 }
             }
+
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
         } catch (NullPointerException e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
         } catch (SQLException e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
         } catch (IOException e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
         }
         request.getRequestDispatcher(forward).forward(request, response);
     }
