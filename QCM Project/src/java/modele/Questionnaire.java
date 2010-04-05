@@ -242,16 +242,13 @@ public class Questionnaire {
     }
 
 
-    public void save() throws Exception, SQLException {
-        //mettre plutot un assert au lieu de if, c'est un contrat en quelque sorte
+    public void save() throws SQLException {
         assert QuestionnaireDAO.search(idTheme, idNiveau, libelle) == null; //Ce n'est pas une exception, mais une erreur
-
-        /*
         if (getIdQuestionnaire() == null) {
-            this.setIdQuestionnaire(QuestionnaireDAO.insert(this));
+            QuestionnaireDAO.insert(this);
         } else {
             QuestionnaireDAO.update(this);
-        }*/
+        }
     }
 
 
