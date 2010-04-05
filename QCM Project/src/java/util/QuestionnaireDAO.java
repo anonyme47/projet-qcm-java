@@ -161,7 +161,7 @@ public class QuestionnaireDAO extends ModeleDAO {
         ps.close();
     }
 
-    public void insert(Questionnaire questionnaire) throws SQLException {
+    public static void insert(Questionnaire questionnaire) throws SQLException {
         ResultSet rs = null;
         Connection connexion = null;
         try {
