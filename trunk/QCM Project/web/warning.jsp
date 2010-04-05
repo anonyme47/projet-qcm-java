@@ -71,7 +71,10 @@
                             <input type="submit" value="Commencer" class="button" />
                         </form>
                             <%
-                                }
+                                }else{
+                                        out.println("<br/><br/>Vous aviez déjà passé ce questionnaire");
+
+                                        }
                             %>
 
                     </div>

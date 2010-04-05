@@ -18,14 +18,14 @@ public class ThemeDAOTest {
     @Test
     public void testGetAll() throws Exception {
         System.out.println("getAll");
-        HashMap<Integer, String> expResult = new HashMap<Integer, String>();
-        expResult.put(1, "Java");
-        expResult.put(2, "Ruby");
-        expResult.put(3, "C++");
-        expResult.put(4, "PHP");
-        expResult.put(5, "UML");
-        expResult.put(6, "POO");
-        HashMap<Integer, String> result = ThemeDAO.getAll();
+        HashMap<Integer, Theme> expResult = new HashMap<Integer, Theme>();
+        expResult.put(1, ThemeDAO.getById(1));
+        expResult.put(2, ThemeDAO.getById(2));
+        expResult.put(3, ThemeDAO.getById(3));
+        expResult.put(4, ThemeDAO.getById(4));
+        expResult.put(5, ThemeDAO.getById(5));
+        expResult.put(6, ThemeDAO.getById(6));
+        HashMap<Integer, Theme> result = ThemeDAO.getAll();
         assertEquals(expResult.get(1), result.get(1));
         assertEquals(expResult.get(2), result.get(2));
         assertEquals(expResult.get(3), result.get(3));
