@@ -16,7 +16,7 @@ public class ThemeDAO extends ModeleDAO {
     public static HashMap<Integer,Theme> getAll() throws SQLException {
         HashMap<Integer,Theme> themes = new HashMap<Integer,Theme>();
         String sql = "SELECT id_theme, id_user , libelle FROM theme ORDER BY id_theme ASC";
-        ResultSet rs = selectAll(sql);
+        ResultSet rs = execute(sql);
         while (rs.next()) {
             Theme t = new Theme(rs.getInt("id_theme"), rs.getInt("id_user"), rs.getString("libelle"));
             themes.put(t.getIdTheme(),t);

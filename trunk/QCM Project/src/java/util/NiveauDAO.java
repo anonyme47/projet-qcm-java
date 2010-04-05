@@ -16,7 +16,7 @@ public class NiveauDAO extends ModeleDAO{
     public static HashMap<Integer, Niveau> getAll() throws SQLException {
         HashMap<Integer, Niveau> niveaux = new HashMap<Integer, Niveau>();
         String sql = "SELECT id_niveau, libelle FROM niveau ORDER BY id_niveau ASC";
-        ResultSet rs = selectAll(sql);
+        ResultSet rs = execute(sql);
         while (rs.next()) {
             Niveau niveau = new Niveau(rs.getInt("id_niveau"), rs.getString("libelle"));
             niveaux.put(niveau.getIdNiveau(), niveau);

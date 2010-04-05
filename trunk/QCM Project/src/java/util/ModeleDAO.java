@@ -21,7 +21,7 @@ public class ModeleDAO {
         return database.getConnection();
     }
 
-    protected static ResultSet selectAll(String sql) throws SQLException{
+    protected static ResultSet execute(String sql) throws SQLException{
         return getConnection().createStatement().executeQuery(sql) ;
     }
 
