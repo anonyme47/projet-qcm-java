@@ -9,7 +9,7 @@
     <body>
         <div id="content">
             <p id="top">Une erreur s'est produite</p>
-           <div id="logo">
+            <div id="logo">
                 <h1><a href="index.jsp">iQCM</a></h1>
             </div>
             <ul id="menu">
@@ -23,11 +23,9 @@
             <div id="body">
                 <h1>Vous avez rencontré une erreur</h1><br/><br/>
                 <%
-                    if(request.getAttribute("errorMessage")!=null){
-                        out.println((String) request.getAttribute("errorMessage"));
-                    }
-
-                    
+                            if (request.getAttribute("errorMessage") != null) {
+                                out.println((String) request.getAttribute("errorMessage"));
+                            }
                 %>
             </div>
 
