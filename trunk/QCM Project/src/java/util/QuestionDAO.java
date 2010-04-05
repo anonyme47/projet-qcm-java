@@ -50,4 +50,16 @@ public class QuestionDAO extends ModeleDAO{
         return reponses;
     }
 
+
+    public List<Question> getByTheme(int idTheme) throws SQLException {
+        List<Question> questions = null;
+        String sql ="SELECT id_question FROM question WHERE id_theme = ? ORDER BY id_question ASC";
+        ResultSet rs = selectById(sql, idTheme);
+        while(rs.next()){
+            questions.add(getById(rs.getInt(1)));
+        }
+        rs.close();
+        return questions;
+    }
+
 }
