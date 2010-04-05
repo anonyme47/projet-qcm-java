@@ -61,12 +61,18 @@
 
                         <a href="Accueil?action=retourAccueil" class="button">Retourner à l'accueil</a>
 
+                        <%
+                            if(request.getAttribute("userHasAlreadyPassedQuestionnaire") == null){
+                        %>
+
                         <form action="PasserQuestionnaire" method="post" id="commencer_qcm_form">
                             <input type="hidden" name="questionnaire" value="<%= questionnaire.getIdQuestionnaire()%>" />
                             <input type="hidden" name="action" value="commencerQcm" />
                             <input type="submit" value="Commencer" class="button" />
                         </form>
-
+                            <%
+                                }
+                            %>
 
                     </div>
                 </div>

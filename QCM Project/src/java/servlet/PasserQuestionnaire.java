@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modele.Questionnaire;
+import modele.QuestionnairePasse;
 import util.QuestionnaireDAO;
 import servlet.helper.*;
 
@@ -51,9 +52,7 @@ public class PasserQuestionnaire extends HttpServlet {
                     helper.setAttributeThemesAndNiveaux();
                     forward = "choixQuestionnaire.jsp";
                 } else if (action.equals("afficherInfoQuestionnaire")) {
-                    Questionnaire questionnaire = QuestionnaireDAO.getById(Integer.parseInt(request.getParameter("questionnaire").toString()));
-                    request.setAttribute("questionnaire", questionnaire);
-                    helper.setAttributeThemeAndNiveau(questionnaire.getIdTheme(), questionnaire.getIdNiveau());
+                    helper.setAttributeInfoQuestionnaire();
                     forward = "warning.jsp";
                 }
             }

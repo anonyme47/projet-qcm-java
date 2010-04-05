@@ -157,7 +157,7 @@ public class Qcm {
         for (Integer idQuestion : userReponses.keySet()) {
             reponses = userReponses.get(idQuestion);
             for (Integer reponse : reponses) {
-                score += ReponseDAO.getNoteById(reponse);
+                score += ReponseDAO.getById(reponse).getNote();
             }
         }
         note=score;

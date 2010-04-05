@@ -9,6 +9,10 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import util.*;
 import exception.*;
+import java.util.List;
+import modele.Questionnaire;
+import modele.QuestionnairePasse;
+import modele.User;
 
 /**
  *
@@ -78,10 +82,29 @@ public class RequestHelper {
         setAttributeNiveaux();
     }
 
-    
+    protected List<QuestionnairePasse> getQuestionnairesPasseByUser(int idUser) throws SQLException{
+        return QuestionnairePasseDAO.getByUser(idUser);
+    }
 
-    
+    public boolean userHasAlreadyPassedQuestionnaire(Questionnaire q) throws SQLException{
+        int idUser = getIdUser();
+        return getQuestionnairesPasseByUser(idUser).contains(new QuestionnairePasse(q.getIdQuestionnaire(), idUser));
+    }
 
+
+    public void setAttributeInfoQuestionnaire() throws SQLException {
+        Questionnaire questionnaire = QuestionnaireDAO.getById(Integer.parseInt(request.getParameter("questionnaire").toString()));
+        request.setAttribute("questionnaire", questionnaire);
+        setAttributeThemeAndNiveau(questionnaire.getIdTheme(), questionnaire.getIdNiveau());
+        if(userHasAlreadyPassedQuestionnaire(questionnaire)){
+            request.setAttribute("userHasAlreadyPassedQuestionnaire", true);
+        }
+    }
+
+
+    protected int getIdUser(){
+        return ((User) request.getSession().getAttribute("user")).getIdUser();
+    }
 
 
 }

@@ -15,13 +15,16 @@ import static org.junit.Assert.*;
  */
 public class DatabaseTest extends QCMTestCase {
 
+
+    private Database database = new Database();
+
     /**
      * Test of getConnection method, of class Database.
      */
     @Test
     public void testGetConnection() throws Exception {
         System.out.println("getConnection");
-        Connection result = Database.getConnection();
+        Connection result = database.getConnection();
         assertNotNull(result);
     }
 
@@ -32,7 +35,7 @@ public class DatabaseTest extends QCMTestCase {
     @Test
     public void testSelect() throws SQLException {
         System.out.println("testSelect");
-        Connection connexion = Database.getConnection();
+        Connection connexion = database.getConnection();
 //        String sql = "SELECT id_user, login, password FROM user WHERE id_user = 2 LIMIT 0,1";
         String sql = "SELECT id_reponse, libelle, descriptif, est_correcte, note FROM reponse WHERE id_reponse = 2 LIMIT 0,1";
         Statement ordre = connexion.createStatement();
@@ -50,7 +53,6 @@ public class DatabaseTest extends QCMTestCase {
 
         rs.close();
         ordre.close();
-        connexion.close();
     }
 
     /**
@@ -64,14 +66,13 @@ public class DatabaseTest extends QCMTestCase {
         //Ce test doit echouer!!
         int idQuestionnaire = 1;
         int idQuestion = 6;
-        Connection connexion = Database.getConnection();
+        Connection connexion = database.getConnection();
         String sql = "INSERT INTO contenu (id_questionnaire, id_question) VALUES (?, ?)";
         PreparedStatement ordre = connexion.prepareStatement(sql);
         ordre.setInt(1, idQuestionnaire);
         ordre.setInt(2, idQuestion);
         int ok = ordre.executeUpdate();
         ordre.close();
-        connexion.close();
         System.out.println(ok);
         assertTrue(ok != 0);
     }

@@ -13,7 +13,7 @@ import modele.Questionnaire;
  *
  * @author Lou
  */
-public class QuestionnaireDAO {
+public class QuestionnaireDAO extends ModeleDAO{
 
     /**
      * Récupère le questionnaire dont on connaît l'identifiant en base de données
@@ -24,12 +24,8 @@ public class QuestionnaireDAO {
 
     public static Questionnaire getById(int idQuestionnaire) throws SQLException {
         Questionnaire questionnaire = null;
-        Connection connexion = Database.getConnection();
         String sql = "SELECT questionnaire.libelle,questionnaire.date_creation,questionnaire.limite_temps,questionnaire.est_actif,questionnaire.id_theme,questionnaire.id_user,questionnaire.id_niveau,COUNT(questionnaire_passe.id_questionnaire) AS nbPasseParUser FROM questionnaire INNER JOIN questionnaire_passe ON questionnaire_passe.id_questionnaire=questionnaire.id_questionnaire WHERE questionnaire.id_questionnaire = ?";
-        PreparedStatement ordre = connexion.prepareStatement(sql);
-        ordre.setInt(1, idQuestionnaire);
-        ResultSet rs = ordre.executeQuery();
-
+        ResultSet rs = selectById(sql, idQuestionnaire);
         if (rs.next()) {
             questionnaire = new Questionnaire(
                     idQuestionnaire,
@@ -44,8 +40,6 @@ public class QuestionnaireDAO {
                     rs.getInt("nbPasseParUser")); 
         }
         rs.close();
-        ordre.close();
-        connexion.close();
         return questionnaire;
     }
 
@@ -57,22 +51,17 @@ public class QuestionnaireDAO {
      */
     public static ArrayList<Question> getQuestionsById(int idQuestionnaire) throws SQLException {
         ArrayList<Question> questions = new ArrayList<Question>();
-        Connection connexion = Database.getConnection();
         String sql = "SELECT contenu.id_question, question.id_theme AS theme_question, questionnaire.id_theme AS theme_questionnaire FROM contenu";
         sql += " INNER JOIN question ON (question.id_question=contenu.id_question)";
         sql += " INNER JOIN questionnaire ON (questionnaire.id_questionnaire=contenu.id_questionnaire)";
         sql += " WHERE contenu.id_questionnaire = ? ORDER BY id_contenu ASC";
-        PreparedStatement ordre = connexion.prepareStatement(sql);
-        ordre.setInt(1, idQuestionnaire);
-        ResultSet rs = ordre.executeQuery();
+        ResultSet rs = selectById(sql, idQuestionnaire);
 
         while (rs.next()) {
             assert rs.getInt("theme_question") == rs.getInt("theme_questionnaire");
             questions.add(QuestionDAO.getById(rs.getInt("id_question")));
         }
         rs.close();
-        ordre.close();
-        connexion.close();
         return questions;
     }
 
@@ -84,19 +73,13 @@ public class QuestionnaireDAO {
      */
     public static HashMap<Integer, String> getQuestionnairesByTheme(int idTheme) throws SQLException {
         HashMap<Integer, String> maMap = new HashMap<Integer, String>();
-        Connection connexion = Database.getConnection();
-        String sql = "SELECT id_questionnaire,libelle FROM questionnaire WHERE id_theme=? AND est_actif=?";
-        PreparedStatement ordre = connexion.prepareStatement(sql);
-        ordre.setInt(1, idTheme);
-        ordre.setBoolean(2, true);
-        ResultSet rs = ordre.executeQuery();
+        String sql = "SELECT id_questionnaire,libelle FROM questionnaire WHERE id_theme=? AND est_actif= 1";
+        ResultSet rs = selectById(sql, idTheme);
 
         while (rs.next()) {
             maMap.put(rs.getInt("id_questionnaire"), rs.getString("libelle"));
         }
         rs.close();
-        ordre.close();
-        connexion.close();
         return maMap;
     }
 
@@ -109,18 +92,12 @@ public class QuestionnaireDAO {
      */
     public static HashMap<Integer, String> getQuestionnairesByNiveau(int idNiveau) throws SQLException {
         HashMap<Integer, String> maMap = new HashMap<Integer, String>();
-        Connection connexion = Database.getConnection();
-        String sql = "SELECT id_questionnaire,libelle FROM questionnaire WHERE id_niveau=? AND est_actif=?";
-        PreparedStatement ordre = connexion.prepareStatement(sql);
-        ordre.setInt(1, idNiveau);
-        ordre.setBoolean(2, true);
-        ResultSet rs = ordre.executeQuery();
+        String sql = "SELECT id_questionnaire,libelle FROM questionnaire WHERE id_niveau=? AND est_actif=1";
+        ResultSet rs = selectById(sql, idNiveau);
         while (rs.next()) {
             maMap.put(rs.getInt("id_questionnaire"), rs.getString("libelle"));
         }
         rs.close();
-        ordre.close();
-        connexion.close();
         return maMap;
     }
 
@@ -136,7 +113,7 @@ public class QuestionnaireDAO {
      */
     public static HashMap<Integer, String> getQuestionnairesByThemeAndNiveau(int idTheme, int idNiveau) throws SQLException {
         HashMap<Integer, String> maMap = new HashMap<Integer, String>();
-        Connection connexion = Database.getConnection();
+        Connection connexion = getConnection();
         String sql = "SELECT id_questionnaire,libelle FROM questionnaire WHERE id_theme=? AND id_niveau=? AND est_actif=?";
         PreparedStatement ordre = connexion.prepareStatement(sql);
         ordre.setInt(1, idTheme);
@@ -149,7 +126,6 @@ public class QuestionnaireDAO {
         }
         rs.close();
         ordre.close();
-        connexion.close();
         return maMap;
     }
 
