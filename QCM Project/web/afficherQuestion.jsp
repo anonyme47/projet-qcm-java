@@ -66,6 +66,11 @@
                         <input type="hidden" name="idQuestion" value="<%= questionCourante.getIdQuestion()%>"/>
                     </form>
                     <div id="temps_restant">
+
+
+
+
+
                         <%
                         %>
                         <p>Il vous reste XX questions<br />et XX:XX minutes.</p>
@@ -77,6 +82,37 @@
                     <%
                                             } else if (request.getAttribute("estFini") != null) {
                                                 out.println("Questionnaire fini");
+                                                if (questions != null) {
+                                                    for (Question question : questions) {
+                                                        %>
+
+                                                        <li onclick="document.getElementById('modifyQuestion').value=<%= question.getIdQuestion() %>;document.getElementById('applyModif').submit();"><%= question.getLibelle() %></li>
+
+
+                                                        <%
+
+                                                    }
+                                                }
+
+                                                %>
+                                                <form action="PasserQuestionnaire" method="post" id="applyModif">
+                                                    <input type="hidden" name="modifyQuestion" id="modifyQuestion" value="" />
+                                                    <input type="hidden" name="action" value="modifierReponses"/>
+                                                    
+                                                </form>
+                                                   <div id="temps_restant">
+                                                        <form action="PasserQuestionnaire" method="post" accept-charset="utf-8">
+                                                            <input class="button" type="submit" value="Terminer maintenant &rarr;" />
+                                                            <input type="hidden" name="action" value="terminer" />
+                                                        </form>
+                                                    </div>
+
+                                                <%
+
+
+
+
+
                                             } else {
                                                 out.println("Erreur");
                                             }

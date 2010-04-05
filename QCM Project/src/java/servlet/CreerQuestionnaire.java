@@ -1,7 +1,8 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
+import servlet.helper.RequestHelper;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,22 +23,6 @@ public class CreerQuestionnaire extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CreerQuestionnaire</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CreerQuestionnaire at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-            */
-        } finally { 
-            out.close();
-        }
     } 
 
     /** 
@@ -50,7 +35,47 @@ public class CreerQuestionnaire extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String forward = "index.jsp";
+        try {
+
+            RequestHelper helper = new RequestHelper(request);
+            
+           
+            String action = request.getParameter("action").toString();
+
+            if (action != null) {
+                if (action.equals("applyToCreate")) {
+                    helper.setAttributeThemesAndNiveaux();
+                    forward = "creerQuestionnaire.jsp";
+                } else if (action.equals("afficherInfoQuestionnaire")) {
+                    helper.setAttributeInfoQuestionnaire();
+                    forward = "warning.jsp";
+                }
+            }
+             
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
+        } catch (IOException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
+        }
+        System.out.println("Forward = "+forward);
+        request.getRequestDispatcher(forward).forward(request, response);
     } 
 
     /** 
