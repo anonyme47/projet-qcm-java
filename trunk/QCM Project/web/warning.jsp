@@ -59,10 +59,10 @@
                         %>
 
 
-                        <a href="Accueil?action=retourAccueil" class="button">Retourner à l'accueil</a>
+                        <a href="PasserQuestionnaire?action=afficherChoixThemesNiveau" class="button">Retour à la liste des questionnaires</a>
 
                         <%
-                            if(request.getAttribute("userHasAlreadyPassedQuestionnaire") == null){
+                                    if (request.getAttribute("userHasAlreadyPassedQuestionnaire") == null) {
                         %>
 
                         <form action="PasserQuestionnaire" method="post" id="commencer_qcm_form">
@@ -70,12 +70,11 @@
                             <input type="hidden" name="action" value="commencerQcm" />
                             <input type="submit" value="Commencer" class="button" />
                         </form>
-                            <%
-                                }else{
-                                        out.println("<br/><br/>Vous aviez déjà passé ce questionnaire");
-
-                                        }
-                            %>
+                        <%
+                                    } else {
+                                        out.println("<p class='error' style='display:inline'>Vous avez déjà passé ce questionnaire</p>");
+                                    }
+                        %>
 
                     </div>
                 </div>

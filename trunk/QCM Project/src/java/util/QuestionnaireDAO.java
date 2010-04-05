@@ -14,7 +14,7 @@ import modele.Reponse;
  *
  * @author Lou
  */
-public class QuestionnaireDAO extends ModeleDAO{
+public class QuestionnaireDAO extends ModeleDAO {
 
     /**
      * Récupère le questionnaire dont on connaît l'identifiant en base de données
@@ -22,7 +22,6 @@ public class QuestionnaireDAO extends ModeleDAO{
      * @return Le questionnaire identifié par idQuestionnaire
      * @throws SQLException
      */
-
     public static Questionnaire getById(int idQuestionnaire) throws SQLException {
         Questionnaire questionnaire = null;
         String sql = "SELECT questionnaire.libelle,questionnaire.date_creation,questionnaire.limite_temps,questionnaire.est_actif,questionnaire.id_theme,questionnaire.id_user,questionnaire.id_niveau,COUNT(questionnaire_passe.id_questionnaire) AS nbPasseParUser FROM questionnaire INNER JOIN questionnaire_passe ON questionnaire_passe.id_questionnaire=questionnaire.id_questionnaire WHERE questionnaire.id_questionnaire = ?";
@@ -38,7 +37,7 @@ public class QuestionnaireDAO extends ModeleDAO{
                     rs.getInt("id_user"),
                     rs.getInt("id_niveau"),
                     QuestionnaireDAO.getQuestionsById(idQuestionnaire),
-                    rs.getInt("nbPasseParUser")); 
+                    rs.getInt("nbPasseParUser"));
         }
         rs.close();
         return questionnaire;
@@ -66,7 +65,7 @@ public class QuestionnaireDAO extends ModeleDAO{
         return questions;
     }
 
-/**
+    /**
      * Récupérer tous les questionnaires d'un thème donné
      * @param idTheme L'identifiant du thème concerné
      * @return La liste de tous les questionnaires dont le thème est passé en argument
@@ -84,8 +83,7 @@ public class QuestionnaireDAO extends ModeleDAO{
         return maMap;
     }
 
-
-     /**
+    /**
      * Récupérer tous les questionnaires d'un niveau donné
      * @param idNiveau L'identifiant du niveau concerné
      * @return La liste de tous les questionnaires dont le niveau est passé en argument
@@ -102,10 +100,7 @@ public class QuestionnaireDAO extends ModeleDAO{
         return maMap;
     }
 
-
-    
-
-/**
+    /**
      * Récupérer tous les questionnaires pour un niveau et un thème spécifiés
      * @param idTheme L'identifiant du thème concerné
      * @param idNiveau L'identifiant du niveau concerné
@@ -130,7 +125,6 @@ public class QuestionnaireDAO extends ModeleDAO{
         return maMap;
     }
 
-
     /**
      * Recherche dans la base données un questionnaire qui a comme thème idTheme, comme niveau idNiveau,
      * et comme libelle libelle
@@ -150,15 +144,14 @@ public class QuestionnaireDAO extends ModeleDAO{
         ResultSet rs = ordre.executeQuery();
 
         if (rs.next()) {
-           questionnaire = new Questionnaire(libelle, idTheme, rs.getInt("id_user"), idNiveau);
+            questionnaire = new Questionnaire(libelle, idTheme, rs.getInt("id_user"), idNiveau);
         }
         rs.close();
         ordre.close();
         return questionnaire;
     }
 
-
-    public static void update(Questionnaire q) throws SQLException{
+    public static void update(Questionnaire q) throws SQLException {
         String sql = "UPDATE questionnaire SET libelle = ? , id_niveau = ? WHERE id_questionnaire = ?";
         PreparedStatement ps = getConnection().prepareStatement(sql);
         ps.setString(1, q.getLibelle());
@@ -168,15 +161,14 @@ public class QuestionnaireDAO extends ModeleDAO{
         ps.close();
     }
 
-
-    private void insert(Questionnaire questionnaire) throws SQLException{
+    public void insert(Questionnaire questionnaire) throws SQLException {
         ResultSet rs = null;
         Connection connexion = null;
-        try{
-             connexion = getConnection();
-             connexion.setAutoCommit(false);
-             String sql ="INSERT INTO questionnaire(libelle, limite_temps , id_niveau , id_theme,id_user , date_creation) " +
-                " VALUES(?,?,?,?,?,NOW())";
+        try {
+            connexion = getConnection();
+            connexion.setAutoCommit(false);
+            String sql = "INSERT INTO questionnaire(libelle, limite_temps , id_niveau , id_theme,id_user , date_creation) "
+                    + " VALUES(?,?,?,?,?,NOW())";
             PreparedStatement psQ = connexion.prepareStatement(sql);
             psQ.setString(1, questionnaire.getLibelle());
             psQ.setInt(2, questionnaire.getLimiteTemps());
@@ -187,7 +179,7 @@ public class QuestionnaireDAO extends ModeleDAO{
             rs = psQ.getGeneratedKeys();
             rs.next();
             int idQuestionnaire = rs.getInt("id_questionnaire");
-            if(idQuestionnaire <= 0){
+            if (idQuestionnaire <= 0) {
                 throw new SQLException("impossible d'enregistrer les informations concernant le questionnaire.");
             }
             /**
@@ -198,25 +190,25 @@ public class QuestionnaireDAO extends ModeleDAO{
             ps.setInt(2, questionnaire.getIdTheme());
 
             ResultSet rsContenu = null;
-            for(Question q : questionnaire.getQuestions()){
+            for (Question q : questionnaire.getQuestions()) {
                 Integer idQuestion = q.getIdQuestion();
-                if(idQuestion==null){
+                if (idQuestion == null) {
                     ps.setString(1, q.getLibelle());
                     ps.setInt(3, q.getIdUser());
                     ps.executeUpdate();
                     rs = ps.getGeneratedKeys();
                     rs.next();
                     idQuestion = rs.getInt("id_question");
-                    if(idQuestion <= 0){
-                        throw new SQLException("impossible d'enregistrer les informations concernant la question "+q.getLibelle());
-                    }else{
+                    if (idQuestion <= 0) {
+                        throw new SQLException("impossible d'enregistrer les informations concernant la question " + q.getLibelle());
+                    } else {
                         rs = null;
                     }
-                        String sqlRep ="INSERT INTO reponse(libelle, descriptif , est_correcte , note , id_question) " +
-                            " VALUES(?,?,?,?,?)";
+                    String sqlRep = "INSERT INTO reponse(libelle, descriptif , est_correcte , note , id_question) "
+                            + " VALUES(?,?,?,?,?)";
                     PreparedStatement psRep = getConnection().prepareStatement(sqlRep);
                     psRep.setInt(5, idQuestion);
-                    for(Reponse r : q.getReponses()){
+                    for (Reponse r : q.getReponses()) {
                         psRep.setString(1, r.getLibelle());
                         psRep.setString(2, r.getDescriptif());
                         psRep.setBoolean(3, r.estCorrecte());
@@ -235,21 +227,20 @@ public class QuestionnaireDAO extends ModeleDAO{
                 psContenu.executeUpdate();
                 rsContenu = psContenu.getGeneratedKeys();
                 rsContenu.next();
-                if(rsContenu.getInt("id_contenu") <= 0){
+                if (rsContenu.getInt("id_contenu") <= 0) {
                     throw new SQLException("Impossible d'enregistrer les questions");
-                }else{
+                } else {
                     rsContenu = null;
                 }
             }
-            
-        }catch(SQLException e){
-            if(connexion!=null){
+
+        } catch (SQLException e) {
+            if (connexion != null) {
                 connexion.rollback();
             }
             throw e;
-        }finally{
-             rs.close();
+        } finally {
+            rs.close();
         }
     }
-
 }
