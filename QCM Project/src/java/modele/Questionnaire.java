@@ -1,9 +1,11 @@
 package modele;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import util.QuestionnaireDAO;
 
 /**
  * La classe Questionnaire est définie par un identifiant, un thème, un niveau,
@@ -90,6 +92,7 @@ public class Questionnaire {
         this.idUser = idUser;
         this.idNiveau = idNiveau;
         this.questions = new ArrayList<Question>();
+        this.estPasse = false;
         assert invariant();
     }
 
@@ -236,6 +239,19 @@ public class Questionnaire {
     @Override
     public String toString() {
         return "[" + libelle + ":" + idTheme + ":" + idNiveau + "]";
+    }
+
+
+    public void save() throws Exception, SQLException {
+        //mettre plutot un assert au lieu de if, c'est un contrat en quelque sorte
+        assert QuestionnaireDAO.search(idTheme, idNiveau, libelle) == null; //Ce n'est pas une exception, mais une erreur
+
+        /*
+        if (getIdQuestionnaire() == null) {
+            this.setIdQuestionnaire(QuestionnaireDAO.insert(this));
+        } else {
+            QuestionnaireDAO.update(this);
+        }*/
     }
 
 

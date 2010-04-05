@@ -130,7 +130,6 @@ public class PasserQuestionnaire extends HttpServlet {
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
         }
         request.getRequestDispatcher(forward).forward(request, response);
-        //setAttributeQuestionnairesByChoice(
     }
 
     /** 

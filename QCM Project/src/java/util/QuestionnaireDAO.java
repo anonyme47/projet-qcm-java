@@ -129,4 +129,32 @@ public class QuestionnaireDAO extends ModeleDAO{
         return maMap;
     }
 
+
+    /**
+     * Recherche dans la base données un questionnaire qui a comme thème idTheme, comme niveau idNiveau,
+     * et comme libelle libelle
+     * @param idTheme
+     * @param idNiveau
+     * @param libelle
+     * @return un questionnaire si la recherche a réussi, null sinon
+     * @throws java.sql.SQLException
+     */
+    public static Questionnaire search(final int idTheme, final int idNiveau, final String libelle) throws SQLException {
+        Questionnaire questionnaire = null;
+        Connection connexion = getConnection();
+        String sql = "SELECT id_user FROM questionnaire WHERE id_theme=? AND id_niveau=? AND libelle=? LIMIT 0,1";
+        PreparedStatement ordre = connexion.prepareStatement(sql);
+        ordre.setInt(1, idTheme);
+        ordre.setInt(2, idNiveau);
+        ordre.setString(3, libelle);
+        ResultSet rs = ordre.executeQuery();
+
+        if (rs.next()) {
+           questionnaire = new Questionnaire(libelle, idTheme, rs.getInt("id_user"), idNiveau);
+        }
+        rs.close();
+        ordre.close();
+        return questionnaire;
+    }
+
 }

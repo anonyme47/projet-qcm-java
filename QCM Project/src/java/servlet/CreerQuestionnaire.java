@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import servlet.helper.CreerQuestionnaireHelper;
+import servlet.helper.PasserQuestionnaireHelper;
 
 /**
  *
@@ -87,8 +89,34 @@ public class CreerQuestionnaire extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String forward = "error.jsp";
+        try {
+            CreerQuestionnaireHelper helper = new CreerQuestionnaireHelper(request);
+            String action = request.getParameter("action").toString();
+            if (action != null) {
+                if (action.equals("createQuestionnaire")) {
+                    helper.setSessionAttributeNewQuestionnaire();
+                    forward = "afficherNouvelleQuestion.jsp";
+                }else{
+                    forward = "creerQuestionnaire.jsp";
+                }
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+        }
+        request.getRequestDispatcher(forward).forward(request, response);
     }
 
     /** 
