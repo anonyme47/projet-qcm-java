@@ -13,21 +13,18 @@ import modele.Question;
  *
  * @author marya
  */
-public class QuestionDAO {
+public class QuestionDAO extends ModeleDAO{
 
 
     public static Question getById(int idQuestion) throws SQLException{
         Question question=null;
-        Connection connexion = Database.getConnection();
         String sql = "SELECT question.libelle, question.id_theme, question.id_user, "+
                 "COUNT( questionnaire_passe.id_questionnaire ) AS nbQuestionnairePasseAppelant "+
                 "FROM question "+
                 "INNER JOIN contenu ON contenu.id_question = question.id_question "+
                 "INNER JOIN questionnaire_passe ON questionnaire_passe.id_questionnaire = contenu.id_questionnaire "+
                 "WHERE question.id_question =?";
-        PreparedStatement ordre = connexion.prepareStatement(sql);
-        ordre.setInt(1, idQuestion);
-        ResultSet rs = ordre.executeQuery();
+        ResultSet rs = selectById(sql, idQuestion);
         if (rs.next()) {
             question = new Question(
                             idQuestion,
@@ -38,25 +35,18 @@ public class QuestionDAO {
                             getReponsesById(idQuestion));
         }
         rs.close();
-        ordre.close();
-        connexion.close();
         return question;
     }
 
     
     public static List<Reponse> getReponsesById(int idQuestion) throws SQLException{
         List<Reponse> reponses= new ArrayList<Reponse>();
-        Connection connexion = Database.getConnection();
         String sql = "SELECT id_reponse FROM reponse WHERE id_question = ? ORDER BY id_reponse ASC";
-        PreparedStatement ordre = connexion.prepareStatement(sql);
-        ordre.setInt(1, idQuestion);
-        ResultSet rs = ordre.executeQuery();
+        ResultSet rs = selectById(sql, idQuestion);
         while(rs.next()) {
             reponses.add(ReponseDAO.getById(rs.getInt("id_reponse")));
         }
         rs.close();
-        ordre.close();
-        connexion.close();
         return reponses;
     }
 

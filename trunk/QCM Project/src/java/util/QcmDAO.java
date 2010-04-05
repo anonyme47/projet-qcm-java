@@ -12,14 +12,14 @@ import modele.Qcm;
  *
  * @author Maria Rabarison et Lou Ferrand
  */
-public class QcmDAO {
+public class QcmDAO extends ModeleDAO{
 
     public static void insert(Qcm qcm) throws SQLException {
         Connection connexion = null;
         PreparedStatement ordre = null;
 
         try {
-            connexion = Database.getConnection();
+            connexion = getConnection();
             connexion.setAutoCommit(false);
             int idQuestionnaire = qcm.getQuestionnaire().getIdQuestionnaire();
             int idUser=qcm.getIdUser();
@@ -54,13 +54,12 @@ public class QcmDAO {
             throw ex;
         } finally {
             ordre.close();
-            connexion.close();
         }
     }
 
     public static Integer getIdContenu(int idQuestionnaire, int idQuestion) throws SQLException {
         Integer result = null;
-        Connection connexion = Database.getConnection();
+        Connection connexion = getConnection();
         String sql = "SELECT id_contenu FROM contenu";
         sql += " WHERE id_questionnaire = ? AND id_question=?";
         PreparedStatement ordre = connexion.prepareStatement(sql);
@@ -73,7 +72,6 @@ public class QcmDAO {
         }
         rs.close();
         ordre.close();
-        connexion.close();
         return result;
     }
 }

@@ -9,10 +9,10 @@ import modele.User;
  *
  * @author marya
  */
-public class UserDAO {
+public class UserDAO extends ModeleDAO{
     public static User getByLoginAndPassword(String login, String password) throws SQLException {
         User user = null;
-        Connection connexion = Database.getConnection();
+        Connection connexion = getConnection();
         String sql = "SELECT user.id_user, user.login, user.password, user.email, user.nom, user.prenom, statut.id_statut, statut.libelle " +
                 "FROM user " +
                 " INNER JOIN statut ON user.id_statut=statut.id_statut" +
@@ -34,7 +34,6 @@ public class UserDAO {
         }
         rs.close();
         ordre.close();
-        connexion.close();
         return user;
     }
 

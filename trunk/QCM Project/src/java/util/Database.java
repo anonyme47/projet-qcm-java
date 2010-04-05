@@ -28,28 +28,38 @@ public class Database {
      */
     public static final String PASSWORD    = "";
 
-    static {
-        /* Chargement du pilote, ne doit avoir lieu qu'une fois */
-        try {
-            Class.forName(DRIVER_NAME).newInstance();
-            System.out.println("*** Driver loaded.");
-        } catch (ClassNotFoundException e) {
-            System.err.println("*** ERROR: Driver " + DRIVER_NAME + " not found");
-        } catch (InstantiationException e) {
-            System.err.println("*** ERROR: Impossible to create an instance of " + DRIVER_NAME);
-            System.err.println(e.getMessage());
-        } catch (IllegalAccessException e) {
-            System.err.println("*** ERROR: Impossible to create an instance of " + DRIVER_NAME);
-            System.err.println(e.getMessage());
-        }
+
+    private static Connection connexion;
+
+
+
+    public Database(){
+        
     }
+
+    
 
     /**
      * Fournit la connexion à la base de données
      * @return La connexion
      * @throws java.sql.SQLException
      */
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+    public Connection getConnection() throws SQLException {
+        if(connexion==null){
+            try {
+                Class.forName(DRIVER_NAME).newInstance();
+                connexion = DriverManager.getConnection(URL, USER, PASSWORD);
+                System.out.println("*** Driver loaded.");
+            } catch (ClassNotFoundException e) {
+                System.err.println("*** ERROR: Driver " + DRIVER_NAME + " not found");
+            } catch (InstantiationException e) {
+                System.err.println("*** ERROR: Impossible to create an instance of " + DRIVER_NAME);
+                System.err.println(e.getMessage());
+            } catch (IllegalAccessException e) {
+                System.err.println("*** ERROR: Impossible to create an instance of " + DRIVER_NAME);
+                System.err.println(e.getMessage());
+            }
+        }
+        return connexion;
     }
 }
