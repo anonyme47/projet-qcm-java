@@ -7,6 +7,7 @@ import org.junit.Test;
 import tools.QCMTestCase;
 import util.QuestionDAO;
 import util.QuestionnaireDAO;
+import util.QuestionnairePasseDAO;
 
 /**
  *
@@ -38,8 +39,6 @@ public class QcmTest extends QCMTestCase {
         assertEquals(expResult, result);
     }
 
-
-
     /**
      * Test of setUserReponse method, of class Qcm.
      */
@@ -49,16 +48,13 @@ public class QcmTest extends QCMTestCase {
         int idQuestionnaire = 1;
         int idQuestion = 1;
         Qcm instance = new Qcm(idQuestionnaire, idQuestion);
-        List<Integer> reponses= new ArrayList<Integer>();
+        List<Integer> reponses = new ArrayList<Integer>();
         reponses.add(1);
         reponses.add(2);
-        instance.setUserReponses(idQuestion,reponses);
+        instance.setUserReponses(idQuestion, reponses);
         assertTrue(instance.getUserReponses().get(idQuestion).containsAll(reponses));
         assertTrue(reponses.containsAll(instance.getUserReponses().get(idQuestion)));
     }
-
-
-  
 
     /**
      *
@@ -69,33 +65,32 @@ public class QcmTest extends QCMTestCase {
         int idQuestionnaire = 1;
         int idQuestion = 1;
         Qcm instance = new Qcm(idQuestionnaire, idQuestion);
-        List<Integer> reponses= new ArrayList<Integer>();
+        List<Integer> reponses = new ArrayList<Integer>();
         reponses.add(1);
         reponses.add(3);
-        instance.setUserReponses(idQuestion,reponses);
+        instance.setUserReponses(idQuestion, reponses);
         int expResult = 5;
         instance.setEstFini(true);
         int result = instance.getNote();
         assertEquals(expResult, result);
     }
 
-        @Test
+    @Test
     public void testSave() throws SQLException {
         System.out.println("save");
-        int idQuestionnaire = 1;
+        int idQuestionnaire = 4;
         int idUser = 1;
         Qcm instance = new Qcm(idQuestionnaire, idUser);
-        List<Integer> reponses= new ArrayList<Integer>();
-        reponses.add(1);
-        reponses.add(3);
-        instance.setUserReponses(1,reponses);
-        System.out.println(instance.getQuestionSuivante());
-        System.out.println(instance.getQuestionSuivante());
+        List<Integer> reponses = new ArrayList<Integer>();
+        reponses.add(14);
+        reponses.add(15);
+        instance.setUserReponses(21, reponses);
         System.out.println(instance.getQuestionSuivante());
         assert instance.invariant();
         instance.save();
         assertTrue(instance.estFini());
-        assertTrue(instance.getNote()==5);
+        assertTrue(instance.getNote() == 6);
+        assertTrue(QuestionnaireDAO.getById(4).estPasse());
+        assertTrue(QuestionnairePasseDAO.getByUser(idUser).contains(new QuestionnairePasse(4, 1)));
     }
-
 }
