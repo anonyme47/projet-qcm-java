@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import util.*;
 import exception.*;
+import java.io.IOException;
 import java.util.List;
 import modele.Questionnaire;
 import modele.QuestionnairePasse;
@@ -22,10 +23,10 @@ public class RequestHelper {
 
     protected HttpServletRequest request;
 
-    public RequestHelper(HttpServletRequest request) throws Exception{
+    public RequestHelper(HttpServletRequest request) throws ExpiredSessionException, IOException{
         this.request=request;
         if(!isUserAuthentificated()){
-            throw QcmException.ExpiredSessionException;
+            throw new ExpiredSessionException("Votre session a expiré");
         }
     }
 

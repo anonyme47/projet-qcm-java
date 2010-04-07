@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="modele.Questionnaire" %>
+<%@page import="modele.Question" %>
+<%@page import="java.util.List" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -16,9 +18,15 @@
 
                 <div id="contenu">
                     <%
+                    List<Question> questionsByThemeNewQuestionnaire = (List<Question>) request.getSession().getAttribute("questionsByThemeNewQuestionnaire");
                     Questionnaire newQuestionnaire = (Questionnaire) request.getSession().getAttribute("newQuestionnaire");
                         if(newQuestionnaire!=null){
                             out.print(newQuestionnaire.getLibelle());
+                            if(questionsByThemeNewQuestionnaire != null){
+                                for(Question q : questionsByThemeNewQuestionnaire){
+                                    out.println(q.getLibelle());
+                                    }
+                                }
                         }else{
                         out.println("Un questionnaire correspondant à vos critères existe déjà");
                         }

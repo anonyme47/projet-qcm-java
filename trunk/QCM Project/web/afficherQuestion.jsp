@@ -19,12 +19,16 @@
                 <jsp:include page="scripts/menu_left.jsp" />
 
                 <div id="contenu">
+                    <%
+                        Question questionCourante = (Question) request.getAttribute("questionCourante");
+                        Qcm qcm = (Qcm) request.getSession().getAttribute("qcm");
+                        if(!qcm.estFini()){
+                    %>
                     <fieldset id="modifier_reponses" class="">
                         <legend>Modifier mes réponses</legend>
                         <ul class="questions">
                             <%
-                                        Question questionCourante = (Question) request.getAttribute("questionCourante");
-                                        Qcm qcm = (Qcm) request.getSession().getAttribute("qcm");
+                                        
 
                                         List<Question> questions = qcm.getQuestionnaire().getQuestions();
                                         if (questions != null) {
@@ -113,6 +117,10 @@
                                                     } else {
                                                         out.println("Erreur");
                                                     }
+                        }//si le questionnaire est fini
+                      else{
+                            out.println("FINI");
+                       }
                     %>
                 </div>
             </div>

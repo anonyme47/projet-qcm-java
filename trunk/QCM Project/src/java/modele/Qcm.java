@@ -130,13 +130,10 @@ public class Qcm {
         return true;
     }
 
-    public boolean estEnregistrable() {
-        return !iterateur.hasNext();
-    }
+   
 
     public void save() throws SQLException {
         assert invariant();
-        assert estEnregistrable();
         QcmDAO.insert(this);
         assert estFini();
     }
