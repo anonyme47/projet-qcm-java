@@ -94,6 +94,9 @@ public class CreerQuestionnaire extends HttpServlet {
                 if (action.equals("createQuestionnaire")) {
                     helper.setSessionAttributeNewQuestionnaire();
                     forward = "listeQuestionsByTheme.jsp";
+                }else if(action.equals("applyToAddQuestionByTheme")){
+                    helper.applyToAddQuestionByTheme();
+                    forward = "listeQuestionsByTheme.jsp";
                 }else{
                     forward = "creerQuestionnaire.jsp";
                 }

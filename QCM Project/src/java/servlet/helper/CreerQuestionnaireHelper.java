@@ -40,4 +40,12 @@ public class CreerQuestionnaireHelper extends RequestHelper{
         request.getSession().setAttribute("questionsByThemeNewQuestionnaire", QuestionDAO.getByTheme(idThemeQuestionnaire));
     }
 
+
+    public void applyToAddQuestionByTheme() throws SQLException{
+        Questionnaire newQuestionnaire = (Questionnaire) request.getSession().getAttribute("newQuestionnaire");
+        int idQuestion = Integer.parseInt(request.getParameter("idQuestionToAdd").toString());
+        newQuestionnaire.addQuestion(QuestionDAO.getById(idQuestion));
+        request.getSession().setAttribute("newQuestionnaire", newQuestionnaire);
+    }
+
 }
