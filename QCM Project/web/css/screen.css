@@ -142,21 +142,21 @@ form#connexion_form input[type=submit] {
     line-height: 1.5em;
     margin: 10px 0 0px 10px;
 }
-form.question {
+.question {
     /*	float:right;*/
     margin-right: 20px;
     width: 550px;/*59%;*/
 }
-form.question div#reponses {
+.question div#reponses {
     margin: 20px;
 }
-form.question div#reponses input {
+.question div#reponses input {
     margin: 5px;
 }
-form.question > p {
+.question > p {
     text-align: center;
 }
-form.question > p > input[type=submit] {
+.question > p > input[type=submit] {
     font-size: large;
     position: static;
 }

@@ -45,16 +45,4 @@ public class ThemeDAOTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getLibelleById, of class ThemeDAO
-     * @throws SQLException
-     */
-    @Test
-    public void testGetLibelleById() throws SQLException {
-        System.out.println("getLibelleById");
-        Theme instance = new Theme(1, 1, "Java");
-        String expResult = "Java";
-        String result = ThemeDAO.getById(instance.getIdTheme()).getLibelle();
-        assertTrue(result.equals(expResult));
-    }
 }

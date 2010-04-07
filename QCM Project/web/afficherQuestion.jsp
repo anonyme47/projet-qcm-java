@@ -54,25 +54,22 @@
                         </fieldset>
                         <div id="reponses">
                             <%
-                                                        List<Reponse> reponses = questionCourante.getReponses();
-                                                        if (reponses != null) {
-                                                            for (Reponse reponse : reponses) {
-                                                                out.println("<input type='checkbox' name='reponses' value='" + reponse.getIdReponse() + "' id='" + reponse.getIdReponse() + "' /><label for='" + reponse.getIdReponse() + "'>" + reponse.getLibelle() + "</label><br />");
-                                                            }
-                                                        }
+                                                                List<Reponse> reponses = questionCourante.getReponses();
+                                                                if (reponses != null) {
+                                                                    for (Reponse reponse : reponses) {
+                                                                        out.println("<input type='checkbox' name='reponses' value='" + reponse.getIdReponse() + "' ");
+                                                                        if (qcm.getUserReponses().get(reponse.getIdQuestion()).contains(reponse.getIdReponse())) {
+                                                                            out.print("checked='checked' ");
+                                                                        }
+                                                                        out.print("id='" + reponse.getIdReponse() + "' /><label for='" + reponse.getIdReponse() + "'>" + reponse.getLibelle() + "</label><br />");
+                                                                    }
+                                                                }
                             %>
                         </div>
                         <p><input type="submit" value="Valider la question" /></p>
                         <input type="hidden" name="idQuestion" value="<%= questionCourante.getIdQuestion()%>"/>
                     </form>
                     <div id="temps_restant">
-
-
-
-
-
-                        <%
-                        %>
                         <p>Il vous reste XX questions<br />et XX:XX minutes.</p>
                         <form action="PasserQuestionnaire" method="post" accept-charset="utf-8">
                             <input class="button" type="submit" value="Terminer maintenant &rarr;" />
@@ -80,42 +77,42 @@
                         </form>
                     </div>
                     <%
-                                            } else if (request.getAttribute("estFini") != null) {
-                                                out.println("Questionnaire fini");
-                                                if (questions != null) {
-                                                    for (Question question : questions) {
-                                                        %>
+                                                    } else if (request.getAttribute("estFini") != null) {%>
+                    <div class="question">
+                        <fieldset id="titre_questionnaire">
+                            <legend><strong>Questionnaire fini : <%= titre_questionnaire%></strong></legend>
+                            <p>
 
-                                                        <li onclick="document.getElementById('modifyQuestion').value=<%= question.getIdQuestion() %>;document.getElementById('applyModif').submit();"><%= question.getLibelle() %></li>
-
-
-                                                        <%
-
+                            </p>
+                            <ul class="liste">
+                                <%
+                                                                    if (questions != null) {
+                                                                        for (Question question : questions) {
+                                %>
+                                <li onclick="document.getElementById('modifyQuestion').value='<%= question.getIdQuestion()%>'; document.getElementById('applyModif').submit();"><%= question.getLibelle()%></li>
+                                <%
+                                                                        }
+                                                                    }
+                                %>
+                            </ul>
+                        </fieldset>
+                        <div>
+                            <p>
+                                <form action="PasserQuestionnaire" method="post" accept-charset="utf-8">
+                                    <input class="button" type="submit" value="Terminer maintenant &rarr;" />
+                                    <input type="hidden" name="action" value="terminer" />
+                                </form>
+                                <form action="PasserQuestionnaire" method="post" id="applyModif">
+                                    <input type="hidden" name="modifyQuestion" id="modifyQuestion" value="" />
+                                    <input type="hidden" name="action" value="modifierReponses"/>
+                                </form>
+                            </p>
+                        </div>
+                    </div>
+                    <%
+                                                    } else {
+                                                        out.println("Erreur");
                                                     }
-                                                }
-
-                                                %>
-                                                <form action="PasserQuestionnaire" method="post" id="applyModif">
-                                                    <input type="hidden" name="modifyQuestion" id="modifyQuestion" value="" />
-                                                    <input type="hidden" name="action" value="modifierReponses"/>
-                                                    
-                                                </form>
-                                                   <div id="temps_restant">
-                                                        <form action="PasserQuestionnaire" method="post" accept-charset="utf-8">
-                                                            <input class="button" type="submit" value="Terminer maintenant &rarr;" />
-                                                            <input type="hidden" name="action" value="terminer" />
-                                                        </form>
-                                                    </div>
-
-                                                <%
-
-
-
-
-
-                                            } else {
-                                                out.println("Erreur");
-                                            }
                     %>
                 </div>
             </div>
