@@ -18,9 +18,6 @@ import static org.junit.Assert.*;
  */
 public class QuestionDAOTest {
 
-    public QuestionDAOTest() {
-    }
-
     /**
      * Test of getReponsesById method, of class QuestionDAO.
      */

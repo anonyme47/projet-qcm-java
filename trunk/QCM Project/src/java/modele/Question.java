@@ -17,7 +17,6 @@ public class Question {
     private String libelle;
     private boolean estModifiable;
     private List<Reponse> reponses;
-
     private int idTheme;
     private int idUser;
 
@@ -36,18 +35,16 @@ public class Question {
         this.libelle = libelle;
         this.idTheme = idTheme;
         this.idUser = idUser;
-        if(nbQuestionnairePasseAppelant > 0){
-            this.estModifiable=true;
-        }else{
-            this.estModifiable=false;
+        if (nbQuestionnairePasseAppelant > 0) {
+            this.estModifiable = false;
+        } else {
+            this.estModifiable = true;
         }
         //assert reponses non null;
         this.reponses = reponses;
         assert invariant();
     }
 
-
-    
     public boolean estModifiable() {
         return estModifiable;
     }
@@ -140,7 +137,7 @@ public class Question {
         assert invariant();
     }
 
-    public boolean hasMultipleResponse(){
+    public boolean hasMultipleResponse() {
         return (reponses.size() > 1);
     }
 
@@ -157,7 +154,6 @@ public class Question {
         return "[ " + idQuestion + " : " + libelle + " : " + idTheme + " ]";
     }
 
-
     public int getNoteMax() {
         int note = 0;
         Iterator<Reponse> it = this.getReponses().iterator();
@@ -165,9 +161,9 @@ public class Question {
 
         while (it.hasNext()) {
 
-            rep =it.next();
-            if(rep.estCorrecte()){
-                note+=rep.getNote();
+            rep = it.next();
+            if (rep.estCorrecte()) {
+                note += rep.getNote();
             }
         }
         return note;
