@@ -1,5 +1,7 @@
 package servlet;
 
+import exception.ExpiredSessionException;
+import exception.UnknownQuestionException;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -111,8 +113,10 @@ public class PasserQuestionnaire extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ExpiredSessionException e) {
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "index.jsp";
+        } catch(UnknownQuestionException e){
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
         }
         request.getRequestDispatcher(forward).forward(request, response);

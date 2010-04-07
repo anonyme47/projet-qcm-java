@@ -1,6 +1,7 @@
 package servlet.helper;
 
 import exception.*;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +18,7 @@ import util.*;
  */
 public class PasserQuestionnaireHelper extends RequestHelper {
 
-    public PasserQuestionnaireHelper(HttpServletRequest request) throws Exception {
+    public PasserQuestionnaireHelper(HttpServletRequest request) throws ExpiredSessionException, IOException {
         super(request);
     }
 
@@ -52,18 +53,22 @@ public class PasserQuestionnaireHelper extends RequestHelper {
         request.setAttribute("questionnaires", questionnaires);
     }
 
-    public void setSessionAttributeQcm() throws SQLException, Exception {
+    public void setSessionAttributeQcm() throws SQLException, UnknownQuestionException {
         int idQuestionnaire = Integer.parseInt(request.getParameter("questionnaire").toString());
         int idUser = ((User) request.getSession().getAttribute("user")).getIdUser();
         Qcm qcm = new Qcm(idQuestionnaire, idUser);
         if (qcm == null) {
-            throw QcmException.UnknowQuestionnaireException;
+            throw new UnknownQuestionException("Questionnaire introuvable");
+        }else if(userHasAlreadyPassedQuestionnaire(qcm.getQuestionnaire())){
+            qcm.setEstFini(true);
+        }else{
+            request.setAttribute("questionCourante", QuestionDAO.getById(qcm.getQuestionSuivante()));
         }
         request.getSession().setAttribute("qcm", qcm);
-        request.setAttribute("questionCourante", QuestionDAO.getById(qcm.getQuestionSuivante()));
+        
     }
 
-    public void setAttributeQuestionSuivante() throws SQLException, Exception {
+    public void setAttributeQuestionSuivante() throws SQLException{
         Qcm qcm = (Qcm) request.getSession().getAttribute("qcm");
         String[] reponses = request.getParameterValues("reponses");
         if (reponses != null && reponses.length != 0) {
@@ -73,7 +78,7 @@ public class PasserQuestionnaireHelper extends RequestHelper {
             }
             int idQuestion = Integer.parseInt(request.getParameter("idQuestion"));
             List<Reponse> reponsesDeQuestion = QuestionDAO.getById(idQuestion).getReponses();
-            if (reponsesDeQuestion.size() > userReponses.size()) {
+            if (!qcm.estFini() && reponsesDeQuestion.size() > userReponses.size()) {
                 qcm.setUserReponses(idQuestion, userReponses);
             }
         }
@@ -88,15 +93,22 @@ public class PasserQuestionnaireHelper extends RequestHelper {
 
     public void prepareResultats() throws SQLException {
         Qcm qcm = (Qcm) request.getSession().getAttribute("qcm");
-        qcm.save();
-
-        request.setAttribute("note", qcm.getNote());
         request.setAttribute("theme", ThemeDAO.getById(qcm.getQuestionnaire().getIdTheme()).getLibelle());
         request.setAttribute("niveau", NiveauDAO.getById(qcm.getQuestionnaire().getIdNiveau()).getLibelle());
+        if(!qcm.estFini() && !userHasAlreadyPassedQuestionnaire(qcm.getQuestionnaire())){
+            qcm.save();
+            request.getSession().setAttribute("qcm", qcm);
+        }
+        request.setAttribute("note", qcm.getNote());
+
+
+
     }
 
     public void applyToModifyResponses() throws SQLException {
-        int modifyQuestion = Integer.parseInt(request.getParameter("modifyQuestion").toString());
-        request.setAttribute("questionCourante", QuestionDAO.getById(modifyQuestion));
+        if(!((Qcm) request.getSession().getAttribute("qcm")).estFini()){
+            int modifyQuestion = Integer.parseInt(request.getParameter("modifyQuestion").toString());
+            request.setAttribute("questionCourante", QuestionDAO.getById(modifyQuestion));
+        }
     }
 }

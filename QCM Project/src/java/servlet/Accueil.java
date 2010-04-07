@@ -4,7 +4,7 @@
  */
 package servlet;
 
-import exception.QcmException;
+import exception.UnknownUserException;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -121,7 +121,7 @@ public class Accueil extends HttpServlet {
         }
         user = UserDAO.getByLoginAndPassword(login, password);
         if (user == null) {
-            throw QcmException.UnknownUserException;
+            throw new UnknownUserException("Utilisateur inconnu : "+login);
         }
         request.getSession().setAttribute("user", user);
         page = "accueil.jsp";

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import servlet.helper.CreerQuestionnaireHelper;
-import servlet.helper.PasserQuestionnaireHelper;
 
 /**
  *
@@ -94,7 +93,7 @@ public class CreerQuestionnaire extends HttpServlet {
             if (action != null) {
                 if (action.equals("createQuestionnaire")) {
                     helper.setSessionAttributeNewQuestionnaire();
-                    forward = "afficherNouvelleQuestion.jsp";
+                    forward = "listeQuestionsByTheme.jsp";
                 }else{
                     forward = "creerQuestionnaire.jsp";
                 }

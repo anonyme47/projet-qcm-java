@@ -9,6 +9,10 @@ package exception;
  *
  * @author marya
  */
-public class QcmException {
+public class QcmException extends Exception{
+
+    public QcmException(String message) {
+        super(message);
+    }
 
 }
