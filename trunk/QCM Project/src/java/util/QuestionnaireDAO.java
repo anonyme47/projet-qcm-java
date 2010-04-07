@@ -167,7 +167,7 @@ public class QuestionnaireDAO extends ModeleDAO {
         try {
             connexion = getConnection();
             connexion.setAutoCommit(false);
-            String sql = "INSERT INTO questionnaire(libelle, limite_temps , id_niveau , id_theme,id_user , date_creation) "
+            String sql = "INSERT INTO questionnaire(libelle, limite_temps, id_niveau, id_theme, id_user, date_creation) "
                     + " VALUES(?,?,?,?,?,NOW())";
             PreparedStatement psQ = connexion.prepareStatement(sql);
             psQ.setString(1, questionnaire.getLibelle());

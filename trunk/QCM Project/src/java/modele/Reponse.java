@@ -23,15 +23,16 @@ public class Reponse {
     private String descriptif;
     private boolean estCorrecte;
     private int note;
-    private int idQuestion;
+    private Integer idQuestion;
 
     public Reponse(final Integer idReponse, final String libelle,
-            final String descriptif, final boolean estCorrecte, final int note) {
+            final String descriptif, final boolean estCorrecte, final int note, final Integer idQuestion) {
         this.idReponse = idReponse;
         this.libelle = libelle;
         this.descriptif = descriptif;
         this.estCorrecte = estCorrecte;
         this.note = note;
+        this.idQuestion = idQuestion;
         assert invariant();
     }
 
