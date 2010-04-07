@@ -44,13 +44,12 @@ public class QuestionDAOTest {
     @Test
     public void testGetReponsesById() throws Exception {
         System.out.println("getReponsesById");
-        int idQuestion = 0;
-        List expResult = null;
-        List result = QuestionDAO.getReponsesById(idQuestion);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        int idQuestion = 6;
+        List<Reponse> expResult = new ArrayList<Reponse>();
+        expResult.add(new Reponse(6, "Réponse 1", "Descriptif Réponse 1 Question 6", false,0,6));
+        List<Reponse> result = QuestionDAO.getReponsesById(idQuestion);
+        assertEquals(expResult.get(0), result.get(0));
+     }
 
     /**
      * Test of getByTheme method, of class QuestionDAO.
@@ -58,13 +57,11 @@ public class QuestionDAOTest {
     @Test
     public void testGetByTheme() throws Exception {
         System.out.println("getByTheme");
-        int idTheme = 0;
-        QuestionDAO instance = new QuestionDAO();
-        List expResult = null;
-        List result = instance.getByTheme(idTheme);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int idTheme = 4;
+        List<Question> expResult = new ArrayList<Question>();
+        expResult.add(QuestionDAO.getById(21));
+        List<Question> result = QuestionDAO.getByTheme(idTheme);
+        assertEquals(expResult.get(0), result.get(0));
     }
 
 

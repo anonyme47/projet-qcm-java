@@ -64,6 +64,7 @@
     <reponse id_reponse = "15" libelle = "Réponse 3" descriptif = "Descriptif Réponse 3 Question 21" est_correcte = "1" note = "3" id_question = "21" />
     <reponse id_reponse = "16" libelle = "Réponse 4" descriptif = "Descriptif Réponse 4 Question 21" est_correcte = "0" note = "0" id_question = "21" />
     <reponse id_reponse = "17" libelle = "Réponse 5" descriptif = "Descriptif Réponse 5 Question 21" est_correcte = "0" note = "0" id_question = "21" />
+    <reponse id_reponse = "18" libelle = "Réponse 1" descriptif = "Descriptif Réponse 1 Question 6" est_correcte = "0" note = "0" id_question = "6" />
 
 
 

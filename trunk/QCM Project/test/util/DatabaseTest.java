@@ -41,9 +41,6 @@ public class DatabaseTest extends QCMTestCase {
         Statement ordre = connexion.createStatement();
         ResultSet rs = ordre.executeQuery(sql);
         while (rs.next()) {
-//            assertEquals(rs.getInt("id_user"), 2);
-//            assertEquals(rs.getString("login"), "Maria");
-//            assertEquals(rs.getString("password"), "maria");
             assertEquals(rs.getInt("id_reponse"), 2);
             assertEquals(rs.getString("libelle"), "Réponse 2");
             assertEquals(rs.getString("descriptif"), "Descriptif Réponse 2 Question 1");

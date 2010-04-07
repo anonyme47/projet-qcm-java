@@ -2,6 +2,7 @@ package util;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import modele.Niveau;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -18,8 +19,7 @@ public class ModeleDAOTest {
     public void testGetConnection() throws Exception {
         System.out.println("getConnection");
         Connection result = ModeleDAO.getConnection();
-        assertTrue(result != null && result instanceof Connection);
-//        assertFalse(expResult.equals(result));
+        assertTrue(result != null);
     }
 
     /**
@@ -28,12 +28,12 @@ public class ModeleDAOTest {
     @Test
     public void testExecute() throws Exception {
         System.out.println("execute");
-        String sql = "";
-        ResultSet expResult = null;
+        String sql = "SELECT id_niveau, libelle FROM niveau WHERE id_niveau = '1'";
         ResultSet result = ModeleDAO.execute(sql);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertTrue(result.next());
+        Niveau expResult =  new Niveau(1,"Débutant");
+        assertTrue(expResult.equals(new Niveau(result.getInt(1),result.getString(2))));
     }
 
     /**
@@ -44,9 +44,12 @@ public class ModeleDAOTest {
         System.out.println("selectById");
         String sql = "SELECT libelle FROM questionnaire WHERE id_questionnaire = ?";
         int id = 1;
-        ResultSet expResult = null;
+        ResultSet expResult = ModeleDAO.execute("SELECT libelle FROM questionnaire WHERE id_questionnaire = 1");
         ResultSet result = ModeleDAO.selectById(sql, id);
-        assertEquals(expResult, result);
+        assertNotNull(result);
+        assertTrue(result.next());
+        expResult.next();
+        assertEquals(expResult.getString(1), result.getString(1));
     }
 
 }
