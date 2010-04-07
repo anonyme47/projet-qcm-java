@@ -178,7 +178,7 @@ public class QuestionnaireDAO extends ModeleDAO {
             psQ.executeUpdate();
             rs = psQ.getGeneratedKeys();
             rs.next();
-            int idQuestionnaire = rs.getInt("id_questionnaire");
+            int idQuestionnaire = rs.getInt(1);
             if (idQuestionnaire <= 0) {
                 throw new SQLException("impossible d'enregistrer les informations concernant le questionnaire.");
             }
@@ -198,7 +198,7 @@ public class QuestionnaireDAO extends ModeleDAO {
                     ps.executeUpdate();
                     rs = ps.getGeneratedKeys();
                     rs.next();
-                    idQuestion = rs.getInt("id_question");
+                    idQuestion = rs.getInt(1);
                     if (idQuestion <= 0) {
                         throw new SQLException("impossible d'enregistrer les informations concernant la question " + q.getLibelle());
                     } else {
@@ -227,7 +227,7 @@ public class QuestionnaireDAO extends ModeleDAO {
                 psContenu.executeUpdate();
                 rsContenu = psContenu.getGeneratedKeys();
                 rsContenu.next();
-                if (rsContenu.getInt("id_contenu") <= 0) {
+                if (rsContenu.getInt(1) <= 0) {
                     throw new SQLException("Impossible d'enregistrer les questions");
                 } else {
                     rsContenu = null;
