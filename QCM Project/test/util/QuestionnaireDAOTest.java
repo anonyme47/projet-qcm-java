@@ -28,7 +28,7 @@ public class QuestionnaireDAOTest extends QCMTestCase {
         assert result.invariant();
         assertTrue(result.equals(questionnaire));
         assertFalse(result.getQuestions().isEmpty());
-        assertFalse(result.estPasse());
+        assertTrue(result.estPasse());
     }
 
     /**

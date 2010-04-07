@@ -101,6 +101,10 @@ public class QuestionnairePasse {
         assert getIdQuestionnaire() > 0;
         return true;
     }
-    
+
+    @Override
+    public String toString() {
+        return "[" + getIdQuestionnaire() + ":" + getIdUser() + ":" + getNote() + "]";
+    }
 
 }

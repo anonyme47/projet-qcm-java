@@ -1,6 +1,5 @@
 package util;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import modele.Theme;
 import org.junit.Test;
