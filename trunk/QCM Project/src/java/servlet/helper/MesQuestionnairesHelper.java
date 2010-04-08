@@ -5,11 +5,15 @@
 
 package servlet.helper;
 
+import exception.ExpiredSessionException;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import modele.Questionnaire;
 import util.QuestionnaireDAO;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -17,20 +21,21 @@ import java.util.List;
  */
 public class MesQuestionnairesHelper extends RequestHelper{
 
-    public MesQuestionnairesHelper(HttpServletRequest request) throws Exception {
+    public MesQuestionnairesHelper(HttpServletRequest request) throws ExpiredSessionException, IOException {
         super(request);
     }
 
     public void setAttributeCreatedQuestionnairesByUser() throws SQLException{
         int idUser = getIdUser();
-        /*
-         List<Questionnaire> questionnaire = QuestionnaireDAO.getCreatedByUser(idUser);
+        
+         List<Questionnaire> questionnaires = QuestionnaireDAO.getCreatedByUser(idUser);
          Map<Integer , String> mapQuestionnaires = new HashMap<Integer, String>();
+         System.out.print(questionnaires);
          for(Questionnaire q: questionnaires){
             mapQuestionnaires.put(q.getIdQuestionnaire(), q.getLibelle());
+            System.out.print(q);
          }
-         * 
-         */
+         request.setAttribute("mapQuestionnaires", mapQuestionnaires);
     }
 
     @Override

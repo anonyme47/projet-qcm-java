@@ -2,6 +2,7 @@ package util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import modele.Question;
 import modele.Questionnaire;
@@ -48,6 +49,7 @@ public class QuestionnaireDAOTest extends QCMTestCase {
     /**
      * Test of getByTheme method, of class QuestionnaireDAO.
      */
+
     @Test
     public void testGetQuestionnairesByTheme() throws Exception {
         System.out.println("getByTheme");
@@ -118,11 +120,34 @@ public class QuestionnaireDAOTest extends QCMTestCase {
     @Test
     public void testInsert() throws Exception {
         System.out.println("insert");
-        Questionnaire questionnaire = QuestionnaireDAO.getById(4);
-        questionnaire.setLibelle("Test d'insert");
+        Questionnaire questionnaire = new Questionnaire("Test insert",1, 1, 1);
+        List<Question> questions = QuestionDAO.getByTheme(1);
+        Question question = new Question(null, "test nouvelle question", 1, 1, 0, new ArrayList<Reponse>());
+        questionnaire.addQuestion(questions.get(1));
+        questionnaire.addQuestion(questions.get(2));
+        questionnaire.addQuestion(question);
         QuestionnaireDAO.insert(questionnaire);
-        Questionnaire nouveauQuestionnaire = QuestionnaireDAO.getById(5);
-        assertTrue(questionnaire.equals(nouveauQuestionnaire));
+        assertTrue(questionnaire.equals(QuestionnaireDAO.getById(5)));
+        assertTrue(QuestionnaireDAO.getQuestionsById(5).contains(question));
+    }
+   
+
+    @Test
+    public void testGetCreatedByUser() throws Exception {
+        System.out.println("getCetCreatedByUser");
+        int idUser = 2;
+        List<Questionnaire> expResult=new ArrayList<Questionnaire>();
+
+        expResult.add(QuestionnaireDAO.getById(3));
+        expResult.add(QuestionnaireDAO.getById(4));
+       
+        List<Questionnaire> result = QuestionnaireDAO.getCreatedByUser(idUser);
+        
+        for(int i = 0; i< expResult.size(); i++)
+            assertTrue(result.get(i).equals(expResult.get(i)));
+        
+        
+        
     }
 
 }

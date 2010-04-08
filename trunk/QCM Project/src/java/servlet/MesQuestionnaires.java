@@ -5,6 +5,7 @@
 
 package servlet;
 
+import exception.ExpiredSessionException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -46,15 +47,15 @@ public class MesQuestionnaires extends HttpServlet {
          String forward = "error.jsp";
         try {
 
-            RequestHelper helper = new RequestHelper(request);
+            MesQuestionnairesHelper helper = new MesQuestionnairesHelper(request);
 
 
             String action = request.getParameter("action").toString();
 
             if (action != null) {
                 if (action.equals("getCreatedQuestionnaires")) {
-                    helper.setAttributeThemesAndNiveaux();
-                    forward = "creerQuestionnaire.jsp";
+                    helper.setAttributeCreatedQuestionnairesByUser();
+                    forward = "mesQuestionnaires.jsp";
                 }
             }
 
@@ -74,10 +75,9 @@ public class MesQuestionnaires extends HttpServlet {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
             forward = "error.jsp";
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ExpiredSessionException e) {
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
-            forward = "error.jsp";
+            forward = "index.jsp";
         }
         request.getRequestDispatcher(forward).forward(request, response);
     } 
