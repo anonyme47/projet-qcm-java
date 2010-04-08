@@ -93,6 +93,7 @@ public class Questionnaire {
         this.idNiveau = idNiveau;
         this.questions = new ArrayList<Question>();
         this.estPasse = false;
+        this.limiteTemps=0;
         assert invariant();
     }
 
@@ -238,7 +239,7 @@ public class Questionnaire {
 
     @Override
     public String toString() {
-        return "[" + libelle + ":" + idTheme + ":" + idNiveau + "]";
+        return "[" + libelle + ":" + idTheme + ":" + idNiveau + " : " + idUser + "]";
     }
 
 

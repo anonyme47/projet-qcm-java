@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import modele.Question;
 import modele.Questionnaire;
 import modele.Reponse;
@@ -164,8 +166,12 @@ public class QuestionnaireDAO extends ModeleDAO {
     public static void insert(Questionnaire questionnaire) throws SQLException {
         ResultSet rs = null;
         Connection connexion = null;
+        ResultSet rsContenu = null, rsQuestion = null;
+        Integer idQuestionnaire = null, idQuestion = null;
+        Statement statement= null;
         try {
             connexion = getConnection();
+            statement = connexion.createStatement();
             connexion.setAutoCommit(false);
             String sql = "INSERT INTO questionnaire(libelle, limite_temps, id_niveau, id_theme, id_user, date_creation) "
                     + " VALUES(?,?,?,?,?,NOW())";
@@ -176,36 +182,39 @@ public class QuestionnaireDAO extends ModeleDAO {
             psQ.setInt(4, questionnaire.getIdTheme());
             psQ.setInt(5, questionnaire.getIdUser());
             psQ.executeUpdate();
-            rs = psQ.getGeneratedKeys();
+            rs = statement.executeQuery("SELECT LAST_INSERT_ID() FROM questionnaire");
             rs.next();
-            int idQuestionnaire = rs.getInt(1);
+            idQuestionnaire = rs.getInt(1);
             if (idQuestionnaire <= 0) {
                 throw new SQLException("impossible d'enregistrer les informations concernant le questionnaire.");
             }
             /**
              * Insertion des questions
              */
-            sql = "INSERT INTO question(libelle,id_theme,id_user) VALUES (?,?,?)";
-            PreparedStatement ps = getConnection().prepareStatement(sql);
+        
+            String sqlQuestion = "INSERT INTO question(libelle,id_theme,id_user) VALUES (?,?,?)";
+            PreparedStatement ps = getConnection().prepareStatement(sqlQuestion);
             ps.setInt(2, questionnaire.getIdTheme());
+            
 
-            ResultSet rsContenu = null;
             for (Question q : questionnaire.getQuestions()) {
-                Integer idQuestion = q.getIdQuestion();
+                idQuestion = q.getIdQuestion();
                 if (idQuestion == null) {
+                    
                     ps.setString(1, q.getLibelle());
                     ps.setInt(3, q.getIdUser());
                     ps.executeUpdate();
-                    rs = ps.getGeneratedKeys();
-                    rs.next();
-                    idQuestion = rs.getInt(1);
+                    rsQuestion = statement.executeQuery("SELECT LAST_INSERT_ID() FROM question");
+                    rsQuestion.next();
+                    idQuestion = rsQuestion.getInt(1);
                     if (idQuestion <= 0) {
                         throw new SQLException("impossible d'enregistrer les informations concernant la question " + q.getLibelle());
-                    } else {
-                        rs = null;
                     }
+
+                    
                     String sqlRep = "INSERT INTO reponse(libelle, descriptif , est_correcte , note , id_question) "
                             + " VALUES(?,?,?,?,?)";
+                    
                     PreparedStatement psRep = getConnection().prepareStatement(sqlRep);
                     psRep.setInt(5, idQuestion);
                     for (Reponse r : q.getReponses()) {
@@ -213,9 +222,10 @@ public class QuestionnaireDAO extends ModeleDAO {
                         psRep.setString(2, r.getDescriptif());
                         psRep.setBoolean(3, r.estCorrecte());
                         psRep.setInt(4, r.getNote());
-                        ps.execute();
+                        ps.executeUpdate();
                     }
                     psRep.close();
+                    
                 }
                 /**
                  * Insertion dans la table contenu
@@ -225,22 +235,37 @@ public class QuestionnaireDAO extends ModeleDAO {
                 psContenu.setInt(1, idQuestionnaire);
                 psContenu.setInt(2, idQuestion);
                 psContenu.executeUpdate();
-                rsContenu = psContenu.getGeneratedKeys();
+                
+                rsContenu = statement.executeQuery("SELECT LAST_INSERT_ID() FROM contenu");
                 rsContenu.next();
                 if (rsContenu.getInt(1) <= 0) {
                     throw new SQLException("Impossible d'enregistrer les questions");
-                } else {
-                    rsContenu = null;
                 }
             }
+            connexion.commit();
 
         } catch (SQLException e) {
             if (connexion != null) {
                 connexion.rollback();
             }
+            e.printStackTrace();
             throw e;
         } finally {
-            rs.close();
+            if(rs != null){
+              rs.close();  
+            }
+            
         }
+    }
+
+    public static List<Questionnaire> getCreatedByUser(int idUser) throws SQLException {
+        List<Questionnaire> questionnaires = new ArrayList<Questionnaire>();
+        String sql = "SELECT id_questionnaire FROM questionnaire WHERE id_user = ? ORDER BY id_questionnaire";
+        ResultSet rs = selectById(sql, idUser);
+        while(rs.next()) {
+            questionnaires.add(getById(rs.getInt(1)));
+        }
+        rs.close();
+        return questionnaires;
     }
 }
