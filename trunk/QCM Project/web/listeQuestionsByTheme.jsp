@@ -10,22 +10,22 @@
         <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen" title="css" charset="utf-8" />
         <title>Projet QCM</title>
         <style type="text/css" media="screen">
-		.question_a_ajouter {
-			display: none;
-		}
-	</style>
+            .question_a_ajouter {
+                display: none;
+            }
+        </style>
         <script type="text/javascript" charset="utf-8">
-		function display_question() {
-			var questions = document.getElementsByClassName('question_a_ajouter');
-			for (var i = 0; i < questions.length; i++) {
-				questions[i].style.display = 'none';
-			}
-			var index = document.getElementById('question').selectedIndex;
-			if (index > 0) {
-                            document.getElementById('question_' + index).style.display = 'block';
-			}
-		}
-	</script>
+            function display_question() {
+                var questions = document.getElementsByClassName('question_a_ajouter');
+                for (var i = 0; i < questions.length; i++) {
+                    questions[i].style.display = 'none';
+                }
+                var index = document.getElementById('question').selectedIndex;
+                if (index > 0) {
+                    document.getElementById('question_' + index).style.display = 'block';
+                }
+            }
+        </script>
     </head>
     <body>
         <div id="content">
@@ -35,72 +35,83 @@
                 <jsp:include page="scripts/menu_left.jsp" />
 
                 <div id="contenu">
-                    
+
                     <%
-                    List<Question> questionsByThemeNewQuestionnaire = (List<Question>) request.getSession().getAttribute("questionsByThemeNewQuestionnaire");
-                    Questionnaire newQuestionnaire = (Questionnaire) request.getSession().getAttribute("newQuestionnaire");
-                        if(newQuestionnaire!=null){
-                            out.print("<fieldset id='titre_questionnaire'><legend><strong>"+newQuestionnaire.getLibelle()+"</strong></legend></fieldset>");
-
-
-                     %>
-
-                     <label for="question">Sélectionner une question existante à ajouter dans votre questionnaire :</label>
-                    <select name="question" id="question" onchange="display_question()">
-                        <option></option>
-
-                     <%
-                            if(questionsByThemeNewQuestionnaire != null){
-                                for(Question q : questionsByThemeNewQuestionnaire){
-                                    out.println("<option value='"+q.getIdQuestion()+"'>"+q.getLibelle()+"</option>");
-                                 }
+                                List<Question> questionsByThemeNewQuestionnaire = (List<Question>) request.getSession().getAttribute("questionsByThemeNewQuestionnaire");
+                                Questionnaire newQuestionnaire = (Questionnaire) request.getSession().getAttribute("newQuestionnaire");
+                                if (newQuestionnaire != null) {
+                                    out.print("<fieldset id='titre_questionnaire'><legend><strong>" + newQuestionnaire.getLibelle() + "</strong></legend></fieldset>");
 
 
                     %>
+
+                    
+                    <label for="question">Sélectionner une question existante à ajouter dans votre questionnaire :</label>
+                    <select name="question" id="question" onchange="display_question()">
+                        <option></option>
+
+                        <%
+                                                    if (questionsByThemeNewQuestionnaire != null) {
+                                                        for (Question q : questionsByThemeNewQuestionnaire) {
+                                                            out.println("<option value='" + q.getIdQuestion() + "'>" + q.getLibelle() + "</option>");
+                                                        }
+
+
+                        %>
                     </select>
 
 
 
 
 
-                    
+
                     <%
-                                for(Question q : questionsByThemeNewQuestionnaire){
-                                    out.println("<div id='question_"+q.getIdQuestion()+"' class='question_a_ajouter'>");
-                                        out.println("<strong>Libelle de la question: "+q.getLibelle()+"</p><br/>");
-                                        out.println("<p>Liste de ses réponses</p><br/>");
-                                        out.println("<div>");
+                                        for (Question q : questionsByThemeNewQuestionnaire) {
+                                            out.println("<div id='question_" + q.getIdQuestion() + "' class='question_a_ajouter'>");
+                                            out.println("<p>Libelle de la question: " + q.getLibelle() + "</p><br/>");
+                                            out.println("<p>Liste de ses réponses</p>");
+                                            
+                                            out.println("<table class='liste' border='1'>");
+                                            out.println("<thead>");
+                                            out.println("<th>Libellé</th>");
+                                            out.println("<th>Descriptif</th>");
+                                            out.println("<th>Note</th>");
+                                            out.println("<th>Réponse correcte</th>");
+                                            out.println("</thead>");
+                                            out.println("<tbody>");
 
                                             List<Reponse> reponses = q.getReponses();
                                             if (reponses != null) {
                                                 for (Reponse reponse : reponses) {
-                                                    out.println("<p>Libelle : "+reponse.getLibelle()+"</p><br/>");
-                                                    out.println("<p>Descriptif : "+reponse.getDescriptif()+"</p><br/>");
-                                                    out.println("<p>Note : "+reponse.getNote()+"</p><br/>");
-                                                    out.println("<p>Est correcte : "+reponse.estCorrecte()+"</p><br/>");
+                                                    out.println("<tr>");
+                                                    out.println("<td>" + reponse.getLibelle() + "</td>");
+                                                    out.println("<td>" + reponse.getDescriptif() + "</td>");
+                                                    out.println("<td>" + reponse.getNote() + "</td>");
+                                                    out.println("<td>" + (reponse.estCorrecte() ? "Oui" : "Non") + "</td>");
+                                                    out.println("</tr>");
                                                 }
                                             }
+                                            out.println("</tbody>");
+                                            out.println("</table>");
 
 
-
-                                        out.println("</div>");
-                                        out.println("<form action='' method='post' accept-charset='utf-8'>");
-                                            out.println("<input type='hidden' name='idQuestionToAdd' value='"+q.getIdQuestion()+"'/>");
+                                            out.println("<form action='' method='post' accept-charset='utf-8'>");
+                                            out.println("<input type='hidden' name='idQuestionToAdd' value='" + q.getIdQuestion() + "'/>");
                                             out.println("<input type='hidden' name='action' value='applyToAddQuestionByTheme'/>");
-                                            out.println("<input type='submit' value='Ajouter cette question'/>");
-                                        out.println("</form>");
-                                    out.println("</div>");
-                                 }
+                                            out.println("<input class='button' type='submit' value='Ajouter cette question'/>");
+                                            out.println("</form>");
+                                            out.println("</div>");
+                                        }
 
-                                    
-                            }
-                        }else{
-                        out.println("Un questionnaire correspondant à vos critères existe déjà");
-                        }
+
+                                    }
+                                } else {
+                                    out.println("Un questionnaire correspondant à vos critères existe déjà");
+                                }
                     %>
 
 
-                
+
 
 
                 </div>
