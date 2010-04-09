@@ -1,5 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.Map" %>
+<%@page import="java.util.List" %>
+<%@page import="modele.Reponse" %>
+<%@page import="modele.Question" %>
+<%@page import="modele.Questionnaire" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -15,26 +19,30 @@
                 <jsp:include page="scripts/menu_left.jsp" />
 
                 <div id="contenu">
-                    <h4>Mes questionnaires passés</h4>
                     <%
-                        Map<Integer , String> questionnaires = (Map<Integer , String>) request.getAttribute("mapQuestionnaires");
-                        if(questionnaires != null && !questionnaires.isEmpty()){
 
+                        Questionnaire questionnaire = (Questionnaire) request.getAttribute("questionnaire");
+
+                        if(questionnaire != null){
                             out.println("<ol>");
-                            for(Integer i : questionnaires.keySet()){
-                            %>
-                                <li><%= questionnaires.get(i) %></li>
-                            <%
+                            for(Question question : questionnaire.getQuestions()){
+                                out.println("<li>");
+                                    out.println(question.getLibelle()+"<br/>");
+                                    for(Reponse reponse: question.getReponses()){
+                                        if(reponse.estCorrecte()){
+                                            out.println("<strong>"+reponse.getLibelle());
+                                            out.println(" ("+reponse.getDescriptif()+")</strong><br/>");
+                                        }else{
+                                            out.println(reponse.getLibelle());
+                                            out.println(" ("+reponse.getDescriptif()+") <br/>");
+                                        }
+                                    }
+                                out.println("</li>");
                             }
                             out.println("</ol>");
                         }
                     %>
                 </div>
-                <form action="MesQuestionnaires" method="post" id="getInfoCreatedQuestionnaire_form">
-                    <input type="hidden" name="questionnaire" value=""/>
-                    <input type="hidden" name="action" value="getInfoCreatedQuestionnaire" />
-
-                </form>
             </div>
 
             <div id="footer">

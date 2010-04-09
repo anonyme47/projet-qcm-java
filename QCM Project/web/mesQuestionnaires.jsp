@@ -15,7 +15,7 @@
                 <jsp:include page="scripts/menu_left.jsp" />
 
                 <div id="contenu">
-                    <h4>Mes questionnaires passés</h4>
+                    <h4>Mes questionnaires créés</h4>
                     <ul class="liste">
                         <%
                                     Map<Integer, String> questionnaires = (Map<Integer, String>) request.getAttribute("mapQuestionnaires");
