@@ -142,7 +142,7 @@ form#connexion_form input[type=submit] {
     line-height: 1.5em;
     margin: 10px 0 0px 10px;
 }
-.question {
+.question, .panel_left {
     /*	float:right;*/
     margin-right: 20px;
     width: 550px;/*59%;*/
@@ -217,12 +217,19 @@ div#temps_restant {
 .liste {
     list-style-position: inside;
     line-height: 2em;
-    /*	background-color: #eee;*/
     background-color: #ffb;
     padding: 15px 30px;
     margin: 20px 0px;
 }
-
+.liste li {
+    list-style: none;
+    cursor: pointer;
+    padding-left: 5px;
+}
+.liste li:hover {
+    background-color: #fff;
+    text-decoration: underline;
+}
 .liste_recapitulatif {
     list-style-position: inside;
     background-color: #ffb;
@@ -334,4 +341,27 @@ a+form {
 }
 .medium-input {
     font-size: 1.3em;
+}
+table {
+    border-collapse: collapse;
+    padding: 5px;
+}
+table th, table td {
+    padding: 5px;
+}
+table#question_a_ajouter {
+    width: 550px;
+}
+table th.note {
+    width: 50px;
+}
+table th.correcte {
+    width: 50px;
+}
+table th.libelle, table th.descriptif {
+    width: 211px;
+}
+
+table.center {
+    text-align: center;
 }

@@ -28,8 +28,6 @@
                         <legend>Modifier mes réponses</legend>
                         <ul class="questions">
                             <%
-                                        
-
                                         List<Question> questions = qcm.getQuestionnaire().getQuestions();
                                         if (questions != null) {
                                             for (Question question : questions) {

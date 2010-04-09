@@ -16,24 +16,25 @@
 
                 <div id="contenu">
                     <h4>Mes questionnaires passés</h4>
-                    <%
-                        Map<Integer , String> questionnaires = (Map<Integer , String>) request.getAttribute("mapQuestionnaires");
-                        if(questionnaires != null && !questionnaires.isEmpty()){
+                    <ul class="liste">
+                        <%
+                                    Map<Integer, String> questionnaires = (Map<Integer, String>) request.getAttribute("mapQuestionnaires");
+                                    if (questionnaires != null && !questionnaires.isEmpty()) {
 
-                            out.println("<ol>");
-                            for(Integer i : questionnaires.keySet()){
-                            %>
-                                <li><%= questionnaires.get(i) %></li>
-                            <%
-                            }
-                            out.println("</ol>");
-                        }
-                    %>
+                                        out.println("<ol>");
+                                        for (Integer i : questionnaires.keySet()) {
+                        %>
+                        <li><%= questionnaires.get(i)%></li>
+                        <%
+                                        }
+                                        out.println("</ol>");
+                                    }
+                        %>
+                    </ul>
                 </div>
                 <form action="MesQuestionnaires" method="post" id="getInfoCreatedQuestionnaire_form">
                     <input type="hidden" name="questionnaire" value=""/>
                     <input type="hidden" name="action" value="getInfoCreatedQuestionnaire" />
-                    
                 </form>
             </div>
 

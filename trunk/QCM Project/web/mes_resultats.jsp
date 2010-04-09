@@ -15,7 +15,7 @@
 
                 <div id="contenu">
                     <h4>Mes questionnaires passés</h4>
-                    <table>
+                    <table class="liste">
                         <tr>
                             <th>Titre</th>
                             <th>Thème</th>
