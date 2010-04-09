@@ -10,7 +10,7 @@
                         <a href="PasserQuestionnaire?action=afficherChoixThemesNiveau"><li>Passer un questionnaire</li></a>
                         <a href="CreerQuestionnaire?action=applyToCreate"><li>Créer un questionnaire</li></a>
                         <a href="MesQuestionnaires?action=getCreatedQuestionnaires"><li>Mes questionnaires</li></a>
-                        <a href="mes_resultats.jsp"><li>Mes résultats</li></a>
+                        <a href="MesResultats?action=getQuestionnairesPasseByUser"><li>Mes résultats</li></a>
                         <a href="Accueil?action=logout"><li>Déconnexion</li></a>
                     </ul>
                 </div>
