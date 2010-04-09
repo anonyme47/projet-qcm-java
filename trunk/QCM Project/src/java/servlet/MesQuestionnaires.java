@@ -44,7 +44,7 @@ public class MesQuestionnaires extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-         String forward = "error.jsp";
+         String forward = "index.jsp";
         try {
 
             MesQuestionnairesHelper helper = new MesQuestionnairesHelper(request);

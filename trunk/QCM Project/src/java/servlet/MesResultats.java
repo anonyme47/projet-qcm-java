@@ -5,12 +5,17 @@
 
 package servlet;
 
+import exception.ExpiredSessionException;
+import exception.UnauthorizedActionException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import servlet.helper.MesResultatsHelper;
+import servlet.helper.RequestHelper;
 
 /**
  *
@@ -27,22 +32,6 @@ public class MesResultats extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet MesResultats</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet MesResultats at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-            */
-        } finally { 
-            out.close();
-        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,8 +45,49 @@ public class MesResultats extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
-    } 
+         String forward = "index.jsp";
+        try {
+
+            MesResultatsHelper helper = new MesResultatsHelper(request);
+
+
+            String action = request.getParameter("action").toString();
+
+            if (action != null) {
+                if (action.equals("getQuestionnairesPasseByUser")) {
+                    helper.setAttributeQuestionnairesPasses();
+                    forward = "mesResultats.jsp";
+                } else if(action.equals("getCorrection")){
+                    System.out.println("correction");
+                    helper.setAttributeCorrectionQuestionnaire();
+                    forward = "afficherInfoQuestionnaire.jsp";
+                }
+            }
+
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
+        } catch (IOException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
+        } catch (ExpiredSessionException e) {
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+        } catch (UnauthorizedActionException e) {
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+            forward = "error.jsp";
+        }
+        request.getRequestDispatcher(forward).forward(request, response);
+    }
 
     /** 
      * Handles the HTTP <code>POST</code> method.
