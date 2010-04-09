@@ -12,16 +12,22 @@ import java.sql.Date;
  */
 public class QuestionnairePasse {
     private int idQuestionnaire;
+    private String libelleQuestionnaire;
     private int idUser;
     private int note;
     private Date date;
+    private Integer limiteTemps;
 
-    public QuestionnairePasse(int idQuestionnaire, int idUser, int note, Date date) {
+    public QuestionnairePasse(int idQuestionnaire, String libelleQuestionnaire, int idUser, int note, Date date, Integer limiteTemps) {
         this.idQuestionnaire = idQuestionnaire;
+        this.libelleQuestionnaire = libelleQuestionnaire;
         this.idUser = idUser;
         this.note = note;
         this.date = date;
+        this.limiteTemps = limiteTemps;
     }
+
+    
 
     public QuestionnairePasse(int idQuestionnaire, int idUser) {
         this.idQuestionnaire = idQuestionnaire;
@@ -69,6 +75,25 @@ public class QuestionnairePasse {
         assert invariant();
     }
 
+    public String getLibelleQuestionnaire() {
+        return libelleQuestionnaire;
+    }
+
+    public void setLibelleQuestionnaire(String libelleQuestionnaire) {
+        this.libelleQuestionnaire = libelleQuestionnaire;
+    }
+
+    public Integer getLimiteTemps() {
+        return limiteTemps;
+    }
+
+    public void setLimiteTemps(Integer limiteTemps) {
+        this.limiteTemps = limiteTemps;
+    }
+
+    
+
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -101,6 +126,9 @@ public class QuestionnairePasse {
         assert getIdQuestionnaire() > 0;
         return true;
     }
+
+
+
 
     @Override
     public String toString() {

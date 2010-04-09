@@ -11,6 +11,7 @@ import modele.Qcm;
 /**
  *
  * @author Maria Rabarison et Lou Ferrand
+ * TODO : Changer limite_temps à celui du qcm
  */
 public class QcmDAO extends ModeleDAO{
 
@@ -38,7 +39,7 @@ public class QcmDAO extends ModeleDAO{
                     ordre.executeUpdate();
                 }
             }
-            sql="INSERT INTO questionnaire_passe(id_questionnaire, id_user, note, date) VALUES ("+idQuestionnaire+","+idUser+","+qcm.getNote()+",NOW())";
+            sql="INSERT INTO questionnaire_passe(id_questionnaire, id_user, note, date, libelle_questionnaire, limite_temps) VALUES ("+idQuestionnaire+","+idUser+","+qcm.getNote()+",NOW(),"+qcm.getQuestionnaire().getLibelle()+","+qcm.getQuestionnaire().getLimiteTemps()+")";
             int result= connexion.createStatement().executeUpdate(sql);
             if(result>0){
               connexion.commit();
