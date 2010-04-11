@@ -18,18 +18,27 @@
 
                 <div id="contenu">
                     <%
-                    List<Question> questionsByThemeNewQuestionnaire = (List<Question>) request.getSession().getAttribute("questionsByThemeNewQuestionnaire");
-                    Questionnaire newQuestionnaire = (Questionnaire) request.getSession().getAttribute("newQuestionnaire");
-                        if(newQuestionnaire!=null){
-                            out.print(newQuestionnaire.getLibelle());
-                            if(questionsByThemeNewQuestionnaire != null){
-                                for(Question q : questionsByThemeNewQuestionnaire){
-                                    out.println(q.getLibelle());
-                                    }
-                                }
-                        }else{
-                        out.println("Un questionnaire correspondant à vos critères existe déjà");
-                        }
+                    out.println("<form action='CreerQuestionnaire' method='post'>");
+                    out.println("<table id='question_a_ajouter' class='liste center question-a-ajouter' border='1'>");
+                    out.println("<tr>");
+                    out.println("<th class='libelle'>Libellé</th>");
+                    out.println("<th class='descriptif'>Descriptif</th>");
+                    out.println("<th class='note'>Note</th>");
+                    out.println("<th class='correcte'>Réponse correcte</th>");
+                    out.println("</tr>");
+                    int nbReponses = Integer.parseInt(request.getAttribute("nbReponses").toString());
+                    for (int i=0; i<nbReponses; i++) {
+                        out.println("<tr>");
+                        out.println("<td><input type='text' value='' name='libelleReponse_"+i+"' /></td>");
+                        out.println("<td><input type='text' value='' name='DescriptifReponse_"+i+"' /></td>");
+                        out.println("<td><input type='text' value='' name='noteReponse_"+i+"' /></td>");
+                        out.println("<td><input type='checkbox' value='' name='estCorrecteReponse_"+i+"' /></td>");
+                        out.println("</tr>");
+                    }
+                    out.println("</table>");
+                    out.println("<input type='hidden' name='nbReponses' value='"+nbReponses+"'>");
+                    out.println("<input type='hidden' name='action' value='createNewQuestion'>");
+                    out.println("</form>");
                     %>
                 </div>
             </div>

@@ -25,7 +25,7 @@
                                     <td class="static"><label for="theme">Choisissez le thème : </label></td>
                                     <td>
                                         <select name="theme" id="theme" class="medium-input">
-                                            <option value="0"></option>
+                                            <option></option>
                                             <%
                                                         Map<Integer, Theme> themes = (Map<Integer, Theme>) request.getAttribute("themes");
                                                         if (themes != null) {
@@ -42,7 +42,7 @@
                                     <td class="static"><label for="niveau">Choisissez le niveau : </label></td>
                                     <td>
                                         <select name="niveau" id="niveau" class="medium-input">
-                                            <option value="0"></option>
+                                            <option></option>
                                             <%
                                                         Map<Integer, Niveau> niveaux = (Map) request.getAttribute("niveaux");
                                                         if (niveaux != null) {
