@@ -88,39 +88,25 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
+                                        <td colspan="2">
                                             <textarea id="libelleQuestion" cols="50" rows="5"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="nbReponses">Nombre de réponses à cette question</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" id="nbReponses" size="3" />
                                         </td>
                                     </tr>
                                 </table>
 
-                                <table class='liste center reponses-a-ajouter' <%--border='1'--%>>
-                                    <tr>
-                                        <th class='libelle'>Libellé</th>
-                                        <th class='descriptif'>Descriptif</th>
-                                        <th class='note'>Note</th>
-                                        <th class='correcte'>Réponse correcte</th>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="text" id="libelle-reponse-1" />
-                                        </td>
-                                        <td>
-                                            <input type="text" id="descriptif-reponse-1" />
-                                        </td>
-                                        <td>
-                                            <input type="text" id="note-reponse-1" size="10" />
-                                        </td>
-                                        <td>
-                                            <input type="checkbox" id="correcte-reponse-1" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="button" value="Ajouter cette réponse" onclick="ajouter_reponse()" />
-                                        </td>
-                                    </tr>
-                                </table>
+                                <form action='' method='post' accept-charset='utf-8'>
+                                    <input type='hidden' name='idQuestionToAdd' value='" + q.getIdQuestion() + "' />
+                                    <input type='hidden' name='action' value='applyToAddQuestionByTheme' />
+                                    <input class='button' type='submit' value='Ajouter les réponses' />
+                                </form>
                             </form>
 
 
