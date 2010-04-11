@@ -20,7 +20,7 @@
                 for (var i = 0; i < questions.length; i++) {
                     questions[i].style.display = 'none';
                 }
-                var index = document.getElementById('question').selectedIndex - 1;
+                var index = document.getElementById('question').value;
                 if (index >= 0) {
                     document.getElementById('question_' + index).style.display = 'block';
                 }
@@ -42,25 +42,28 @@
                 <jsp:include page="scripts/menu_left.jsp" />
 
                 <div id="contenu">
+
+                    <%
+                       List<Question> questionsByThemeNewQuestionnaire = (List<Question>) request.getSession().getAttribute("questionsByThemeNewQuestionnaire");
+                       Questionnaire newQuestionnaire = (Questionnaire) request.getSession().getAttribute("newQuestionnaire");
+
+                    %>
                     <fieldset id="modifier_reponses" class="">
                         <legend>Questions du questionnaire</legend>
                         <ul class="questions">
-                            <li>bla bla bla bla</li>
-                            <li>bla bla bla bla</li>
-                            <li>bla bla bla bla</li>
-                            <li>bla bla bla bla</li>
-                            <li>bla bla bla bla</li>
-                            <li>bla bla bla bla</li>
-                            <li>bla bla bla bla</li>
+                            <%
+                                for(Question question : newQuestionnaire.getQuestions()){
+                                    out.println("<li>"+question.getLibelle()+"</li>");
+                                }
+                            %>
                         </ul>
                     </fieldset>
 
                     <div class="panel_left">
                         <%
-                                    List<Question> questionsByThemeNewQuestionnaire = (List<Question>) request.getSession().getAttribute("questionsByThemeNewQuestionnaire");
-                                    Questionnaire newQuestionnaire = (Questionnaire) request.getSession().getAttribute("newQuestionnaire");
-                                    if (newQuestionnaire != null) {
-                                        out.print("<h1>Nouveau questionnaire : &laquo; " + newQuestionnaire.getLibelle() + " &raquo;</h1>");
+
+                          if (newQuestionnaire != null) {
+                              out.print("<h1>Nouveau questionnaire : &laquo; " + newQuestionnaire.getLibelle() + " &raquo;</h1>");
                         %>
 
 
@@ -69,18 +72,18 @@
                             <option>Choisissez une question à ajouter</option>
                             <option value="0">Ajouter une nouvelle question</option>
 
-                            <%
-                                                                    if (questionsByThemeNewQuestionnaire != null) {
-                                                                        for (Question q : questionsByThemeNewQuestionnaire) {
-                                                                            out.println("<option value='" + q.getIdQuestion() + "'>" + q.getLibelle() + "</option>");
-                                                                        }
+                            <%if (questionsByThemeNewQuestionnaire != null) {
+                                    for (int k=0; k<questionsByThemeNewQuestionnaire.size();k++) {
+                                        out.println("<option value='" + questionsByThemeNewQuestionnaire.get(k).getIdQuestion() + "'>" + questionsByThemeNewQuestionnaire.get(k).getLibelle() + "</option>");
+                                    }
+                                
                             %>
                         </select>
 
 
 
                         <div id="reponses">
-                            <form id="question_0" class="question_a_ajouter" action="#" method="post">
+                            <form id="question_0" class="question_a_ajouter" action="CreerQuestionnaire" method="post">
                                 <table>
                                     <tr>
                                         <td>
@@ -89,7 +92,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <textarea id="libelleQuestion" cols="50" rows="5"></textarea>
+                                            <textarea id="libelleQuestion" name="libelleQuestion" cols="50" rows="5"></textarea>
                                         </td>
                                     </tr>
                                     <tr>
@@ -97,21 +100,19 @@
                                             <label for="nbReponses">Nombre de réponses à cette question</label>
                                         </td>
                                         <td>
-                                            <input type="text" id="nbReponses" size="3" />
+                                            <input type="text" id="nbReponses" name="nbReponses" size="3" />
                                         </td>
                                     </tr>
                                 </table>
 
-                                <form action='' method='post' accept-charset='utf-8'>
-                                    <input type='hidden' name='idQuestionToAdd' value='" + q.getIdQuestion() + "' />
-                                    <input type='hidden' name='action' value='applyToAddQuestionByTheme' />
-                                    <input class='button' type='submit' value='Ajouter les réponses' />
-                                </form>
+                                <input type='hidden' name='action' value='applyToAddNewQuestion' />
+                                <input class='button' type='submit' value='Ajouter les réponses' />
                             </form>
 
 
                             <%
-                                                for (Question q : questionsByThemeNewQuestionnaire) {
+                                                for (int i=0 ; i<questionsByThemeNewQuestionnaire.size();i++) {
+                                                    Question q =questionsByThemeNewQuestionnaire.get(i);
                                                     out.println("<div id='question_" + q.getIdQuestion() + "' class='question_a_ajouter'>");
 
                                                     out.println("<table id='question_a_ajouter' class='liste center question-a-ajouter' border='1'>");

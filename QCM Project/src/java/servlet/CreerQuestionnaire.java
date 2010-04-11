@@ -1,5 +1,9 @@
 package servlet;
 
+import exception.ExpiredSessionException;
+import exception.UnauthorizedActionException;
+import exception.UnknownNiveauException;
+import exception.UnknownThemeException;
 import java.io.IOException;
 import java.sql.SQLException;
 import servlet.helper.RequestHelper;
@@ -86,7 +90,7 @@ public class CreerQuestionnaire extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String forward = "error.jsp";
+        String forward = "index.jsp";
         try {
             CreerQuestionnaireHelper helper = new CreerQuestionnaireHelper(request);
             String action = request.getParameter("action").toString();
@@ -97,21 +101,35 @@ public class CreerQuestionnaire extends HttpServlet {
                 }else if(action.equals("applyToAddQuestionByTheme")){
                     helper.applyToAddQuestionByTheme();
                     forward = "listeQuestionsByTheme.jsp";
-                }else{
-                    forward = "creerQuestionnaire.jsp";
+                }else if(action.equals("applyToAddNewQuestion")){
+                    helper.applyToAddNewQuestion();
+                    forward = "afficherNouvelleQuestion.jsp";
+                } else if(action.equals("createNewQuestion")){
+                    forward = "listeQuestionsByTheme.jsp";
                 }
             }
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            forward = "error.jsp";
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
         } catch (SQLException e) {
-            e.printStackTrace();
+            forward = "error.jsp";
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            forward = "error.jsp";
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ExpiredSessionException e) {
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+        } catch (UnknownThemeException e) {
+            forward = "error.jsp";
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+        }catch (UnknownNiveauException e) {
+            forward = "error.jsp";
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+        } catch (NumberFormatException e) {
+            forward = "error.jsp";
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+        } catch (UnauthorizedActionException e) {
+            forward = "error.jsp";
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
         }
         request.getRequestDispatcher(forward).forward(request, response);
