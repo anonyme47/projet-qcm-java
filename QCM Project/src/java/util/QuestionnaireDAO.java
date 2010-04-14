@@ -268,4 +268,27 @@ public class QuestionnaireDAO extends ModeleDAO {
         rs.close();
         return questionnaires;
     }
+
+    public static HashMap<Integer, Questionnaire> getAll() throws SQLException {
+        HashMap<Integer, Questionnaire> questionnaires = new HashMap<Integer, Questionnaire>();
+        String sql = "SELECT id_questionnaire, libelle, date_creation, limite_temps, est_actif, id_theme, id_user, id_niveau FROM questionnaire";
+        ResultSet rs = getConnection().createStatement().executeQuery(sql);
+        while (rs.next()) {
+            int idQuestionnaire = rs.getInt("id_questionnaire");
+            questionnaires.put(idQuestionnaire, new Questionnaire(
+                    idQuestionnaire,
+                    rs.getString("libelle"),
+                    rs.getDate("date_creation"),
+                    rs.getInt("limite_temps"),
+                    rs.getBoolean("est_actif"),
+                    rs.getInt("id_Theme"),
+                    rs.getInt("id_user"),
+                    rs.getInt("id_niveau"),
+                    QuestionnaireDAO.getQuestionsById(idQuestionnaire),
+                    1
+                    ));
+        }
+        return questionnaires;
+    }
+
 }

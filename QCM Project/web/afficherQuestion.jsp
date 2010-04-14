@@ -86,7 +86,7 @@
                             <p>
 
                             </p>
-                            <ul class="liste">
+                            <ul id="questionnaire_fini" class="liste">
                                 <%
                                                                     if (questions != null) {
                                                                         for (Question question : questions) {

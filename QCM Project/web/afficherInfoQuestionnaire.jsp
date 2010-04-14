@@ -20,27 +20,31 @@
 
                 <div id="contenu">
                     <%
+                                Questionnaire questionnaire = (Questionnaire) request.getAttribute("questionnaire");
 
-                        Questionnaire questionnaire = (Questionnaire) request.getAttribute("questionnaire");
-
-                        if(questionnaire != null){
-                            out.println("<ol>");
-                            for(Question question : questionnaire.getQuestions()){
-                                out.println("<li>");
-                                    out.println(question.getLibelle()+"<br/>");
-                                    for(Reponse reponse: question.getReponses()){
-                                        if(reponse.estCorrecte()){
-                                            out.println("<strong>"+reponse.getLibelle());
-                                            out.println(" ("+reponse.getDescriptif()+")</strong><br/>");
-                                        }else{
-                                            out.println(reponse.getLibelle());
-                                            out.println(" ("+reponse.getDescriptif()+") <br/>");
-                                        }
-                                    }
-                                out.println("</li>");
-                            }
-                            out.println("</ol>");
-                        }
+                                if (questionnaire != null) {%>
+                    <h1><%=questionnaire.getLibelle()%></h1>
+                    <a href="MesResultats?action=getQuestionnairesPasseByUser">&laquo; Retour</a>
+                    <ol id="info_questionnaire">
+                        <%
+                                                            for (Question question : questionnaire.getQuestions()) {
+                                                                out.println("<li>" + question.getLibelle() + "<ul class='liste'>");
+                                                                for (Reponse reponse : question.getReponses()) {
+                                                                    out.println("<li>");
+                                                                    if (reponse.estCorrecte()) {
+                                                                        out.println("<strong class='bon'>" + reponse.getLibelle());
+                                                                        out.println(" (" + reponse.getDescriptif() + ")</strong>");
+                                                                    } else {
+                                                                        out.println(reponse.getLibelle());
+                                                                        out.println(" (" + reponse.getDescriptif() + ")");
+                                                                    }
+                                                                    out.println("</li>");
+                                                                }
+                                                                out.println("</ul></li>");
+                                                            }
+                        %>
+                    </ol>
+                    <%}
                     %>
                 </div>
             </div>
