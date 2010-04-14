@@ -13,7 +13,7 @@ import modele.Qcm;
  * @author Maria Rabarison et Lou Ferrand
  * TODO : Changer limite_temps à celui du qcm
  */
-public class QcmDAO extends ModeleDAO{
+public class QcmDAO extends ModeleDAO {
 
     public static void insert(Qcm qcm) throws SQLException {
         Connection connexion = null;
@@ -23,7 +23,7 @@ public class QcmDAO extends ModeleDAO{
             connexion = getConnection();
             connexion.setAutoCommit(false);
             int idQuestionnaire = qcm.getQuestionnaire().getIdQuestionnaire();
-            int idUser=qcm.getIdUser();
+            int idUser = qcm.getIdUser();
             String sql = "INSERT INTO user_reponse(id_contenu, id_reponse, id_user) VALUES (?,?,?)";
             ordre = connexion.prepareStatement(sql);
             ordre.setInt(3, idUser);
@@ -39,15 +39,17 @@ public class QcmDAO extends ModeleDAO{
                     ordre.executeUpdate();
                 }
             }
-            sql="INSERT INTO questionnaire_passe(id_questionnaire, id_user, note, date, libelle_questionnaire, limite_temps) VALUES ("+idQuestionnaire+","+idUser+","+qcm.getNote()+",NOW(),"+qcm.getQuestionnaire().getLibelle()+","+qcm.getQuestionnaire().getLimiteTemps()+")";
-            int result= connexion.createStatement().executeUpdate(sql);
-            if(result>0){
-              connexion.commit();
-              qcm.setEstFini(true);
-            }else{
+            sql = "INSERT INTO questionnaire_passe(id_questionnaire, id_user, note, date, libelle_questionnaire, limite_temps) " +
+                    "VALUES (" + idQuestionnaire + "," + idUser + "," + qcm.getNote() + ",NOW(),\"" + qcm.getQuestionnaire().getLibelle() + "\"," + qcm.getQuestionnaire().getLimiteTemps() + ")";
+                    System.out.println(sql);
+            int result = connexion.createStatement().executeUpdate(sql);
+            if (result > 0) {
+                connexion.commit();
+                qcm.setEstFini(true);
+            } else {
                 throw new SQLException("Insertion questionnaire_passe failed.");
             }
-            
+
         } catch (SQLException ex) {
             if (connexion != null) {
                 connexion.rollback();
