@@ -12,6 +12,11 @@
                 <h1><a href="index.jsp">iQCM</a></h1>
             </div>
             <ul id="menu">
+                <%
+                    if (user.getStatut().getLibelle().equals("Administrateur")) {
+                        out.println("<li><a href='#'>Administrateur</a></li>");
+                    }
+                %>
                 <li><a href="Accueil?action=retourAccueil">Accueil</a></li>
                 <li><a href="#">Actualité</a></li>
                 <li><a href="#">A propos</a></li>

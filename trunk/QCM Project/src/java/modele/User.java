@@ -5,6 +5,7 @@ package modele;
  * @author Maria Rabarison et Lou Ferrand
  */
 public class User {
+
     private Integer idUser;
     private String login;
     private String password;
@@ -17,9 +18,10 @@ public class User {
         this.idUser = idUser;
         this.login = login;
         this.password = password;
-        this.email=email;
-        this.nom=nom;
-        this.prenom=prenom;
+        this.email = email;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.statut = statut;
         assert invariant();
     }
 
@@ -28,7 +30,7 @@ public class User {
     }
 
     public void setIdUser(int idUser) {
-        assert idUser>0;
+        assert idUser > 0;
         this.idUser = idUser;
         assert invariant();
     }
@@ -79,6 +81,10 @@ public class User {
         this.prenom = prenom;
     }
 
+    public Statut getStatut() {
+        return statut;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -94,7 +100,7 @@ public class User {
         if ((this.email == null) ? (other.email != null) : !this.email.equals(other.email)) {
             return false;
         }
-        if(this.login.equals(other.login) || this.email.equals(other.email)){
+        if (this.login.equals(other.login) || this.email.equals(other.email)) {
             return true;
         }
         return true;
@@ -108,14 +114,12 @@ public class User {
         return hash;
     }
 
-
-    protected boolean invariant(){
-        assert getIdUser()==null || getIdUser()>0;
+    protected boolean invariant() {
+        assert getIdUser() == null || getIdUser() > 0;
         assert getLogin() != null && !getLogin().matches("^\\s*$") : "Le getLogin() ne doit être ni null ni vide";
         assert getPassword() != null && !getPassword().matches("^\\s*$") : "Le getLogin() ne doit être ni null ni vide";
         assert getEmail() != null && !getEmail().matches("^[a-z0-9._#&*-]+@[a-z0-9.#&*-]{2,}\\.[a-z]{2,4}$") : "L'email ne doit être ni null ni non valide ";
 
         return true;
     }
-
 }

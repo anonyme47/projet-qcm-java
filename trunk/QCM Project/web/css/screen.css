@@ -95,6 +95,9 @@ ul.menu_gauche a li {
     -moz-border-radius-topleft: 5px;
     -moz-border-radius-bottomleft: 5px;
 }
+ul.menu_gauche + ul.menu_gauche {
+    margin-top: 3em;
+}
 #menu li {
     display: inline;
 
@@ -205,7 +208,7 @@ div#navigation ul a li:hover {
     margin-top: 5px;
     margin-bottom: 20px;
     float: left;
-    /*	overflow: scroll;*/
+    -webkit-border-top-right-radius: 10px;
 }
 div#temps_restant {
     float:right;
@@ -223,12 +226,12 @@ div#temps_restant {
 }
 .liste li {
     list-style: none;
-    cursor: pointer;
     padding-left: 5px;
 }
-.liste li:hover {
+ul#questionnaire_fini li:hover {
     background-color: #fff;
     text-decoration: underline;
+    cursor: pointer;
 }
 .liste_recapitulatif {
     list-style-position: inside;
@@ -364,4 +367,85 @@ table th.libelle, table th.descriptif {
 
 table.center {
     text-align: center;
+}
+ol#info_questionnaire {
+    list-style: inside decimal;
+}
+
+
+
+
+/********************************/
+table,td
+{
+	border               : 1px solid #CCC;
+	border-collapse      : collapse;
+  font                 : small/1.5 "Tahoma", "Bitstream Vera Sans", Verdana, Helvetica, sans-serif;
+}
+table
+{
+	border                :none;
+	border                :1px solid #CCC;
+}
+thead th,
+tbody th
+{
+	background            : #FFF url(th_bck.gif) repeat-x;
+  color                 : #666;
+	padding               : 5px 10px;
+  border-left           : 1px solid #CCC;
+}
+tbody th
+{
+  background            : #fafafb;
+  border-top            : 1px solid #CCC;
+  text-align            : left;
+  font-weight           : normal;
+}
+tbody tr td
+{
+	padding               : 5px 10px;
+  color                 : #666;
+}
+tbody tr:hover
+{
+  background            : #FFF url(tr_bck.gif) repeat;
+}
+
+tbody tr:hover td
+{
+  color                 : #454545;
+}
+tfoot td,
+tfoot th
+{
+  border-left           : none;
+  border-top            : 1px solid #CCC;
+	padding               : 4px;
+  background            : #FFF url(foot_bck.gif) repeat;
+  color                 : #666;
+}
+caption
+{
+	text-align            : left;
+	font-size             : 120%;
+	padding               : 10px 0;
+	color                 : #666;
+}
+table a:link
+{
+	color                 : #666;
+}
+table a:visited
+{
+	color                 : #666;
+}
+table a:hover
+{
+	color                 : #003366;
+	text-decoration       : none;
+}
+table a:active
+{
+	color                 : #003366;
 }

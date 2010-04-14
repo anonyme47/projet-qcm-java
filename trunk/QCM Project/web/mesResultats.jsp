@@ -18,32 +18,42 @@
                 <div id="contenu">
                     <h4>Mes questionnaires passés</h4>
                     <%
-                        List<QuestionnairePasse> questionnairesPasses= (List<QuestionnairePasse>) request.getAttribute("questionnairesPasses");
-                        if(questionnairesPasses != null && !questionnairesPasses.isEmpty()){
+                                List<QuestionnairePasse> questionnairesPasses = (List<QuestionnairePasse>) request.getAttribute("questionnairesPasses");
+                                if (questionnairesPasses != null && !questionnairesPasses.isEmpty()) {
 
-                            out.println("<table>");
-                            for(QuestionnairePasse qP : questionnairesPasses){
-                            %>
-                                <tr>
-                                    <td><%= qP.getDate() %></td>
-                                    <td><a href="MesResultats?action=getCorrection&questionnaire=<%= qP.getIdQuestionnaire() %>"><%= qP.getLibelleQuestionnaire() %></a></td>
-                                    <td><%= qP.getNote() %></td>
-                                    <td>
-                                        <%
-                                            if(qP.getLimiteTemps()!=null && qP.getLimiteTemps() > 0)
-                                                out.println(qP.getLimiteTemps());
-                                        %>
+                                    out.println("<table>");
+                    %>
+                    <tr>
+                        <th>Date</th>
+                        <th>Intitulé</th>
+                        <th>Note</th>
+                        <th>Limite de temps</th>
+                    </tr>
 
-                                    </td>
-                                
-                                
-                                </tr>
+                    <%
+                                                for (QuestionnairePasse qP : questionnairesPasses) {
+                    %>
+                    <tr>
+                        <td><%= qP.getDate()%></td>
+                        <td><a href="MesResultats?action=getCorrection&questionnaire=<%= qP.getIdQuestionnaire()%>"><%= qP.getLibelleQuestionnaire()%></a></td>
+                        <td><%= qP.getNote()%></td>
+                        <td>
                             <%
-                            }
-                            out.println("</table>");
-                        }else{
-                            out.println("Vous n'avez encore passé aucun questionnaire.");
-                        }
+                                                            if (qP.getLimiteTemps() != null && qP.getLimiteTemps() > 0) {
+                                                                out.println(qP.getLimiteTemps());
+                                                            }
+                            %>
+
+                        </td>
+
+
+                    </tr>
+                    <%
+                                    }
+                                    out.println("</table>");
+                                } else {
+                                    out.println("Vous n'avez encore passé aucun questionnaire.");
+                                }
                     %>
                 </div>
             </div>
