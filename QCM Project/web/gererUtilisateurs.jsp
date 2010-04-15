@@ -12,6 +12,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen" title="css" charset="utf-8" />
+        <script src="js/jquery-1.4.2.min.js" type="text/javascript" />
+        <script src="js/jquery-ui/js/jquery-ui-1.8.custom.min.js" type="text/javascript" />
+        <script src="js/jquery-ui/css/ui-lightness/jquery-ui-1.8.custom.css" type="text/javascript" />
+
         <title>Projet QCM</title>
     </head>
     <body>
@@ -22,48 +26,58 @@
                 <jsp:include page="scripts/menu_left.jsp" />
 
                 <div id="contenu">
-                    <h4>Gérer les questionnaires</h4>
+                    <h4>Gérer les utilisateurs</h4>
+                    <jsp:include page="scripts/errorViewHelper.jsp" />
 
                     <%
                                 HashMap<Integer, User> users = (HashMap) request.getAttribute("users");
                                 if (users != null) {
-                                    %>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Login</th>
-                                                <th>Nom</th>
-                                                <th>Prénom</th>
-                                                <th>email</th>
-                                                <th>Mot de passe</th>
-                                                <th>Statut</th>
-                                                <th>Modifier</th>
-                                                <th>Supprimer</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <%
-                                            for (Integer idUser : users.keySet()) {
-                                                User user = users.get(idUser);
-                                                out.println("<tr>");
-                                                out.println("<td>" + user.getLogin() + "</td>");
-                                                out.println("<td>" + user.getNom() + "</td>");
-                                                out.println("<td>" + user.getPrenom() + "</td>");
-                                                out.println("<td>" + user.getEmail() + "</td>");
-                                                out.println("<td>" + user.getPassword() + "</td>");
-                                                out.println("<td>" + user.getStatut().getLibelle() + "</td>");
-                                                out.println("<td><a href=''><img src='img/edit_16.png' /></a></td>");
-                                                out.println("<td><a href=''><img src='img/delete_16.png' /></a></td>");
-                                                out.println("</tr>");
-                                            }
-                                            %>
-                                        </tbody>
-                                    </table>
+                    %>
+                    <table class="format">
+                        <tr>
+                            <th>Login</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Email</th>
+                            <th>Mot de passe</th>
+                            <th>Statut</th>
+                            <th>Contrôle</th>
+                        </tr>
+                        <%
+                            for (Integer idUser : users.keySet()) {
+                                User user = users.get(idUser);
+                        %>
+                        <tr>
+                            <td><%= user.getLogin() %></td>
+                            <td><%= user.getNom() %></td>
+                            <td><%= user.getPrenom() %></td>
+                            <td><%= user.getEmail() %></td>
+                            <td><%= user.getPassword() %></td>
+                            <td><%= user.getStatut().getLibelle() %></td>
 
+                                <td class="centered">
                                     <%
+                                    if (user.estActif()) {
+                                        out.println("<span class='bon'>Actif</span>");
+                                    } else {
+                                        out.println("<span class='mauvais'>Inactif</span>");
+                                    }
+                                    %>
+                                    <form method="post" action="Admin?action=controleUser">
+                                        <input type="hidden" name="id" value="<%= user.getIdUser() %>" />
+                                    <% if (user.estActif()) { %>
+                                        <input type="submit" value="Désactiver" /> <input type="hidden" name="est_actif" value="false" />
+                                    <% } else { %>
+                                        <input type="submit" value="Activer" /> <input type="hidden" name="est_actif" value="true" />
+                                    <% } %>
+                                    </form>
+                                </td>
+                        </tr>
+                        <% } %>
+                    </table>
+                    <%
                                 }
                     %>
-                    <a href="#" class="button">Ajouter un utilisateur</a>
 
                 </div>
             </div>

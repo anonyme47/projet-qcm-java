@@ -23,33 +23,59 @@
 
                 <div id="contenu">
                     <h4>Gérer les questionnaires</h4>
+                    <jsp:include page="scripts/errorViewHelper.jsp" />
+                    
                     <%
                                 HashMap<Integer, Questionnaire> questionnaires = (HashMap) request.getAttribute("questionnaires");
                                 if (questionnaires != null) {
-                                    %>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Libellé</th>
-                                                <th>Modifier</th>
-                                                <th>Supprimer</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <%
-                                            for (Integer idTheme : questionnaires.keySet()) {
-                                                Questionnaire questionnaire = questionnaires.get(idTheme);
-                                                out.println("<tr>");
-                                                out.println("<td>" + questionnaire.getLibelle() + "</td>");
-                                                out.println("<td><a href=''><img src='img/edit_16.png' /></a></td>");
-                                                out.println("<td><a href=''><img src='img/delete_16.png' /></a></td>");
-                                                out.println("</tr>");
-                                            }
-                                            %>
-                                        </tbody>
-                                    </table>
-
+                    %>
+                        <table class="format">
+                            <tr>
+                                <th>Libellé</th>
+                                <th>Utilisé</th>
+                                <th>Activité</th>
+                                <th>Contrôle</th>
+                            </tr>
+                            <%
+                            for (Integer idQuestionnaire : questionnaires.keySet()) {
+                                Questionnaire questionnaire = questionnaires.get(idQuestionnaire );
+                            %>
+                            <tr>
+                                <td><%= questionnaire.getLibelle() %></td>
+                                <td class="centered">
                                     <%
+                                    if (questionnaire.estPasse()) {
+                                        out.println("Oui");
+                                    } else {
+                                        out.println("Non");
+                                    }
+                                    %>
+                                </td>
+                                <td class="centered">
+                                    <%
+                                    if (questionnaire.estActif()) {
+                                        out.println("<span class='bon'>Actif</span>");
+                                    } else {
+                                        out.println("<span class='mauvais'>Inactif</span>");
+                                    }
+                                    %>
+                                </td>
+                                <td class="centered">
+                                    <form method="post" action="Admin?action=controleQuestionnaire">
+                                        <input type="hidden" name="id" value="<%= questionnaire.getIdQuestionnaire() %>" />
+                                    <% if (questionnaire.estActif()) { %>
+                                        <input type="submit" value="Désactiver" /> <input type="hidden" name="est_actif" value="false" />
+                                    <% } else { %>
+                                        <input type="submit" value="Activer" /> <input type="hidden" name="est_actif" value="true" />
+                                    <% } %>
+                                    </form>
+                                </td>
+                            </tr>
+                            <%
+                            }
+                            %>
+                        </table>
+                    <%
                                 }
                     %>
 
