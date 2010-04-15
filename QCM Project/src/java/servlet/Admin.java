@@ -60,6 +60,12 @@ public class Admin extends HttpServlet {
                 } else if (action.equals("gererQuestionnaires")) {
                     helper.setQuestionnaires();
                     forward = "gererQuestionnaires.jsp";
+                } else if (action.equals("editNiveau")) {
+                    helper.setAttributeNiveau();
+                    forward = "editNiveau.jsp";
+                } else if (action.equals("editTheme")) {
+                    helper.setAttributeTheme();
+                    forward = "editTheme.jsp";
                 }
             } else {
                 forward = "index.jsp";
@@ -108,9 +114,13 @@ public class Admin extends HttpServlet {
                     requestHelper.setAttributeThemes();
                     forward = "gererThemes.jsp";
                 } else if (action.equals("editTheme")) {
-                    forward = "editTheme.jsp";
+                    helper.editTheme();
+                    helper.setAttributeThemes();
+                    forward = "gererThemes.jsp";
                 } else if (action.equals("editNiveau")) {
-                    forward = "editNiveau.jsp";
+                    helper.editNiveau();
+                    helper.setAttributeNiveaux();
+                    forward = "gererNiveaux.jsp";
                 } else if (action.equals("controleUser")) {
                     helper.controleUser();
                     helper.setUsers();

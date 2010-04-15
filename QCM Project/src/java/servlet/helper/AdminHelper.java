@@ -36,6 +36,16 @@ public class AdminHelper extends RequestHelper {
         request.setAttribute("users", users);
     }
 
+    public void setAttributeNiveau() throws SQLException {
+        Integer idNiveau = Integer.parseInt(request.getParameter("id"));
+        request.setAttribute("niveau", NiveauDAO.getById(idNiveau));
+    }
+
+    public void setAttributeTheme() throws SQLException {
+        Integer idTheme = Integer.parseInt(request.getParameter("id"));
+        request.setAttribute("theme", ThemeDAO.getById(idTheme));
+    }
+
     /**
      *
      */
@@ -58,6 +68,8 @@ public class AdminHelper extends RequestHelper {
                 request.setAttribute("errorMessage", "Une erreur s'est produite lors de la mise à jour : " + ex.getMessage());
                 Logger.getLogger(AdminHelper.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            request.setAttribute("message", "Questionnaire inexistant");
         }
     }
 
@@ -80,6 +92,8 @@ public class AdminHelper extends RequestHelper {
                 request.setAttribute("errorMessage", "Une erreur s'est produite lors de la suppression : " + ex.getMessage());
                 Logger.getLogger(AdminHelper.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            request.setAttribute("message", "Niveau inexistant");
         }
     }
 
@@ -102,21 +116,20 @@ public class AdminHelper extends RequestHelper {
                 request.setAttribute("errorMessage", "Une erreur s'est produite lors de la mise à jour : " + ex.getMessage());
                 Logger.getLogger(AdminHelper.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            request.setAttribute("message", "Thème inexistant");
         }
     }
 
     public void controleUser() {
-        System.out.println("Test");
         Integer idUser = Integer.parseInt(request.getParameter("id"));
         if (idUser != null && idUser >= 0) {
             System.out.println(idUser);
             try {
                 Boolean estActif = Boolean.parseBoolean(request.getParameter("est_actif"));
                 User user = UserDAO.getById(idUser);
-                System.out.println(user);
                 user.setEstActif(estActif);
                 UserDAO.update(user);
-                System.out.println(user);
                 String message = "Le compte utilisateur de <strong>" + user.getNom() + " " + user.getPrenom() + "</strong> a été ";
                 if (estActif) {
                     message += "activé";
@@ -130,6 +143,48 @@ public class AdminHelper extends RequestHelper {
             }
         } else {
             request.setAttribute("message", "Utilisateur inexistant");
+        }
+    }
+
+    public void editTheme() {
+        Integer idTheme = Integer.parseInt(request.getParameter("id"));
+        if (idTheme != null && idTheme >= 0) {
+            try {
+                String libelle = request.getParameter("libelle");
+                Theme theme = ThemeDAO.getById(idTheme);
+                theme.setLibelle(libelle);
+                ThemeDAO.update(theme);
+                request.setAttribute("message", "La modification du niveau s'est déroulée correctement.");
+            } catch (SQLException ex) {
+                request.setAttribute("errorMessage", "Une erreur s'est produite lors de la mise à jour : " + ex.getMessage());
+                Logger.getLogger(AdminHelper.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException ex) {
+                request.setAttribute("errorMessage", "Une erreur s'est produite lors de la mise à jour : " + ex.getMessage());
+                Logger.getLogger(AdminHelper.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            request.setAttribute("message", "Thème inexistant");
+        }
+    }
+
+    public void editNiveau() {
+        Integer idNiveau = Integer.parseInt(request.getParameter("id"));
+        if (idNiveau != null && idNiveau >= 0) {
+            try {
+                String libelle = request.getParameter("libelle");
+                Niveau niveau = NiveauDAO.getById(idNiveau);
+                niveau.setLibelle(libelle);
+                NiveauDAO.update(niveau);
+                request.setAttribute("message", "La modification du niveau s'est déroulée correctement.");
+            } catch (SQLException ex) {
+                request.setAttribute("errorMessage", "Une erreur s'est produite lors de la mise à jour : " + ex.getMessage());
+                Logger.getLogger(AdminHelper.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException ex) {
+                request.setAttribute("errorMessage", "Une erreur s'est produite lors de la mise à jour : " + ex.getMessage());
+                Logger.getLogger(AdminHelper.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            request.setAttribute("message", "Niveau inexistant");
         }
     }
 }

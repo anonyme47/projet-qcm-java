@@ -45,10 +45,7 @@
                                     if (niveau.getUtilisations() == 0) {
                                 %>
                                 <td class="centered">
-                                    <form method="post" action="Admin?action=editNiveau">
-                                        <input type="hidden" name="id" value="<%= niveau.getIdNiveau() %>" />
-                                        <input type="image" src="img/edit_16.png" />
-                                    </form>
+                                    <a href="Admin?action=editNiveau&id=<%= niveau.getIdNiveau() %>"><img src="img/edit_16.png" alt="Modifier le libellé du niveau" /></a>
                                 </td>
                                 <td class="centered">
                                     <%
