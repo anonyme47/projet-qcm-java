@@ -21,11 +21,11 @@
                 <jsp:include page="scripts/menu_left.jsp" />
 
                 <div id="contenu">
-                    <div id="choix_questionnaire">
+                    <div class="choice">
                         <p>Veuillez sélectionner le thème et / ou le niveau du questionnaire que vous souhaitez passer.</p>
                         <form id="choix_questionnaire_form" action="PasserQuestionnaire" method="post" accept-charset="utf-8">
 
-                            <table>
+                            <table class="no-border">
                                 <tr>
                                     <td class="static"><label for="theme">Choisissez le thème : </label></td>
                                     <td>

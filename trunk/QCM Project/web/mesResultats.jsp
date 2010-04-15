@@ -21,7 +21,7 @@
                                 List<QuestionnairePasse> questionnairesPasses = (List<QuestionnairePasse>) request.getAttribute("questionnairesPasses");
                                 if (questionnairesPasses != null && !questionnairesPasses.isEmpty()) {
 
-                                    out.println("<table>");
+                                    out.println("<table class='format'>");
                     %>
                     <tr>
                         <th>Date</th>
@@ -34,10 +34,10 @@
                                                 for (QuestionnairePasse qP : questionnairesPasses) {
                     %>
                     <tr>
-                        <td><%= qP.getDate()%></td>
+                        <td class="centered"><%= qP.getDate()%></td>
                         <td><a href="MesResultats?action=getCorrection&questionnaire=<%= qP.getIdQuestionnaire()%>"><%= qP.getLibelleQuestionnaire()%></a></td>
-                        <td><%= qP.getNote()%></td>
-                        <td>
+                        <td class="centered"><%= qP.getNote()%></td>
+                        <td class="centered">
                             <%
                                                             if (qP.getLimiteTemps() != null && qP.getLimiteTemps() > 0) {
                                                                 out.println(qP.getLimiteTemps());

@@ -17,7 +17,7 @@
                 <jsp:include page="scripts/menu_left.jsp" />
 
                 <div id="contenu">
-                    <div id="choix_questionnaire">
+                    <div class="choice">
                         <p>Veuillez sélectionner le thème et le niveau du questionnaire que vous souhaitez ajouter dans la base de données. </p>
                         <form id="choix_questionnaire_form" action="CreerQuestionnaire" method="post" accept-charset="utf-8">
                             <table>

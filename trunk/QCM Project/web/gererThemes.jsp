@@ -3,6 +3,7 @@
     Created on : 13 avr. 2010, 14:24:26
     Author     : Lou
 --%>
+
 <%@page import="modele.Theme"%>
 <%@page import="java.util.HashMap"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -22,35 +23,64 @@
 
                 <div id="contenu">
                     <h4>Gérer les thèmes des questionnaires</h4>
+                    <jsp:include page="scripts/errorViewHelper.jsp" />
 
                     <%
                                 HashMap<Integer, Theme> themes = (HashMap) request.getAttribute("themes");
                                 if (themes != null) {
-                                    %>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Libellé</th>
-                                                <th>Modifier</th>
-                                                <th>Supprimer</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <%
-                                            for (Integer idTheme : themes.keySet()) {
-                                                Theme theme = themes.get(idTheme);
-                                                out.println("<tr>");
-                                                out.println("<td>" + theme.getLibelle() + "</td>");
-                                                out.println("<td><a href=''><img src='img/edit_16.png' /></a></td>");
-                                                out.println("<td><a href=''><img src='img/delete_16.png' /></a></td>");
-                                                out.println("</tr>");
-                                            }
-                                            %>
-                                        </tbody>
-                                    </table>
-
+                    %>
+                        <table class="format">
+                            <tr>
+                                <th>Libellé</th>
+                                <th>Modifier</th>
+                                <th>Activité</th>
+                                <th>Contrôle</th>
+                            </tr>
+                            <%
+                            for (Integer idTheme : themes.keySet()) {
+                                Theme theme = themes.get(idTheme);
+                            %>
+                            <tr>
+                                <td><%= theme.getLibelle() %></td>
+                                <%
+                                    if (theme.getUtilisations() == 0) {
+                                %>
+                                <td class="centered">
+                                    <form method="post" action="Admin?action=editTheme">
+                                        <input type="hidden" name="id" value="<%= theme.getIdTheme() %>" />
+                                        <input type="image" src="img/edit_16.png" />
+                                    </form>
+                                </td>
+                                <td class="centered">
                                     <%
-                                }
+                                    if (theme.estActif()) {
+                                        out.println("<span class='bon'>Actif</span>");
+                                    } else {
+                                        out.println("<span class='mauvais'>Inactif</span>");
+                                    }
+                                    %>
+                                </td>
+                                <td class="centered">
+                                    <form method="post" action="Admin?action=controleTheme">
+                                        <input type="hidden" name="id" value="<%= theme.getIdTheme() %>" />
+                                    <% if (theme.estActif()) { %>
+                                        <input type="submit" value="Désactiver" /> <input type="hidden" name="est_actif" value="false" />
+                                    <% } else { %>
+                                        <input type="submit" value="Activer" /> <input type="hidden" name="est_actif" value="true" />
+                                    <% } %>
+                                    </form>
+                                </td>
+                                <% } else { %>
+                                <td class="centered" colspan="3"><small>Ce thème ne peut pas être modifié ou supprimé.</small></td>
+                                <% } %>
+                            </tr>
+                            <%
+                            }
+                            %>
+                        </table>
+
+                    <%
+                    }
                     %>
 
                 </div>
