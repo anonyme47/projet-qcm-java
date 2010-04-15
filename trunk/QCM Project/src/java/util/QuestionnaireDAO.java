@@ -26,7 +26,9 @@ public class QuestionnaireDAO extends ModeleDAO {
      */
     public static Questionnaire getById(int idQuestionnaire) throws SQLException {
         Questionnaire questionnaire = null;
-        String sql = "SELECT questionnaire.libelle,questionnaire.date_creation,questionnaire.limite_temps,questionnaire.est_actif,questionnaire.id_theme,questionnaire.id_user,questionnaire.id_niveau,COUNT(questionnaire_passe.id_questionnaire) AS nbPasseParUser FROM questionnaire INNER JOIN questionnaire_passe ON questionnaire_passe.id_questionnaire=questionnaire.id_questionnaire WHERE questionnaire.id_questionnaire = ?";
+        String sql = "SELECT questionnaire.libelle,questionnaire.date_creation,questionnaire.limite_temps,questionnaire.est_actif,"
+                + "questionnaire.id_theme,questionnaire.id_user,questionnaire.id_niveau, COUNT(questionnaire_passe.id_questionnaire) AS nbPasseParUser "
+                + "FROM questionnaire INNER JOIN questionnaire_passe ON questionnaire_passe.id_questionnaire=questionnaire.id_questionnaire WHERE questionnaire.id_questionnaire = ?";
         ResultSet rs = selectById(sql, idQuestionnaire);
         if (rs.next()) {
             questionnaire = new Questionnaire(
@@ -138,7 +140,7 @@ public class QuestionnaireDAO extends ModeleDAO {
      */
     public static Questionnaire search(final int idTheme, final int idNiveau, final String libelle) throws SQLException {
         Questionnaire questionnaire = null;
-        String sql = "SELECT id_user FROM questionnaire WHERE id_theme=? AND id_niveau=? AND libelle=? LIMIT 0,1";
+        String sql = "SELECT id_user FROM questionnaire WHERE id_theme = ? AND id_niveau = ? AND libelle = ? LIMIT 0, 1";
         PreparedStatement ordre = getConnection().prepareStatement(sql);
         ordre.setInt(1, idTheme);
         ordre.setInt(2, idNiveau);
@@ -154,11 +156,12 @@ public class QuestionnaireDAO extends ModeleDAO {
     }
 
     public static void update(Questionnaire q) throws SQLException {
-        String sql = "UPDATE questionnaire SET libelle = ? , id_niveau = ? WHERE id_questionnaire = ?";
+        String sql = "UPDATE questionnaire SET libelle = ? , id_niveau = ?, est_actif = ? WHERE id_questionnaire = ?";
         PreparedStatement ps = getConnection().prepareStatement(sql);
         ps.setString(1, q.getLibelle());
         ps.setInt(2, q.getIdNiveau());
-        ps.setInt(3, q.getIdQuestionnaire());
+        ps.setBoolean(3, q.estActif());
+        ps.setInt(4, q.getIdQuestionnaire());
         ps.executeUpdate();
         ps.close();
     }
@@ -168,13 +171,13 @@ public class QuestionnaireDAO extends ModeleDAO {
         Connection connexion = null;
         ResultSet rsContenu = null, rsQuestion = null;
         Integer idQuestionnaire = null, idQuestion = null;
-        Statement statement= null;
+        Statement statement = null;
         try {
             connexion = getConnection();
             statement = connexion.createStatement();
             connexion.setAutoCommit(false);
             String sql = "INSERT INTO questionnaire(libelle, limite_temps, id_niveau, id_theme, id_user, date_creation) "
-                    + " VALUES(?,?,?,?,?,NOW())";
+                    + " VALUES(?, ?, ?, ?, ?, NOW())";
             PreparedStatement psQ = connexion.prepareStatement(sql);
             psQ.setString(1, questionnaire.getLibelle());
             psQ.setInt(2, questionnaire.getLimiteTemps());
@@ -191,16 +194,15 @@ public class QuestionnaireDAO extends ModeleDAO {
             /**
              * Insertion des questions
              */
-        
             String sqlQuestion = "INSERT INTO question(libelle,id_theme,id_user) VALUES (?,?,?)";
             PreparedStatement ps = getConnection().prepareStatement(sqlQuestion);
             ps.setInt(2, questionnaire.getIdTheme());
-            
+
 
             for (Question q : questionnaire.getQuestions()) {
                 idQuestion = q.getIdQuestion();
                 if (idQuestion == null) {
-                    
+
                     ps.setString(1, q.getLibelle());
                     ps.setInt(3, q.getIdUser());
                     ps.executeUpdate();
@@ -211,10 +213,10 @@ public class QuestionnaireDAO extends ModeleDAO {
                         throw new SQLException("impossible d'enregistrer les informations concernant la question " + q.getLibelle());
                     }
 
-                    
-                    String sqlRep = "INSERT INTO reponse(libelle, descriptif , est_correcte , note , id_question) "
-                            + " VALUES(?,?,?,?,?)";
-                    
+
+                    String sqlRep = "INSERT INTO reponse(libelle, descriptif, est_correcte, note, id_question) "
+                            + " VALUES(?, ?, ?, ?, ?)";
+
                     PreparedStatement psRep = getConnection().prepareStatement(sqlRep);
                     psRep.setInt(5, idQuestion);
                     for (Reponse r : q.getReponses()) {
@@ -225,17 +227,17 @@ public class QuestionnaireDAO extends ModeleDAO {
                         ps.executeUpdate();
                     }
                     psRep.close();
-                    
+
                 }
                 /**
                  * Insertion dans la table contenu
                  */
-                String sqlContenu = "INSERT INTO contenu(id_questionnaire,id_question) VALUES(?,?)";
+                String sqlContenu = "INSERT INTO contenu(id_questionnaire, id_question) VALUES(?, ?)";
                 PreparedStatement psContenu = connexion.prepareStatement(sqlContenu);
                 psContenu.setInt(1, idQuestionnaire);
                 psContenu.setInt(2, idQuestion);
                 psContenu.executeUpdate();
-                
+
                 rsContenu = statement.executeQuery("SELECT LAST_INSERT_ID() FROM contenu");
                 rsContenu.next();
                 if (rsContenu.getInt(1) <= 0) {
@@ -251,10 +253,10 @@ public class QuestionnaireDAO extends ModeleDAO {
             e.printStackTrace();
             throw e;
         } finally {
-            if(rs != null){
-              rs.close();  
+            if (rs != null) {
+                rs.close();
             }
-            
+
         }
     }
 
@@ -262,7 +264,7 @@ public class QuestionnaireDAO extends ModeleDAO {
         List<Questionnaire> questionnaires = new ArrayList<Questionnaire>();
         String sql = "SELECT id_questionnaire FROM questionnaire WHERE id_user = ? ORDER BY id_questionnaire";
         ResultSet rs = selectById(sql, idUser);
-        while(rs.next()) {
+        while (rs.next()) {
             questionnaires.add(getById(rs.getInt(1)));
         }
         rs.close();
@@ -285,10 +287,29 @@ public class QuestionnaireDAO extends ModeleDAO {
                     rs.getInt("id_user"),
                     rs.getInt("id_niveau"),
                     QuestionnaireDAO.getQuestionsById(idQuestionnaire),
-                    1
-                    ));
+                    1));
         }
         return questionnaires;
     }
 
+    public static HashMap<Integer, Questionnaire> getAllActives() throws SQLException {
+        HashMap<Integer, Questionnaire> questionnaires = new HashMap<Integer, Questionnaire>();
+        String sql = "SELECT id_questionnaire, libelle, date_creation, limite_temps, est_actif, id_theme, id_user, id_niveau FROM questionnaire WHERE est_actif = 1";
+        ResultSet rs = getConnection().createStatement().executeQuery(sql);
+        while (rs.next()) {
+            int idQuestionnaire = rs.getInt("id_questionnaire");
+            questionnaires.put(idQuestionnaire, new Questionnaire(
+                    idQuestionnaire,
+                    rs.getString("libelle"),
+                    rs.getDate("date_creation"),
+                    rs.getInt("limite_temps"),
+                    rs.getBoolean("est_actif"),
+                    rs.getInt("id_Theme"),
+                    rs.getInt("id_user"),
+                    rs.getInt("id_niveau"),
+                    QuestionnaireDAO.getQuestionsById(idQuestionnaire),
+                    1));
+        }
+        return questionnaires;
+    }
 }

@@ -2,7 +2,6 @@ package servlet;
 
 import exception.ExpiredSessionException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import servlet.helper.AdminHelper;
+import servlet.helper.RequestHelper;
 
 /**
  *
@@ -45,13 +45,14 @@ public class Admin extends HttpServlet {
         String forward = "index.jsp";
         try {
             AdminHelper helper = new AdminHelper(request);
+            RequestHelper requestHelper = new RequestHelper(request);
             String action = request.getParameter("action").toString();
             if (action != null) {
                 if (action.equals("gererThemes")) {
-                    helper.setThemes();
+                    requestHelper.setAttributeThemes();
                     forward = "gererThemes.jsp";
                 } else if (action.equals("gererNiveaux")) {
-                    helper.setNiveaux();
+                    requestHelper.setAttributeNiveaux();
                     forward = "gererNiveaux.jsp";
                 } else if (action.equals("gererUtilisateurs")) {
                     helper.setUsers();
@@ -85,7 +86,49 @@ public class Admin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        String forward = "index.jsp";
+        try {
+            AdminHelper helper = new AdminHelper(request);
+            RequestHelper requestHelper = new RequestHelper(request);
+            String action = request.getParameter("action").toString();
+            if (action != null) {
+                if (action.equals("controleQuestionnaire")) {
+                    helper.controleQuestionnaire();
+                    helper.setQuestionnaires();
+                    forward = "gererQuestionnaires.jsp";
+                } else if (action.equals("controleNiveau")) {
+                    helper.controleNiveau();
+                    requestHelper.setAttributeNiveaux();
+                    forward = "gererNiveaux.jsp";
+                } else if (action.equals("controleTheme")) {
+                    helper.controleTheme();
+                    requestHelper.setAttributeThemes();
+                    forward = "gererThemes.jsp";
+                } else if (action.equals("editTheme")) {
+                    forward = "editTheme.jsp";
+                } else if (action.equals("editNiveau")) {
+                    forward = "editNiveau.jsp";
+                } else if (action.equals("controleUser")) {
+                    helper.controleUser();
+                    helper.setUsers();
+                    forward = "gererUtilisateurs.jsp";
+                }
+            } else {
+                forward = "index.jsp";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExpiredSessionException ex) {
+            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException e) {
+            request.setAttribute("errorMessage", "Vous n'êtes pas authentifié");
+        } catch (IllegalArgumentException e) {
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+        }
+        request.getRequestDispatcher(forward).forward(request, response);
     }
 
     /** 

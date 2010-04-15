@@ -9,14 +9,18 @@ public class Theme {
     private Integer idTheme;
     private String libelle;
     private int idUser;
+    private int utilisations;
+    private boolean estActif;
 
-    public Theme(Integer idTheme, int idUser, String libelle) {
+    public Theme(Integer idTheme, int idUser, String libelle, int utilisations, boolean estActif) {
         assert libelle != null && !libelle.matches("^\\s*$") : "Le Libelle ne doit être ni null ni vide";
         assert idTheme == null || idTheme > 0 : "idTheme doit être non négatif (reçu: " + idTheme + " )";
         assert idUser > 0;
         this.idTheme = idTheme;
         this.libelle = libelle;
         this.idUser = idUser;
+        this.utilisations = utilisations;
+        this.estActif = estActif;
         assert invariant();
     }
 
@@ -50,6 +54,18 @@ public class Theme {
         assert invariant();
     }
 
+    public int getUtilisations() {
+        return utilisations;
+    }
+
+    public boolean estActif() {
+        return estActif;
+    }
+
+    public void setEstActif(boolean estActif) {
+        this.estActif = estActif;
+    }
+
     protected boolean invariant() {
         assert getLibelle() != null && !getLibelle().matches("^\\s*$") : "Le Libelle ne doit être ni null ni vide";
         assert getIdUser() > 0;
@@ -78,6 +94,5 @@ public class Theme {
         hash = 29 * hash + (this.libelle != null ? this.libelle.hashCode() : 0);
         return hash;
     }
-
 
 }

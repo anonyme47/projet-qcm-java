@@ -3,13 +3,14 @@ package util;
 import java.util.HashMap;
 import modele.Theme;
 import org.junit.Test;
+import tools.QCMTestCase;
 import static org.junit.Assert.*;
 
 /**
  *
  * @author Lou
  */
-public class ThemeDAOTest {
+public class ThemeDAOTest extends QCMTestCase {
 
     /**
      * Test of getAll method, of class ThemeDAO.
@@ -39,9 +40,23 @@ public class ThemeDAOTest {
     @Test
     public void testGetById() throws Exception {
         System.out.println("getById");
-        Theme expResult = new Theme(1, 1, "Java");
+        Theme expResult = new Theme(1, 1, "Java", 1, true);
         Theme result = ThemeDAO.getById(1);
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of update method, of class ThemeDAO.
+     */
+    @Test
+    public void testUpdate() throws Exception {
+        System.out.println("update");
+        Theme theme = new Theme(1, 1, "Java", 1, true);
+        String nouveauLibelleTheme = "Nouveau theme";
+        theme.setLibelle(nouveauLibelleTheme);
+        ThemeDAO.update(theme);
+        assertTrue(ThemeDAO.getById(1).getLibelle().equals(nouveauLibelleTheme));
+    }
+
 
 }
