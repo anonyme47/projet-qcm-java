@@ -46,10 +46,7 @@
                                     if (theme.getUtilisations() == 0) {
                                 %>
                                 <td class="centered">
-                                    <form method="post" action="Admin?action=editTheme">
-                                        <input type="hidden" name="id" value="<%= theme.getIdTheme() %>" />
-                                        <input type="image" src="img/edit_16.png" />
-                                    </form>
+                                    <a href="Admin?action=editTheme&id=<%= theme.getIdTheme() %>"><img src="img/edit_16.png" alt="Modifier le libellé du thème" /></a>
                                 </td>
                                 <td class="centered">
                                     <%
