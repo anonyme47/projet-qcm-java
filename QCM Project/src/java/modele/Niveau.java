@@ -8,18 +8,22 @@ public class Niveau {
 
     private int idNiveau;
     private String libelle;
+    private int utilisations;
+    private boolean estActif;
 
     /**
      * Constructeur de niveau
      * @param idNiveau L'identifiant du niveau
      * @param libelle Le libelle du niveau
      */
-    public Niveau(int idNiveau, String libelle) {
+    public Niveau(int idNiveau, String libelle, int utilisations, boolean estActif) {
         assert idNiveau > 0;
         assert libelle != null && !libelle.matches("^\\s*$") : "Le Libelle ne doit être ni null ni vide";
 
         this.idNiveau = idNiveau;
         this.libelle = libelle;
+        this.utilisations = utilisations;
+        this.estActif = estActif;
         assert invariant();
     }
 
@@ -41,6 +45,28 @@ public class Niveau {
         assert libelle != null && !libelle.matches("^\\s*$") : "Le Libelle ne doit être ni null ni vide";
         this.libelle = libelle;
         assert invariant();
+    }
+
+    public int getUtilisations() {
+        return utilisations;
+    }
+
+    public boolean estActif() {
+        return estActif;
+    }
+
+    public void setEstActif(boolean estActif) {
+        this.estActif = estActif;
+    }
+    
+    /**
+     *
+     * @return true si les invariants sont vérifiés, sinon s'arrête
+     */
+    protected boolean invariant() {
+        assert getLibelle() != null && !getLibelle().matches("^\\s*$") : "Le Libelle ne doit être ni null ni vide";
+        assert getIdNiveau() > 0;
+        return true;
     }
 
     @Override
@@ -73,14 +99,4 @@ public class Niveau {
         return " [ " + getLibelle() + " : " + getIdNiveau() + " ] ";
     }
 
-
-    /**
-     * 
-     * @return true si les invariants sont vérifiés, sinon s'arrête
-     */
-    protected boolean invariant() {
-        assert getLibelle() != null && !getLibelle().matches("^\\s*$") : "Le Libelle ne doit être ni null ni vide";
-        assert getIdNiveau() > 0;
-        return true;
-    }
 }

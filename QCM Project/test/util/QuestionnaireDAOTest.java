@@ -41,21 +41,20 @@ public class QuestionnaireDAOTest extends QCMTestCase {
         int idTheme = 4;
         int idNiveau = 1;
         Map<Integer, String> expResult = new HashMap<Integer, String>();
-        expResult.put(4,"Test");
+        expResult.put(4, "Test");
         Map<Integer, String> result = QuestionnaireDAO.getQuestionnairesByThemeAndNiveau(idTheme, idNiveau);
         assertEquals(expResult.get(4), result.get(4));
-     }
+    }
 
     /**
      * Test of getByTheme method, of class QuestionnaireDAO.
      */
-
     @Test
     public void testGetQuestionnairesByTheme() throws Exception {
         System.out.println("getByTheme");
         int idTheme = 4;
         Map<Integer, String> expResult = new HashMap<Integer, String>();
-        expResult.put(4,"Test");
+        expResult.put(4, "Test");
         Map<Integer, String> result = QuestionnaireDAO.getQuestionnairesByTheme(idTheme);
         assertEquals(expResult.get(4), result.get(4));
     }
@@ -68,7 +67,7 @@ public class QuestionnaireDAOTest extends QCMTestCase {
         System.out.println("getByNiveau");
         int idNiveau = 2;
         HashMap<Integer, String> expResult = new HashMap<Integer, String>();
-        expResult.put(2,"L'héritage en Ruby");
+        expResult.put(2, "L'héritage en Ruby");
         HashMap<Integer, String> result = QuestionnaireDAO.getQuestionnairesByNiveau(idNiveau);
         assertEquals(expResult.get(2), result.get(2));
     }
@@ -120,7 +119,7 @@ public class QuestionnaireDAOTest extends QCMTestCase {
     @Test
     public void testInsert() throws Exception {
         System.out.println("insert");
-        Questionnaire questionnaire = new Questionnaire("Test insert",1, 1, 1);
+        Questionnaire questionnaire = new Questionnaire("Test insert", 1, 1, 1);
         List<Question> questions = QuestionDAO.getByTheme(1);
         Question question = new Question(null, "test nouvelle question", 1, 1, 0, new ArrayList<Reponse>());
         questionnaire.addQuestion(questions.get(1));
@@ -130,24 +129,54 @@ public class QuestionnaireDAOTest extends QCMTestCase {
         assertTrue(questionnaire.equals(QuestionnaireDAO.getById(5)));
         assertTrue(QuestionnaireDAO.getQuestionsById(5).contains(question));
     }
-   
 
     @Test
     public void testGetCreatedByUser() throws Exception {
-        System.out.println("getCetCreatedByUser");
+        System.out.println("getCreatedByUser");
         int idUser = 2;
-        List<Questionnaire> expResult=new ArrayList<Questionnaire>();
+        List<Questionnaire> expResult = new ArrayList<Questionnaire>();
 
         expResult.add(QuestionnaireDAO.getById(3));
         expResult.add(QuestionnaireDAO.getById(4));
-       
+
         List<Questionnaire> result = QuestionnaireDAO.getCreatedByUser(idUser);
-        
-        for(int i = 0; i< expResult.size(); i++)
+
+        for (int i = 0; i < expResult.size(); i++) {
             assertTrue(result.get(i).equals(expResult.get(i)));
-        
-        
-        
+        }
     }
 
+    /**
+     * Test of getAll method, of class QuestionnaireDAO.
+     */
+    @Test
+    public void testGetAll() throws Exception {
+        System.out.println("getAll");
+        HashMap<Integer, Questionnaire> expResult = new HashMap<Integer, Questionnaire>();
+        expResult.put(1, QuestionnaireDAO.getById(1));
+        expResult.put(2, QuestionnaireDAO.getById(2));
+        expResult.put(3, QuestionnaireDAO.getById(3));
+        expResult.put(4, QuestionnaireDAO.getById(4));
+        expResult.put(5, QuestionnaireDAO.getById(5));
+        HashMap<Integer, Questionnaire> result = QuestionnaireDAO.getAll();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getAllActives method, of class QuestionnaireDAO.
+     */
+    @Test
+    public void testGetAllActives() throws Exception {
+        System.out.println("getAllActives");
+        Questionnaire q = QuestionnaireDAO.getById(1);
+        q.setEstActif(false);
+        QuestionnaireDAO.update(q);
+        HashMap<Integer, Questionnaire> expResult = new HashMap<Integer, Questionnaire>();
+        expResult.put(2, QuestionnaireDAO.getById(2));
+        expResult.put(3, QuestionnaireDAO.getById(3));
+        expResult.put(4, QuestionnaireDAO.getById(4));
+        expResult.put(5, QuestionnaireDAO.getById(5));
+        HashMap<Integer, Questionnaire> result = QuestionnaireDAO.getAllActives();
+        assertEquals(expResult, result);
+    }
 }

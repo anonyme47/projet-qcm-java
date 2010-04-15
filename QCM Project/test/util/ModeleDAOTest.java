@@ -32,8 +32,8 @@ public class ModeleDAOTest {
         ResultSet result = ModeleDAO.execute(sql);
         assertNotNull(result);
         assertTrue(result.next());
-        Niveau expResult =  new Niveau(1,"Débutant");
-        assertTrue(expResult.equals(new Niveau(result.getInt(1),result.getString(2))));
+        Niveau expResult =  new Niveau(1,"Débutant", 3, true);
+        assertTrue(expResult.equals(new Niveau(result.getInt(1),result.getString(2), 3, true)));
     }
 
     /**

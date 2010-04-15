@@ -1,16 +1,16 @@
 package util;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import modele.Niveau;
 import org.junit.Test;
+import tools.QCMTestCase;
 import static org.junit.Assert.*;
 
 /**
  *
  * @author Lou
  */
-public class NiveauDAOTest {
+public class NiveauDAOTest extends QCMTestCase {
 
     /**
      * Test of getAll method, of class NiveauDAO.
@@ -34,10 +34,21 @@ public class NiveauDAOTest {
     @Test
     public void testGetById() throws Exception {
         System.out.println("getById");
-        Niveau expResult = new Niveau(1, "Débutant");
+        Niveau expResult = new Niveau(1, "Débutant", 3, true);
         Niveau result = NiveauDAO.getById(1);
         assertEquals(expResult, result);
     }
 
-    
+    /**
+     * Test of update method, of class NiveauDAO.
+     */
+    @Test
+    public void testUpdate() throws Exception {
+        System.out.println("update");
+        Niveau niveau = new Niveau(1, "Débutant", 3, true);
+        String nouveauLibelleTheme = "Nouveau libelle";
+        niveau.setLibelle(nouveauLibelleTheme);
+        NiveauDAO.update(niveau);
+        assertTrue(NiveauDAO.getById(1).getLibelle().equals(nouveauLibelleTheme));
+    }
 }

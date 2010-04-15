@@ -13,8 +13,9 @@ public class User {
     private Statut statut;
     private String nom;
     private String prenom;
+    private boolean estActif;
 
-    public User(Integer idUser, String login, String password, String email, String nom, String prenom, Statut statut) {
+    public User(Integer idUser, String login, String password, String email, String nom, String prenom, Statut statut, boolean estActif) {
         this.idUser = idUser;
         this.login = login;
         this.password = password;
@@ -22,6 +23,7 @@ public class User {
         this.nom = nom;
         this.prenom = prenom;
         this.statut = statut;
+        this.estActif = estActif;
         assert invariant();
     }
 
@@ -85,6 +87,31 @@ public class User {
         return statut;
     }
 
+    public boolean estActif() {
+        return estActif;
+    }
+
+    public void setEstActif(boolean estActif) {
+        this.estActif = estActif;
+    }
+
+    public boolean isAdmin() {
+        if (getStatut().getLibelle().equals("Administrateur")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isCreator() {
+        if (getStatut().getLibelle().equals("Enseignant")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -122,4 +149,10 @@ public class User {
 
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "[ " + getLogin() + " : " + getNom() + " : " + getPrenom() + " : " + getEmail() + " : " + getPassword() + "]";
+    }
+
 }
