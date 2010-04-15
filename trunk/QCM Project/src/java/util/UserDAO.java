@@ -44,14 +44,11 @@ public class UserDAO extends ModeleDAO {
 
     public static User getById(int idUser) throws SQLException {
         User user = null;
-        Connection connexion = getConnection();
         String sql = "SELECT user.id_user, user.login, user.password, user.email, user.nom, user.prenom, user.est_actif, statut.id_statut, statut.libelle "
                 + "FROM user "
                 + "INNER JOIN statut ON user.id_statut = statut.id_statut "
                 + "WHERE user.id_user = ?";
-        PreparedStatement ordre = connexion.prepareStatement(sql);
-        ordre.setInt(1, idUser);
-        ResultSet rs = ordre.executeQuery();
+        ResultSet rs = selectById(sql, idUser);
 
         if (rs.next()) {
             user = new User(
@@ -65,7 +62,6 @@ public class UserDAO extends ModeleDAO {
                     rs.getBoolean("est_actif"));
         }
         rs.close();
-        ordre.close();
         return user;
     }
 
