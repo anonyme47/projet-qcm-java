@@ -130,7 +130,7 @@ public class Admin extends HttpServlet {
                 forward = "index.jsp";
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("errorMessage", ex.getMessage());
         } catch (ExpiredSessionException ex) {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NullPointerException e) {

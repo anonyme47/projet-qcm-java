@@ -6,22 +6,30 @@
     <statut id_statut = "3" libelle = "Administrateur" />
 
 
-    <niveau id_niveau = "1" libelle = "Débutant" />
-    <niveau id_niveau = "2" libelle = "Avancé" />
-    <niveau id_niveau = "3" libelle = "Expert" />
+    <niveau id_niveau = "1" libelle = "Débutant" est_actif = "1" />
+    <niveau id_niveau = "2" libelle = "Avancé" est_actif= " 1" />
+    <niveau id_niveau = "3" libelle = "Expert" est_actif= " 1" />
+    <niveau id_niveau = "4" libelle = "Super Ninja de la programmation" est_actif = "1" />
 
 
-    <user id_user = "1" login = "Lou" nom = "Ferrand" prenom = "Lou" password = "lou" email = "ferrandlou@gmail.com" id_statut = "3" />
-    <user id_user = "2" login = "Maria" nom = "Rabarison" prenom = "Maria" password = "maria" email = "maryarabarison@gmail.com" id_statut = "1" />
-    <user id_user = "3" login = "Test" nom = "Test" prenom = "Test" password = "test" email = "test@test.fr" id_statut = "2" />
+    <user id_user = "1" login = "Lou" nom = "Ferrand" prenom = "Lou" password = "lou" email = "ferrandlou@gmail.com" id_statut = "3" est_actif = "1" />
+    <user id_user = "2" login = "Maria" nom = "Rabarison" prenom = "Maria" password = "maria" email = "maryarabarison@gmail.com" id_statut = "1" est_actif = "1" />
+    <user id_user = "3" login = "Test" nom = "Test" prenom = "Test" password = "test" email = "test@test.fr" id_statut = "2" est_actif = "1" />
+    <user id_user = "4" login = "mplasse" nom = "Plasse" prenom = "Michel" password = "mplasse" email = "mplasse@parisdescartes.fr" id_statut = "3" est_actif = "1" />
+    <user id_user = "5" login = "cgnaho" nom = "Gnaho" prenom = "Christophe" password = "cgnaho" email = "cgnaho@parisdescartes.fr" id_statut = "3" est_actif = "1" />
+    <user id_user = "6" login = "tridene" nom = "Ridene" prenom = "Taha" password = "tridene" email = "tridene@parisdescartes.fr" id_statut = "1" est_actif = "1" />
+    <user id_user = "7" login = "mgiry" nom = "Giry" prenom = "Martin" password = "mgiry" email = "mgiry@parisdescartes.fr" id_statut = "1" est_actif = "1" />
+    <user id_user = "8" login = "mschwartz" nom = "Schwartz" prenom = "Michael" password = "mschwartz" email = "mschwartz@parisdescartes.fr" id_statut = "2" est_actif = "1" />
+    <user id_user = "9" login = "gyakan" nom = "Yakan" prenom = "Grégoire" password = "gyakan" email = "gyakan@parisdescartes.fr" id_statut = "2" est_actif = "1" />
+    <user id_user = "10" login = "dtaing" nom = "Taing" prenom = "David" password = "dtaing" email = "dtaing@parisdescartes.fr" id_statut = "2" est_actif = "1" />
 
 
-    <theme id_theme = "1" libelle = "Java" descriptif = "Java" id_user = "1" />
-    <theme id_theme = "2" libelle = "Ruby" descriptif = "Ruby" id_user = "1" />
-    <theme id_theme = "3" libelle = "C++" descriptif = "C++" id_user = "1" />
-    <theme id_theme = "4" libelle = "PHP" descriptif = "PHP" id_user = "1" />
-    <theme id_theme = "5" libelle = "UML" descriptif = "UML" id_user = "1" />
-    <theme id_theme = "6" libelle = "POO" descriptif = "Programmation Orientée Objet" id_user = "1" />
+    <theme id_theme = "1" libelle = "Java" id_user = "1" est_actif = "1" />
+    <theme id_theme = "2" libelle = "Ruby" id_user = "1" est_actif = "1" />
+    <theme id_theme = "3" libelle = "C++" id_user = "1" est_actif = "1" />
+    <theme id_theme = "4" libelle = "PHP" id_user = "1" est_actif = "1" />
+    <theme id_theme = "5" libelle = "UML" id_user = "1" est_actif = "1" />
+    <theme id_theme = "6" libelle = "Programmation Orientée Objet" id_user = "1" est_actif = "1" />
 
 
     <question id_question = "1"  libelle = "Question 1 Theme 1"  id_theme = "1" id_user = "2" />
