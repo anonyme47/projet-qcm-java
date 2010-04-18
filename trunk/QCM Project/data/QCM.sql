@@ -168,6 +168,7 @@ CREATE  TABLE IF NOT EXISTS `QCM`.`questionnaire_passe` (
   `id_user` INT NOT NULL ,
   `note` INT NOT NULL ,
   `date` DATE NOT NULL ,
+  `temps` INT NULL ,
   PRIMARY KEY (`id_questionnaire`, `id_user`) ,
   INDEX `fk_questionnaire_has_user_questionnaire1` (`id_questionnaire`) ,
   INDEX `fk_questionnaire_has_user_user1` (`id_user`) ,
@@ -372,15 +373,15 @@ COMMIT;
 -- -----------------------------------------------------
 SET AUTOCOMMIT=0;
 USE `QCM`;
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (1, 1, 15, NOW());
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (2, 1, 10, NOW());
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (3, 1, 5, NOW());
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (1, 2, 15, NOW());
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (2, 2, 10, NOW());
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (3, 2, 5, NOW());
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (1, 3, 15, NOW());
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (2, 3, 10, NOW());
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (3, 3, 5, NOW());
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`, `temps`) values (1, 1, 15, NOW(), 0);
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`, `temps`) values (2, 1, 10, NOW(), 0);
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`, `temps`) values (3, 1, 5, NOW(), 0);
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`, `temps`) values (1, 2, 15, NOW(), 0);
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`, `temps`) values (2, 2, 10, NOW(), 0);
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`, `temps`) values (3, 2, 5, NOW(), 0);
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`, `temps`) values (1, 3, 15, NOW(), 0);
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`, `temps`) values (2, 3, 10, NOW(), 0);
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`, `temps`) values (3, 3, 5, NOW(), 0);
 
 COMMIT;
 
