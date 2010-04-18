@@ -16,15 +16,15 @@ public class QuestionnairePasse {
     private int idUser;
     private int note;
     private Date date;
-    private Integer limiteTemps;
+    private Integer temps;
 
-    public QuestionnairePasse(int idQuestionnaire, String libelleQuestionnaire, int idUser, int note, Date date, Integer limiteTemps) {
+    public QuestionnairePasse(int idQuestionnaire, String libelleQuestionnaire, int idUser, int note, Date date, Integer temps) {
         this.idQuestionnaire = idQuestionnaire;
         this.libelleQuestionnaire = libelleQuestionnaire;
         this.idUser = idUser;
         this.note = note;
         this.date = date;
-        this.limiteTemps = limiteTemps;
+        this.temps = temps;
     }
 
     
@@ -83,12 +83,12 @@ public class QuestionnairePasse {
         this.libelleQuestionnaire = libelleQuestionnaire;
     }
 
-    public Integer getLimiteTemps() {
-        return limiteTemps;
+    public Integer getTemps() {
+        return temps;
     }
 
-    public void setLimiteTemps(Integer limiteTemps) {
-        this.limiteTemps = limiteTemps;
+    public void setLimiteTemps(Integer temps) {
+        this.temps = temps;
     }
 
     

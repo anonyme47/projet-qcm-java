@@ -6,6 +6,7 @@
 package servlet;
 
 import exception.ExpiredSessionException;
+import exception.UnauthorizedActionException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import servlet.helper.MesQuestionnairesHelper;
 import servlet.helper.RequestHelper;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -44,7 +47,7 @@ public class MesQuestionnaires extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-         String forward = "index.jsp";
+         String forward = "error.jsp";
         try {
 
             MesQuestionnairesHelper helper = new MesQuestionnairesHelper(request);
@@ -56,28 +59,41 @@ public class MesQuestionnaires extends HttpServlet {
                 if (action.equals("getCreatedQuestionnaires")) {
                     helper.setAttributeCreatedQuestionnairesByUser();
                     forward = "mesQuestionnaires.jsp";
+                }else if(action.equals("getCreadtedQuestionnaire")){
+                    helper.setAttributeEditableQuestionnaire();
+                    forward = "afficherInfoQuestionnaire.jsp";
                 }
             }
 
+
+
+
+
+            
         } catch (IllegalStateException e) {
-            e.printStackTrace();
+            Logger.getLogger(MesQuestionnaires.class.getName()).log(Level.SEVERE, null, e);
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
-            forward = "error.jsp";
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            Logger.getLogger(MesQuestionnaires.class.getName()).log(Level.SEVERE, null, e);
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
-            forward = "error.jsp";
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.getLogger(MesQuestionnaires.class.getName()).log(Level.SEVERE, null, e);
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
-            forward = "error.jsp";
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(MesQuestionnaires.class.getName()).log(Level.SEVERE, null, e);
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
-            forward = "error.jsp";
         } catch (ExpiredSessionException e) {
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
             forward = "index.jsp";
+        } catch (NumberFormatException e) {
+            Logger.getLogger(MesQuestionnaires.class.getName()).log(Level.SEVERE, null, e);
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            Logger.getLogger(MesQuestionnaires.class.getName()).log(Level.SEVERE, null, e);
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
+        } catch (UnauthorizedActionException e) {
+            Logger.getLogger(MesQuestionnaires.class.getName()).log(Level.SEVERE, null, e);
+            request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
         }
         request.getRequestDispatcher(forward).forward(request, response);
     } 
@@ -108,25 +124,21 @@ public class MesQuestionnaires extends HttpServlet {
             }
 
         } catch (IllegalStateException e) {
-            e.printStackTrace();
+            Logger.getLogger(MesQuestionnaires.class.getName()).log(Level.SEVERE, null, e);
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
-            forward = "error.jsp";
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            Logger.getLogger(MesQuestionnaires.class.getName()).log(Level.SEVERE, null, e);
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
-            forward = "error.jsp";
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.getLogger(MesQuestionnaires.class.getName()).log(Level.SEVERE, null, e);
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
-            forward = "error.jsp";
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(MesQuestionnaires.class.getName()).log(Level.SEVERE, null, e);
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
-            forward = "error.jsp";
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ExpiredSessionException e) {
+            Logger.getLogger(MesQuestionnaires.class.getName()).log(Level.SEVERE, null, e);
             request.setAttribute("errorMessage", "Erreur : " + e.getMessage());
-            forward = "error.jsp";
+            forward = "index.jsp";
         }
         request.getRequestDispatcher(forward).forward(request, response);
     }

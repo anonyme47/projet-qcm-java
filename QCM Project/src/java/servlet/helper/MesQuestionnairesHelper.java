@@ -6,6 +6,7 @@
 package servlet.helper;
 
 import exception.ExpiredSessionException;
+import exception.UnauthorizedActionException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import modele.Questionnaire;
 import util.QuestionnaireDAO;
 import java.util.List;
 import java.util.Map;
+import modele.User;
 
 /**
  *
@@ -38,9 +40,12 @@ public class MesQuestionnairesHelper extends RequestHelper{
          request.setAttribute("mapQuestionnaires", mapQuestionnaires);
     }
 
-    @Override
-    public void setAttributeInfoQuestionnaire() throws SQLException {
+    public void setAttributeEditableQuestionnaire() throws SQLException, UnauthorizedActionException {
         Questionnaire questionnaire = QuestionnaireDAO.getById(Integer.parseInt(request.getParameter("questionnaire").toString()));
+        int idUser = getIdUser();
+        if(idUser != questionnaire.getIdUser()){
+            throw new UnauthorizedActionException("Vous n'avez pas le droit d'éditer ce questionnaire car vous n'êtes pas son créateur.");
+        }
         request.setAttribute("questionnaire", questionnaire);
      }
     
