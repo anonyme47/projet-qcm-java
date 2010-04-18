@@ -182,7 +182,7 @@ CREATE  TABLE IF NOT EXISTS `QCM`.`questionnaire_passe` (
     REFERENCES `QCM`.`user` (`id_user` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = INNODB;
 
 
 -- -----------------------------------------------------
@@ -208,7 +208,7 @@ CREATE  TABLE IF NOT EXISTS `QCM`.`contenu` (
     REFERENCES `QCM`.`question` (`id_question` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = INNODB;
 
 
 -- -----------------------------------------------------
@@ -223,7 +223,7 @@ CREATE  TABLE IF NOT EXISTS `QCM`.`user_reponse` (
   INDEX `fk_contenu_has_reponse_contenu` (`id_contenu`) ,
   INDEX `fk_contenu_has_reponse_reponse` (`id_reponse`) ,
   INDEX `fk_user_reponse_user` (`id_user`) ,
-  PRIMARY KEY (`id_contenu`, `id_user`) ,
+  PRIMARY KEY (`id_contenu`, `id_user`, `id_reponse`) ,
   CONSTRAINT `fk_contenu_has_reponse_contenu`
     FOREIGN KEY (`id_contenu` )
     REFERENCES `QCM`.`contenu` (`id_contenu` )
@@ -239,7 +239,7 @@ CREATE  TABLE IF NOT EXISTS `QCM`.`user_reponse` (
     REFERENCES `QCM`.`user` (`id_user` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = INNODB;
 
 
 
@@ -252,10 +252,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 SET AUTOCOMMIT=0;
 USE `QCM`;
-insert into `QCM`.`niveau` (`id_niveau`, `libelle`, `est_actif`) values (1, 'Débutant', 1);
-insert into `QCM`.`niveau` (`id_niveau`, `libelle`, `est_actif`) values (2, 'Avancé', 1);
-insert into `QCM`.`niveau` (`id_niveau`, `libelle`, `est_actif`) values (3, 'Expert', 1);
-insert into `QCM`.`niveau` (`id_niveau`, `libelle`, `est_actif`) values (4, 'Super ninja de la programmation', 1);
+INSERT INTO `QCM`.`niveau` (`id_niveau`, `libelle`, `est_actif`) VALUES (1, 'Débutant', 1);
+INSERT INTO `QCM`.`niveau` (`id_niveau`, `libelle`, `est_actif`) VALUES (2, 'Avancé', 1);
+INSERT INTO `QCM`.`niveau` (`id_niveau`, `libelle`, `est_actif`) VALUES (3, 'Expert', 1);
+INSERT INTO `QCM`.`niveau` (`id_niveau`, `libelle`, `est_actif`) VALUES (4, 'Super ninja de la programmation', 1);
 
 COMMIT;
 
@@ -264,9 +264,9 @@ COMMIT;
 -- -----------------------------------------------------
 SET AUTOCOMMIT=0;
 USE `QCM`;
-insert into `QCM`.`statut` (`id_statut`, `libelle`) values (1, 'Enseignant');
-insert into `QCM`.`statut` (`id_statut`, `libelle`) values (2, 'Etudiant');
-insert into `QCM`.`statut` (`id_statut`, `libelle`) values (3, 'Administrateur');
+INSERT INTO `QCM`.`statut` (`id_statut`, `libelle`) VALUES (1, 'Enseignant');
+INSERT INTO `QCM`.`statut` (`id_statut`, `libelle`) VALUES (2, 'Etudiant');
+INSERT INTO `QCM`.`statut` (`id_statut`, `libelle`) VALUES (3, 'Administrateur');
 
 COMMIT;
 
@@ -275,7 +275,7 @@ COMMIT;
 -- -----------------------------------------------------
 SET AUTOCOMMIT=0;
 USE `QCM`;
-insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `est_actif`, `id_statut`) values (1, 'Lou', 'Ferrand', 'Lou', 'lou', 'ferrandlou@gmail.com', 1, 3);
+INSERT INTO `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `est_actif`, `id_statut`) VALUES (1, 'Lou', 'Ferrand', 'Lou', 'lou', 'ferrandlou@gmail.com', 1, 3);
 insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `est_actif`, `id_statut`) values (2, 'Maria', 'Rabarison', 'Maria', 'maria', 'maryarabarison@gmail.com', 1, 1);
 insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `est_actif`, `id_statut`) values (3, 'Test', 'Test', 'Test', 'test', 'test@test.fr', 1, 2);
 insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `est_actif`, `id_statut`) values (4, 'mplasse', 'Plasse', 'Michel', 'mplasse', 'mplasse@parisdescartes.fr', 1, 3);
