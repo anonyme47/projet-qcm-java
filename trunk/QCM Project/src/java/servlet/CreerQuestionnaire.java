@@ -42,12 +42,8 @@ public class CreerQuestionnaire extends HttpServlet {
     throws ServletException, IOException {
         String forward = "error.jsp";
         try {
-
             RequestHelper helper = new RequestHelper(request);
-            
-           
             String action = request.getParameter("action").toString();
-
             if (action != null) {
                 if (action.equals("applyToCreate")) {
                     helper.setAttributeThemesAndNiveaux();
@@ -105,6 +101,7 @@ public class CreerQuestionnaire extends HttpServlet {
                     helper.applyToAddNewQuestion();
                     forward = "afficherNouvelleQuestion.jsp";
                 } else if(action.equals("createNewQuestion")){
+                    helper.createQuestion();
                     forward = "listeQuestionsByTheme.jsp";
                 }
             }
@@ -142,6 +139,6 @@ public class CreerQuestionnaire extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

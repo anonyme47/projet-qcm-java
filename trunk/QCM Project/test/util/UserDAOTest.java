@@ -68,10 +68,10 @@ public class UserDAOTest extends QCMTestCase {
     public void testUpdate() throws Exception {
         System.out.println("update");
         User user = new User(1, "lou", "lou", "ferrandlou@gmail.com", "Ferrand", "Lou", new Statut(3, "Administrateur"), true);
-        String nouveauLoginUser = "Nouveau login";
-        user.setLogin(nouveauLoginUser);
+        String nouveauEmailUser = "test@example.com";
+        user.setEmail(nouveauEmailUser);
         UserDAO.update(user);
-        assertTrue(UserDAO.getById(1).getLogin().equals(nouveauLoginUser));
+        assertTrue(UserDAO.getById(1).getEmail().equals(nouveauEmailUser));
     }
 
 }

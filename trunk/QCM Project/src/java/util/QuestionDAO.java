@@ -62,6 +62,13 @@ public class QuestionDAO extends ModeleDAO{
         return questions;
     }
 
+    public static void insert(Question question) {
+        try {
+            getConnection().createStatement();
+            getConnection().setAutoCommit(false);
+        } catch (SQLException ex) {
 
+        }
+    }
 
 }
