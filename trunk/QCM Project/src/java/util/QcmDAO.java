@@ -33,16 +33,22 @@ public class QcmDAO extends ModeleDAO {
             for (Integer idQuestion : userReponses.keySet()) {
                 idContenu = QcmDAO.getIdContenu(idQuestionnaire, idQuestion);
                 reponses = userReponses.get(idQuestion);
-                for (Integer idReponse : reponses) {
+                for (int k = 0 ; k< reponses.size() ; k++) {
+                    int idReponse = reponses.get(k);
+                    System.out.println(ReponseDAO.getById(idReponse).getLibelle());
                     ordre.setInt(1, idContenu);
                     ordre.setInt(2, idReponse);
                     ordre.executeUpdate();
                 }
             }
-            sql = "INSERT INTO questionnaire_passe(id_questionnaire, id_user, note, date, libelle_questionnaire, limite_temps) " +
-                    "VALUES (" + idQuestionnaire + "," + idUser + "," + qcm.getNote() + ",NOW(),\"" + qcm.getQuestionnaire().getLibelle() + "\"," + qcm.getQuestionnaire().getLimiteTemps() + ")";
+            sql = "INSERT INTO questionnaire_passe(id_questionnaire, id_user, note, date, temps) VALUES (?,?,?,NOW(),?)";
                     System.out.println(sql);
-            int result = connexion.createStatement().executeUpdate(sql);
+            PreparedStatement ps = connexion.prepareStatement(sql);
+            ps.setInt(1,idQuestionnaire);
+            ps.setInt(2, idUser);
+            ps.setInt(3, qcm.getNote());
+            ps.setInt(4, qcm.getQuestionnaire().getLimiteTemps());
+            int result = ps.executeUpdate();
             if (result > 0) {
                 connexion.commit();
                 qcm.setEstFini(true);
