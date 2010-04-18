@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS `QCM`.`niveau` ;
 CREATE  TABLE IF NOT EXISTS `QCM`.`niveau` (
   `id_niveau` INT NOT NULL AUTO_INCREMENT ,
   `libelle` VARCHAR(255) NOT NULL ,
+  `est_actif` TINYINT(1) NOT NULL DEFAULT 1 ,
   PRIMARY KEY (`id_niveau`) )
 ENGINE = InnoDB;
 
@@ -41,9 +42,10 @@ CREATE  TABLE IF NOT EXISTS `QCM`.`user` (
   `prenom` VARCHAR(255) NOT NULL ,
   `password` VARCHAR(32) NOT NULL ,
   `email` VARCHAR(255) NOT NULL ,
+  `est_actif` TINYINT(1) NOT NULL DEFAULT 1 ,
   `id_statut` INT NOT NULL ,
   PRIMARY KEY (`id_user`) ,
-  INDEX `fk_user_statut` (`id_statut` ASC) ,
+  INDEX `fk_user_statut` (`id_statut`) ,
   CONSTRAINT `fk_user_statut`
     FOREIGN KEY (`id_statut` )
     REFERENCES `QCM`.`statut` (`id_statut` )
@@ -60,10 +62,10 @@ DROP TABLE IF EXISTS `QCM`.`theme` ;
 CREATE  TABLE IF NOT EXISTS `QCM`.`theme` (
   `id_theme` INT NOT NULL AUTO_INCREMENT ,
   `libelle` VARCHAR(255) NOT NULL ,
-  `descriptif` VARCHAR(255) NULL ,
+  `est_actif` TINYINT(1) NOT NULL DEFAULT 1 ,
   `id_user` INT NOT NULL ,
   PRIMARY KEY (`id_theme`) ,
-  INDEX `fk_theme_user` (`id_user` ASC) ,
+  INDEX `fk_theme_user` (`id_user`) ,
   CONSTRAINT `fk_theme_user`
     FOREIGN KEY (`id_user` )
     REFERENCES `QCM`.`user` (`id_user` )
@@ -87,9 +89,9 @@ CREATE  TABLE IF NOT EXISTS `QCM`.`questionnaire` (
   `id_theme` INT NOT NULL ,
   `id_user` INT NOT NULL ,
   PRIMARY KEY (`id_questionnaire`) ,
-  INDEX `fk_questionnaire_niveau` (`id_niveau` ASC) ,
-  INDEX `fk_questionnaire_theme` (`id_theme` ASC) ,
-  INDEX `fk_questionnaire_user` (`id_user` ASC) ,
+  INDEX `fk_questionnaire_niveau` (`id_niveau`) ,
+  INDEX `fk_questionnaire_theme` (`id_theme`) ,
+  INDEX `fk_questionnaire_user` (`id_user`) ,
   CONSTRAINT `fk_questionnaire_niveau`
     FOREIGN KEY (`id_niveau` )
     REFERENCES `QCM`.`niveau` (`id_niveau` )
@@ -119,8 +121,8 @@ CREATE  TABLE IF NOT EXISTS `QCM`.`question` (
   `id_theme` INT NOT NULL ,
   `id_user` INT NOT NULL ,
   PRIMARY KEY (`id_question`) ,
-  INDEX `fk_question_theme` (`id_theme` ASC) ,
-  INDEX `fk_question_user` (`id_user` ASC) ,
+  INDEX `fk_question_theme` (`id_theme`) ,
+  INDEX `fk_question_user` (`id_user`) ,
   CONSTRAINT `fk_question_theme`
     FOREIGN KEY (`id_theme` )
     REFERENCES `QCM`.`theme` (`id_theme` )
@@ -147,7 +149,7 @@ CREATE  TABLE IF NOT EXISTS `QCM`.`reponse` (
   `note` INT NOT NULL ,
   `id_question` INT NOT NULL ,
   PRIMARY KEY (`id_reponse`) ,
-  INDEX `fk_reponse_question` (`id_question` ASC) ,
+  INDEX `fk_reponse_question` (`id_question`) ,
   CONSTRAINT `fk_reponse_question`
     FOREIGN KEY (`id_question` )
     REFERENCES `QCM`.`question` (`id_question` )
@@ -167,8 +169,8 @@ CREATE  TABLE IF NOT EXISTS `QCM`.`questionnaire_passe` (
   `note` INT NOT NULL ,
   `date` DATE NOT NULL ,
   PRIMARY KEY (`id_questionnaire`, `id_user`) ,
-  INDEX `fk_questionnaire_has_user_questionnaire1` (`id_questionnaire` ASC) ,
-  INDEX `fk_questionnaire_has_user_user1` (`id_user` ASC) ,
+  INDEX `fk_questionnaire_has_user_questionnaire1` (`id_questionnaire`) ,
+  INDEX `fk_questionnaire_has_user_user1` (`id_user`) ,
   CONSTRAINT `fk_questionnaire_has_user_questionnaire1`
     FOREIGN KEY (`id_questionnaire` )
     REFERENCES `QCM`.`questionnaire` (`id_questionnaire` )
@@ -192,8 +194,8 @@ CREATE  TABLE IF NOT EXISTS `QCM`.`contenu` (
   `id_questionnaire` INT NOT NULL ,
   `id_question` INT NOT NULL ,
   PRIMARY KEY (`id_contenu`) ,
-  INDEX `fk_contenu_questionnaire` (`id_questionnaire` ASC) ,
-  INDEX `fk_contenu_question` (`id_question` ASC) ,
+  INDEX `fk_contenu_questionnaire` (`id_questionnaire`) ,
+  INDEX `fk_contenu_question` (`id_question`) ,
   UNIQUE INDEX `id_questionnaire_id_question_UNIQUE` (`id_questionnaire`, `id_question`) ,
   CONSTRAINT `fk_contenu_questionnaire`
     FOREIGN KEY (`id_questionnaire` )
@@ -217,9 +219,9 @@ CREATE  TABLE IF NOT EXISTS `QCM`.`user_reponse` (
   `id_contenu` INT NOT NULL ,
   `id_user` INT NOT NULL ,
   `id_reponse` INT NOT NULL ,
-  INDEX `fk_contenu_has_reponse_contenu` (`id_contenu` ASC) ,
-  INDEX `fk_contenu_has_reponse_reponse` (`id_reponse` ASC) ,
-  INDEX `fk_user_reponse_user` (`id_user` ASC) ,
+  INDEX `fk_contenu_has_reponse_contenu` (`id_contenu`) ,
+  INDEX `fk_contenu_has_reponse_reponse` (`id_reponse`) ,
+  INDEX `fk_user_reponse_user` (`id_user`) ,
   PRIMARY KEY (`id_contenu`, `id_user`) ,
   CONSTRAINT `fk_contenu_has_reponse_contenu`
     FOREIGN KEY (`id_contenu` )
@@ -249,9 +251,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 SET AUTOCOMMIT=0;
 USE `QCM`;
-insert into `QCM`.`niveau` (`id_niveau`, `libelle`) values (1, 'Débutant');
-insert into `QCM`.`niveau` (`id_niveau`, `libelle`) values (2, 'Avancé');
-insert into `QCM`.`niveau` (`id_niveau`, `libelle`) values (3, 'Expert');
+insert into `QCM`.`niveau` (`id_niveau`, `libelle`, `est_actif`) values (1, 'Débutant', 1);
+insert into `QCM`.`niveau` (`id_niveau`, `libelle`, `est_actif`) values (2, 'Avancé', 1);
+insert into `QCM`.`niveau` (`id_niveau`, `libelle`, `est_actif`) values (3, 'Expert', 1);
+insert into `QCM`.`niveau` (`id_niveau`, `libelle`, `est_actif`) values (4, 'Super ninja de la programmation', 1);
 
 COMMIT;
 
@@ -271,9 +274,16 @@ COMMIT;
 -- -----------------------------------------------------
 SET AUTOCOMMIT=0;
 USE `QCM`;
-insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `id_statut`) values (1, 'Lou', 'Ferrand', 'Lou', 'lou', 'ferrandlou@gmail.com', 3);
-insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `id_statut`) values (2, 'Maria', 'Rabarison', 'Maria', 'maria', 'maryarabarison@gmail.com', 1);
-insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `id_statut`) values (3, 'Test', 'Test', 'Test', 'test', 'test@test.fr', 2);
+insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `est_actif`, `id_statut`) values (1, 'Lou', 'Ferrand', 'Lou', 'lou', 'ferrandlou@gmail.com', 1, 3);
+insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `est_actif`, `id_statut`) values (2, 'Maria', 'Rabarison', 'Maria', 'maria', 'maryarabarison@gmail.com', 1, 1);
+insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `est_actif`, `id_statut`) values (3, 'Test', 'Test', 'Test', 'test', 'test@test.fr', 1, 2);
+insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `est_actif`, `id_statut`) values (4, 'mplasse', 'Plasse', 'Michel', 'mplasse', 'mplasse@parisdescartes.fr', 1, 3);
+insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `est_actif`, `id_statut`) values (5, 'cgnaho', 'Gnaho', 'Christophe', 'cgnaho', 'cgnaho@parisdescartes.fr', 1, 3);
+insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `est_actif`, `id_statut`) values (6, 'tridene', 'Ridene', 'Taha', 'tridene', 'tridene@parisdescartes.fr', 1, 1);
+insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `est_actif`, `id_statut`) values (7, 'mgiry', 'Giry', 'Martin', 'mgiry', 'mgiry@parisdescartes.fr', 1, 1);
+insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `est_actif`, `id_statut`) values (8, 'mschwartz', 'Schwartz', 'Michael', 'mschwartz', 'mschwartz@parisdescartes.fr', 1, 2);
+insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `est_actif`, `id_statut`) values (9, 'gyakan', 'Yakan', 'Grégoire', 'gyakan', 'gyakan@parisdescartes.fr', 1, 2);
+insert into `QCM`.`user` (`id_user`, `login`, `nom`, `prenom`, `password`, `email`, `est_actif`, `id_statut`) values (10, 'dtaing', 'Taing', 'David', 'dtaing', 'dtaing@parisdescartes.fr', 1, 2);
 
 COMMIT;
 
@@ -282,12 +292,12 @@ COMMIT;
 -- -----------------------------------------------------
 SET AUTOCOMMIT=0;
 USE `QCM`;
-insert into `QCM`.`theme` (`id_theme`, `libelle`, `descriptif`, `id_user`) values (1, 'Java', 'Java', 1);
-insert into `QCM`.`theme` (`id_theme`, `libelle`, `descriptif`, `id_user`) values (2, 'Ruby', 'Ruby', 1);
-insert into `QCM`.`theme` (`id_theme`, `libelle`, `descriptif`, `id_user`) values (3, 'C++', 'C++', 2);
-insert into `QCM`.`theme` (`id_theme`, `libelle`, `descriptif`, `id_user`) values (4, 'PHP', 'PHP', 2);
-insert into `QCM`.`theme` (`id_theme`, `libelle`, `descriptif`, `id_user`) values (5, 'UML', 'UML', 3);
-insert into `QCM`.`theme` (`id_theme`, `libelle`, `descriptif`, `id_user`) values (6, 'POO', 'Programmation Orientée Objet', 3);
+insert into `QCM`.`theme` (`id_theme`, `libelle`, `est_actif`, `id_user`) values (1, 'Java', 1, 1);
+insert into `QCM`.`theme` (`id_theme`, `libelle`, `est_actif`, `id_user`) values (2, 'Ruby', 1, 1);
+insert into `QCM`.`theme` (`id_theme`, `libelle`, `est_actif`, `id_user`) values (3, 'C++', 1, 1);
+insert into `QCM`.`theme` (`id_theme`, `libelle`, `est_actif`, `id_user`) values (4, 'PHP', 1, 1);
+insert into `QCM`.`theme` (`id_theme`, `libelle`, `est_actif`, `id_user`) values (5, 'Unified Modeling Language', 1, 1);
+insert into `QCM`.`theme` (`id_theme`, `libelle`, `est_actif`, `id_user`) values (6, 'Programmation Orientée Objet', 1, 1);
 
 COMMIT;
 
@@ -296,10 +306,10 @@ COMMIT;
 -- -----------------------------------------------------
 SET AUTOCOMMIT=0;
 USE `QCM`;
-insert into `QCM`.`questionnaire` (`id_questionnaire`, `libelle`, `date_creation`, `limite_temps`, `est_actif`, `id_niveau`, `id_theme`, `id_user`) values (1, 'Les exceptions en Java', 'NOW()', 30, true, 1, 1, 1);
-insert into `QCM`.`questionnaire` (`id_questionnaire`, `libelle`, `date_creation`, `limite_temps`, `est_actif`, `id_niveau`, `id_theme`, `id_user`) values (2, 'L\'héritage en Ruby', 'NOW()', 20, true, 2, 2, 1);
-insert into `QCM`.`questionnaire` (`id_questionnaire`, `libelle`, `date_creation`, `limite_temps`, `est_actif`, `id_niveau`, `id_theme`, `id_user`) values (3, 'Le polymorphisme en C++', 'NOW()', 45, true, 1, 3, 2);
-insert into `QCM`.`questionnaire` (`id_questionnaire`, `libelle`, `date_creation`, `limite_temps`, `est_actif`, `id_niveau`, `id_theme`, `id_user`) values (4, 'Test', 'NOW()', 45, true, 1, 4, 2);
+insert into `QCM`.`questionnaire` (`id_questionnaire`, `libelle`, `date_creation`, `limite_temps`, `est_actif`, `id_niveau`, `id_theme`, `id_user`) values (1, 'Les exceptions en Java', NOW(), 30, true, 1, 1, 1);
+insert into `QCM`.`questionnaire` (`id_questionnaire`, `libelle`, `date_creation`, `limite_temps`, `est_actif`, `id_niveau`, `id_theme`, `id_user`) values (2, 'L\'héritage en Ruby', NOW(), 20, true, 2, 2, 1);
+insert into `QCM`.`questionnaire` (`id_questionnaire`, `libelle`, `date_creation`, `limite_temps`, `est_actif`, `id_niveau`, `id_theme`, `id_user`) values (3, 'Le polymorphisme en C++', NOW(), 45, true, 1, 3, 2);
+insert into `QCM`.`questionnaire` (`id_questionnaire`, `libelle`, `date_creation`, `limite_temps`, `est_actif`, `id_niveau`, `id_theme`, `id_user`) values (4, 'Test', NOW(), 45, true, 1, 4, 2);
 
 COMMIT;
 
@@ -362,15 +372,15 @@ COMMIT;
 -- -----------------------------------------------------
 SET AUTOCOMMIT=0;
 USE `QCM`;
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (1, 1, 15, 'NOW()');
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (2, 1, 10, 'NOW()');
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (3, 1, 5, 'NOW()');
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (1, 2, 15, 'NOW()');
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (2, 2, 10, 'NOW()');
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (3, 2, 5, 'NOW()');
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (1, 3, 15, 'NOW()');
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (2, 3, 10, 'NOW()');
-insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (3, 3, 5, 'NOW()');
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (1, 1, 15, NOW());
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (2, 1, 10, NOW());
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (3, 1, 5, NOW());
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (1, 2, 15, NOW());
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (2, 2, 10, NOW());
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (3, 2, 5, NOW());
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (1, 3, 15, NOW());
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (2, 3, 10, NOW());
+insert into `QCM`.`questionnaire_passe` (`id_questionnaire`, `id_user`, `note`, `date`) values (3, 3, 5, NOW());
 
 COMMIT;
 
