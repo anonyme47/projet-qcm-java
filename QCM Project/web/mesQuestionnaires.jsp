@@ -24,7 +24,7 @@
                                         out.println("<ol>");
                                         for (Integer i : questionnaires.keySet()) {
                         %>
-                        <li><%= questionnaires.get(i)%></li>
+                        <a href="?action=getCreatedQuestionnaire&questionnaire=<%= i %>"><li><%= questionnaires.get(i)%></li></a>
                         <%
                                         }
                                         out.println("</ol>");

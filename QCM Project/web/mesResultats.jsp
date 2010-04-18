@@ -39,8 +39,8 @@
                         <td class="centered"><%= qP.getNote()%></td>
                         <td class="centered">
                             <%
-                                                            if (qP.getLimiteTemps() != null && qP.getLimiteTemps() > 0) {
-                                                                out.println(qP.getLimiteTemps());
+                                                            if (qP.getTemps() != null && qP.getTemps() > 0) {
+                                                                out.println(qP.getTemps());
                                                             }
                             %>
 
