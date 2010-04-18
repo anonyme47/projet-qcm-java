@@ -86,7 +86,7 @@ public class UserDAO extends ModeleDAO {
     }
 
     public static void update(User user) throws SQLException {
-        String sql = "UPDATE user SET login = ?, nom = ?, prenom = ?, email = ?, password = ?, est_actif = ? WHERE id_ser = ?";
+        String sql = "UPDATE user SET login = ?, nom = ?, prenom = ?, email = ?, password = ?, est_actif = ? WHERE id_user = ?";
         PreparedStatement ps = getConnection().prepareStatement(sql);
         ps.setString(1, user.getLogin());
         ps.setString(2, user.getNom());
