@@ -82,6 +82,7 @@
     <questionnaire id_questionnaire = "4" libelle = "Test" date_creation = "0002-11-30 00:00:00" limite_temps = "45" id_niveau = "1" id_theme = "4" id_user = "2" est_actif="1"/>
 
 
+
     <contenu id_contenu="1" id_questionnaire="1" id_question="1" />
     <contenu id_contenu="2" id_questionnaire="1" id_question="2" />
     <contenu id_contenu="3" id_questionnaire="1" id_question="3" />
@@ -91,17 +92,15 @@
    
 
 
-    
-
-    <questionnaire_passe id_questionnaire = "1" id_user = "1" note = "15" date = "0002-11-30 00:00:00" libelle_questionnaire = "Les exceptions en Java" limite_temps = "30" />
-    <questionnaire_passe id_questionnaire = "2" id_user = "1" note = "10" date = "0002-11-30 00:00:00" libelle_questionnaire = "L'héritage en Ruby" limite_temps = "20"  />
-    <questionnaire_passe id_questionnaire = "3" id_user = "1" note = "5"  date = "0002-11-30 00:00:00" libelle_questionnaire = "Le polymorphisme en C++" limite_temps = "45"  />
-    <questionnaire_passe id_questionnaire = "1" id_user = "2" note = "15" date = "0002-11-30 00:00:00" libelle_questionnaire = "Les exceptions en Java" limite_temps = "30"  />
-    <questionnaire_passe id_questionnaire = "2" id_user = "2" note = "10" date = "0002-11-30 00:00:00" libelle_questionnaire = "L'héritage en Ruby" limite_temps = "20"  />
-    <questionnaire_passe id_questionnaire = "3" id_user = "2" note = "5"  date = "0002-11-30 00:00:00" libelle_questionnaire = "Le polymorphisme en C++" limite_temps = "45"  />
-    <questionnaire_passe id_questionnaire = "1" id_user = "3" note = "15" date = "0002-11-30 00:00:00" libelle_questionnaire = "Les exceptions en Java" limite_temps = "30"  />
-    <questionnaire_passe id_questionnaire = "2" id_user = "3" note = "10" date = "0002-11-30 00:00:00" libelle_questionnaire = "L'héritage en Ruby" limite_temps = "20"  />
-    <questionnaire_passe id_questionnaire = "3" id_user = "3" note = "5"  date = "0002-11-30 00:00:00" libelle_questionnaire = "Le polymorphisme en C++" limite_temps = "45"  />
+    <questionnaire_passe id_questionnaire = "1" id_user = "1" note = "15" date = "0002-11-30 00:00:00" limite_temps = "30" />
+    <questionnaire_passe id_questionnaire = "2" id_user = "1" note = "10" date = "0002-11-30 00:00:00" limite_temps = "20" />
+    <questionnaire_passe id_questionnaire = "3" id_user = "1" note = "5"  date = "0002-11-30 00:00:00" limite_temps = "45" />
+    <questionnaire_passe id_questionnaire = "1" id_user = "2" note = "15" date = "0002-11-30 00:00:00" limite_temps = "30" />
+    <questionnaire_passe id_questionnaire = "2" id_user = "2" note = "10" date = "0002-11-30 00:00:00" limite_temps = "20" />
+    <questionnaire_passe id_questionnaire = "3" id_user = "2" note = "5"  date = "0002-11-30 00:00:00" limite_temps = "45" />
+    <questionnaire_passe id_questionnaire = "1" id_user = "3" note = "15" date = "0002-11-30 00:00:00" limite_temps = "30" />
+    <questionnaire_passe id_questionnaire = "2" id_user = "3" note = "10" date = "0002-11-30 00:00:00" limite_temps = "20" />
+    <questionnaire_passe id_questionnaire = "3" id_user = "3" note = "5"  date = "0002-11-30 00:00:00" limite_temps = "45" />
 
     <!--<questionnaire_passe /> Pour le respect des contraintes d'intégrité-->
     <user_reponse />  <!--Pour le respect des contraintes d'intégrité-->
